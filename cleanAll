@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cd bin 
+rm -R *  2>/dev/null
+rm *  2>/dev/null 
+ls
+cd ../docs
+rm -R *  2>/dev/null
+rm *  2>/dev/null
+ls

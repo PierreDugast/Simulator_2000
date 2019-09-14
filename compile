@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd src
+javac **/*.java -d ../bin
+javac *.java -d ../bin
+
+cd ../bin
+echo "Fichiers compilés :"
+ls

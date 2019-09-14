@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cd src
+javadoc **/*.java -d ../docs
+javadoc *.java -d ../docs
+
+cd ../docs
+echo "Docs générées :"
+ls
+
