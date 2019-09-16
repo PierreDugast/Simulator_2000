@@ -1,4 +1,4 @@
-import sources.*;
+﻿import sources.*;
 import destinations.*;
 import transmetteurs.*;
 
@@ -8,7 +8,7 @@ import transmetteurs.*;
  * Transmetteur(s) et d'une Destination.
  * @author cousin
  * @author prou
- *
+ * @Salut moi c'est Arnaud :=)
  */
 public class Simulateur {
       	
