@@ -21,11 +21,13 @@ public  class Information <T>  implements Iterable <T> {
      * pour construire à partir d'un tableau de T une information
      * @param content le tableau d'éléments pour initialiser l'information construite
      */
-    public Information(T [] content) {
-	this.content = new LinkedList <T> (); 
-	for (int i = 0; i < content.length; i++) {
-            this.content.addLast(content[i]);
-	}
+    public Information(T [] content) 
+    {
+    	this.content = new LinkedList <T> (); 
+    	for (int i = 0; i < content.length; i++) 
+			{
+            	this.content.addLast(content[i]);
+			}
     }
    
     /**

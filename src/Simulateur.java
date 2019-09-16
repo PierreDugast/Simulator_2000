@@ -106,7 +106,7 @@ public class Simulateur {
 		else if (args[i].matches("[0-9]{1,6}")) {
 		    messageAleatoire = true;
 		    nbBitsMess = new Integer(args[i]);
-		    if (nbBitsMess < 1) 
+		   if (nbBitsMess < 1) 
 			throw new ArgumentsException ("Valeur du parametre -mess invalide : " + nbBitsMess);
 		}
 		else 
@@ -126,7 +126,8 @@ public class Simulateur {
      * @throws Exception si un problème survient lors de l'exécution
      *
      */ 
-    public void execute() throws Exception {      
+    public void execute() throws Exception 
+    {      
          
 	//  source.emettre(); 
       	     	      
