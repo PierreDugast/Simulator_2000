@@ -28,5 +28,5 @@ public  abstract class Sonde <T> extends Destination <T> {
      * @param information  l'information  à recevoir
      */   
     @Override
-	public abstract void recevoir(Information <T> information);     
+	public abstract void recevoir(Information <T> information);
 }

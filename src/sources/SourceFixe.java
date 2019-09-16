@@ -1,11 +1,10 @@
 package sources;
-import java.util.*;
 import information.*;
 import ExceptionsGlobales.ArgumentsException;
 
 public class SourceFixe extends Source <Boolean>
 {
-	public SourceFixe(String messageString, int nbBits) throws ArgumentsException
+	public SourceFixe(String messageString, int nbBits)
 	{
 		
 		Boolean [] boolTab = new Boolean[nbBits];
@@ -15,8 +14,6 @@ public class SourceFixe extends Source <Boolean>
 				boolTab[i] = false;
 			if ('1' == messageString.charAt(i))
 				boolTab[i] = true;
-			else
-				throw new ArgumentsException("argument non binaire en entrée d'une source fixe");
 		}
 		this.informationGeneree = new Information(boolTab);
 	}

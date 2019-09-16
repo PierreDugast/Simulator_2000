@@ -70,36 +70,41 @@ public  class Information <T>  implements Iterable <T> {
      */	 
     @Override
 	@SuppressWarnings("unchecked")
-    public boolean equals(Object o) {
-	if (!(o instanceof Information))
+    public boolean equals(Object o) 
+    {
+    	if (!(o instanceof Information))
             return false;
-	Information <T> information =  (Information <T>) o;
-	if (this.nbElements() != information.nbElements())
+    	Information <T> information =  (Information <T>) o;
+    	if (this.nbElements() != information.nbElements())
             return false;
-	for (int i = 0; i < this.nbElements(); i++) {
+    	for (int i = 0; i < this.nbElements(); i++) 
+    	{
             if (!this.iemeElement(i).equals(information.iemeElement(i)))
-		return false;
-	}
-	return true;
+            		return false;
+    	}
+    	return true;
     }
    
     /**
      * pour afficher une information
      */
     @Override
-	public String toString() {
-	String s = "";
-	for (int i = 0; i < this.nbElements(); i++) {
+	public String toString() 
+    {
+    	String s = "";
+		for (int i = 0; i < this.nbElements(); i++) 
+		{
             s += " " + this.iemeElement(i);
-	}
-	return s;
+		}
+		return s;
     }
    
     /**
      * pour utilisation du "for each" 
      */
     @Override
-	public Iterator <T> iterator() {
-	return content.iterator();
+	public Iterator <T> iterator() 
+    {
+    	return content.iterator();
     }
 }

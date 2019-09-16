@@ -1,6 +1,11 @@
 ﻿import sources.*;
 import destinations.*;
+import information.Information;
+import information.InformationNonConforme;
 import transmetteurs.*;
+import visualisations.*;
+import java.util.Iterator;
+
 import ExceptionsGlobales.ArgumentsException;
 /*BLABLA*/
 /** La classe Simulateur permet de construire et simuler une chaîne de
@@ -8,7 +13,7 @@ import ExceptionsGlobales.ArgumentsException;
  * Transmetteur(s) et d'une Destination.
  * @author cousin
  * @author prou
- * @Salut moi c'est Arnaud :=)
+ * @author Arnaud Rohé & Pierre Dugast, FIP 2021
  */
 public class Simulateur {
       	
@@ -51,7 +56,20 @@ public class Simulateur {
     	analyseArguments(args);
     	
       	// assemblage des composants de la chaine de transmission pour le TP1 :
-      		
+    	
+      	if (messageAleatoire)
+      	{
+      		this.source = new SourceAleatoire(this.nbBitsMess);
+      	}
+      	if (!(messageAleatoire))
+      	{
+      		this.source = new SourceFixe(this.messageString,this.nbBitsMess);
+      	}
+      	this.transmetteurLogique = new TransmetteurParfait();
+      	this.destination = new DestinationFinale();
+      	
+      	this.source.connecter(this.transmetteurLogique);
+      	this.transmetteurLogique.connecter(this.destination);
     }
    
    
@@ -131,7 +149,15 @@ public class Simulateur {
      */ 
     public void execute() throws Exception 
     {      
-    	source.emettre(); 	      
+    	this.source.emettre();
+      	//Si l'affichage des sondes est demandée :
+      	if(this.affichage)
+      	{
+      		SondeLogique sonde1 = new SondeLogique("Sonde sortie générateur",720);
+      		sonde1.recevoir(this.source.getInformationEmise());
+      		SondeLogique sonde2 = new SondeLogique("Sonde sortie transmetteur",720);
+      		sonde2.recevoir(this.transmetteurLogique.getInformationEmise());
+      	}
     }
    
    	   	
@@ -143,8 +169,24 @@ public class Simulateur {
      */   	   
     public float  calculTauxErreurBinaire()
     {  
-      	//TODO: A compléter
-    	return  0.0f;
+      	//!!! Test calculTauxErreurBinaire() à conserver jusqu'à intégration dans les tests !!!____________________
+      	//this.source = new SourceFixe("1111111111",10); //Deuxième génération de bits différents afin de changer les valeur dans la destination finale
+      	//try {source.emettre();} catch (InformationNonConforme e) {e.printStackTrace();}
+      	//!!!Fin test !!!__________________________________________________________________________________________
+    	
+    	int nbErreur = 0;
+      	Iterator itInit = this.source.getInformationEmise().iterator();
+      	Iterator itFinal = this.destination.getInformationRecue().iterator();
+      	
+      	while(itInit.hasNext())
+      	{
+      		if (itInit.next()!=itFinal.next())
+      		{
+      			nbErreur++;
+      		}
+      			
+      	}
+    	return  (((float)nbErreur)/((float)this.source.getInformationEmise().nbElements()));
     }
    
    
@@ -158,9 +200,12 @@ public class Simulateur {
     public static void main(String [] args) 
     { 
     	Simulateur simulateur = null;
+    	//Test des arguments avec le String[] argBis :
+    	String[] argsBis = {"-mess","1234","-s"};
 		try 
 		{
-			simulateur = new Simulateur(args);
+			simulateur = new Simulateur(argsBis); //(pour tester les arguments passés en argBis)
+			//simulateur = new Simulateur(args);
 		}
 		catch (Exception e) 
 		{
