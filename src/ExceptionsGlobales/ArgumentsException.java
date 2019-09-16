@@ -1,4 +1,4 @@
-package Exceptions;
+package ExceptionsGlobales;
 public class ArgumentsException extends Exception {
     
     private static final long serialVersionUID = 1789L; 

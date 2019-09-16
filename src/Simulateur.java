@@ -1,8 +1,7 @@
 ﻿import sources.*;
 import destinations.*;
 import transmetteurs.*;
-import Exceptions.ArgumentsException;
-
+import ExceptionsGlobales.ArgumentsException;
 /*BLABLA*/
 /** La classe Simulateur permet de construire et simuler une chaîne de
  * transmission composée d'une Source, d'un nombre variable de
