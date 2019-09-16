@@ -45,14 +45,12 @@ public class Simulateur {
      * @throws ArgumentsException si un des arguments est incorrect
      *
      */   
-    public  Simulateur(String [] args) throws ArgumentsException {
-      
+    public  Simulateur(String [] args) throws ArgumentsException 
+    {
       	// analyser et récupérer les arguments
-      	
-	analyseArguments(args);
-      
-      	      
-      	// A compléter
+    	analyseArguments(args);
+    	
+      	// assemblage des composants de la chaine de transmission pour le TP1 :
       		
     }
    
@@ -76,47 +74,52 @@ public class Simulateur {
      * @throws ArgumentsException si un des arguments est incorrect.
      *
      */   
-    public  void analyseArguments(String[] args)  throws  ArgumentsException {
-      		
-	for (int i=0;i<args.length;i++){ 
-              
-            if (args[i].matches("-s")){
-		affichage = true;
-            }
-            else if (args[i].matches("-seed")) {
-		aleatoireAvecGerme = true;
-		i++; 
-            	// traiter la valeur associee
-		try { 
-		    seed =new Integer(args[i]);
+    public  void analyseArguments(String[] args)  throws  ArgumentsException 
+    {
+		for (int i=0;i<args.length;i++)
+		{ 
+			if (args[i].matches("-s"))
+			{
+				affichage = true;
+	        }
+	        else if (args[i].matches("-seed")) 
+	        {
+	        	aleatoireAvecGerme = true;
+	        	i++; 
+	            // traiter la valeur associee
+	        	try 
+	        	{ 
+	        		seed =new Integer(args[i]);
+	        	}
+	        	catch (Exception e) 
+	        	{
+	        		throw new ArgumentsException("Valeur du parametre -seed  invalide :" + args[i]);
+	        	}           		
+	        }
+	        else if (args[i].matches("-mess"))
+	        {
+	        	i++; 
+	            // traiter la valeur associee
+	        	messageString = args[i];
+	        	if (args[i].matches("[0,1]{7,}")) 
+	        	{
+				    messageAleatoire = false;
+				    nbBitsMess = args[i].length();
+	        	} 
+	        	else if (args[i].matches("[0-9]{1,6}")) 
+	        	{
+	        		messageAleatoire = true;
+	        		nbBitsMess = new Integer(args[i]);
+	        		if (nbBitsMess < 1) 
+	        			throw new ArgumentsException ("Valeur du parametre -mess invalide : " + nbBitsMess);
+	        	}
+	        	else 
+	        		throw new ArgumentsException("Valeur du parametre -mess invalide : " + args[i]);
+	        }
+	        else 
+	        	throw new ArgumentsException("Option invalide :"+ args[i]);
 		}
-		catch (Exception e) {
-		    throw new ArgumentsException("Valeur du parametre -seed  invalide :" + args[i]);
-		}           		
-            }
-            
-            else if (args[i].matches("-mess")){
-		i++; 
-            	// traiter la valeur associee
-		messageString = args[i];
-		if (args[i].matches("[0,1]{7,}")) {
-		    messageAleatoire = false;
-		    nbBitsMess = args[i].length();
-		} 
-		else if (args[i].matches("[0-9]{1,6}")) {
-		    messageAleatoire = true;
-		    nbBitsMess = new Integer(args[i]);
-		   if (nbBitsMess < 1) 
-			throw new ArgumentsException ("Valeur du parametre -mess invalide : " + nbBitsMess);
-		}
-		else 
-		    throw new ArgumentsException("Valeur du parametre -mess invalide : " + args[i]);
-            }
-                                   
-            else throw new ArgumentsException("Option invalide :"+ args[i]);
 	}
-      
-    }
      
     
    	
@@ -128,9 +131,7 @@ public class Simulateur {
      */ 
     public void execute() throws Exception 
     {      
-         
-	//  source.emettre(); 
-      	     	      
+    	source.emettre(); 	      
     }
    
    	   	
@@ -140,11 +141,10 @@ public class Simulateur {
      *
      * @return  La valeur du Taux dErreur Binaire.
      */   	   
-    public float  calculTauxErreurBinaire() {
-      
-      	// A compléter
-      	
-	return  0.0f;
+    public float  calculTauxErreurBinaire()
+    {  
+      	//TODO: A compléter
+    	return  0.0f;
     }
    
    
@@ -155,32 +155,35 @@ public class Simulateur {
      *  d'une transmission.
      *  @param args les différents arguments qui serviront à l'instanciation du Simulateur.
      */
-    public static void main(String [] args) { 
-      
-	Simulateur simulateur = null;
-      	
-	try {
-            simulateur = new Simulateur(args);
-	}
-	catch (Exception e) {
-	    System.out.println(e); 
-	    System.exit(-1);
-	} 
-      		
-	try {
-            simulateur.execute();
-            float tauxErreurBinaire = simulateur.calculTauxErreurBinaire();
-            String s = "java  Simulateur  ";
-            for (int i = 0; i < args.length; i++) {
-		s += args[i] + "  ";
-	    }
-            System.out.println(s + "  =>   TEB : " + tauxErreurBinaire);
-	}
-	catch (Exception e) {
-	    System.out.println(e);
-	    e.printStackTrace();
-	    System.exit(-2);
-	}              	
+    public static void main(String [] args) 
+    { 
+    	Simulateur simulateur = null;
+		try 
+		{
+			simulateur = new Simulateur(args);
+		}
+		catch (Exception e) 
+		{
+		    System.out.println(e); 
+		    System.exit(-1);
+		} 		
+		try 
+		{
+		    simulateur.execute();
+		    float tauxErreurBinaire = simulateur.calculTauxErreurBinaire();
+		    String s = "java  Simulateur  ";
+		    for (int i = 0; i < args.length; i++) 
+		    {
+		    	s += args[i] + "  ";
+		    }
+		    System.out.println(s + "  =>   TEB : " + tauxErreurBinaire);
+		}
+		catch (Exception e) 
+		{
+		    System.out.println(e);
+		    e.printStackTrace();
+		    System.exit(-2);
+		}              	
     }
 }
 
