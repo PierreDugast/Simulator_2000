@@ -11,5 +11,4 @@ public class DestinationFinale extends Destination<Boolean>{
 	public void recevoir(Information<Boolean> information) throws InformationNonConforme {
 		informationRecue=information;
 	}
-
 }
