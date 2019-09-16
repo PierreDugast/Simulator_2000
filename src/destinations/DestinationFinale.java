@@ -4,7 +4,10 @@ import information.InformationNonConforme;
 
 public class DestinationFinale extends Destination<Boolean>{
 
-	@Override
+	public DestinationFinale ()
+	{
+		super();
+	}
 	public void recevoir(Information<Boolean> information) throws InformationNonConforme {
 		informationRecue=information;
 	}
