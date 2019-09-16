@@ -1,5 +1,5 @@
 import java.util.*;
-import package src.information;
+package source;
 public class SourceAleatoire extends Source{
 	
 	Information mess=new Information();
