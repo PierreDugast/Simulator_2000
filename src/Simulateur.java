@@ -1,6 +1,7 @@
 ﻿import sources.*;
 import destinations.*;
 import transmetteurs.*;
+import Exceptions.ArgumentsException;
 
 /*BLABLA*/
 /** La classe Simulateur permet de construire et simuler une chaîne de

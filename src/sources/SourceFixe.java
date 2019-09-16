@@ -7,6 +7,7 @@ public class SourceFixe extends Source <Boolean>
 {
 	public SourceFixe(String messageString, int nbBits) throws ArgumentsException
 	{
+		
 		Boolean [] boolTab = new Boolean[nbBits];
 		for (int i=0;i<messageString.length();i++)
 		{
@@ -17,6 +18,6 @@ public class SourceFixe extends Source <Boolean>
 			else
 				throw new ArgumentsException("argument non binaire en entrée d'une source fixe");
 		}
-		
+		this.informationGeneree = new Information(boolTab);
 	}
 }
