@@ -1,7 +1,12 @@
-# Simulator_2000
-
-                                
-## Descriptif du dossier
+=================Simulator_2000=================
+                        V.1
+                        -+-   
+                        
+      Auteurs : Pierre Dugast - Arnaud Rohé
+      
+                        -+-   
+                        
+=============Descriptif du dossier==============
 
 /
 ├── src/*     	 	//Répertoire contenant le code source Java                       
@@ -17,8 +22,10 @@
 └── runTests   	//Script d'autotests
 └── readme     	//Le fichier que vous êtes en train de lire, explique le contenu du dossier et la manière d'utiliser le logiciel.
 
-                                
-## Guide d'utilisation du logiciel
+
+                        -+- 
+                        
+=========Guide d'utilisation du logiciel=========
 
 * Compiler le programme : exécuter ./compile
 
@@ -33,6 +40,8 @@
                 
 * Supprimer les fichiers compilés et la Javadoc : exécuter ./cleanAll
 
+
+                        -+-
 
 
 
