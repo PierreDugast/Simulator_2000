@@ -11,13 +11,13 @@
 /
 ├── src/*     	 	//Répertoire contenant le code source Java                       
 │    └── ...        
-├── bin/*      	  	//Répertoire contenant les binaires Java compilés
+├── bin/*      	  //Répertoire contenant les binaires Java compilés
 │   └── ...
 ├── docs/       	//Répertoire contenant les fichiers relatifs à la Javadoc
 │   └── ...
 └── compile    	//Script permettant de compiler le code source Java
 └── genDoc     	//Script permettant de génére la Javadoc
-└── cleanAll      	//Script permettant de supprimer les fichiers compilés et la Javadoc
+└── cleanAll    //Script permettant de supprimer les fichiers compilés et la Javadoc
 └── simulateur 	//Script de lancement d’une simulation
 └── runTests   	//Script d'autotests
 └── readme     	//Le fichier que vous êtes en train de lire, explique le contenu du dossier et la manière d'utiliser le logiciel.
