@@ -22,3 +22,21 @@
                                 
 -------------------Guide d'utilisation du logiciel-------------------
 
+*Compiler le programme : exécuter ./compile
+
+*Générer la Javadoc : exécuter ./genDoc 
+
+*Lancer le script d'autotests : exécuter ./runTests
+
+*Lancer la simulation : exécuter ./simulateur [arguments]  //Les arguments possibles sont listés dans le fichier commande_unique.pdf sur Moodle
+    →Exemples : ./simulateur -mess 1234 -s
+                ./simulateur -mess 10011011 -s
+                
+                
+*Supprimer les fichiers compilés et la Javadoc : exécuter ./cleanAll
+
+
+
+
+
+
