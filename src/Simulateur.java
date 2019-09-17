@@ -14,7 +14,7 @@ import ExceptionsGlobales.ArgumentsException;
  * Transmetteur(s) et d'une Destination.
  * @author cousin
  * @author prou
- * @author Arnaud Rohé & Pierre Dugast, FIP 2021
+ * @author Arnaud Rohé et Pierre Dugast, FIP 2021
  */
 public class Simulateur {
       	
@@ -41,8 +41,8 @@ public class Simulateur {
    	
    
     /** Le constructeur de Simulateur construit une chaîne de
-     * transmission composée d'une Source <Boolean>, d'une Destination
-     * <Boolean> et de Transmetteur(s) [voir la méthode
+     * transmission composée d'une Source &lt; Boolean &gt;, d'une Destination
+     * &lt;Boolean &gt; et de Transmetteur(s) [voir la méthode
      * analyseArguments]...  <br> Les différents composants de la
      * chaîne de transmission (Source, Transmetteur(s), Destination,
      * Sonde(s) de visualisation) sont créés et connectés.
@@ -202,11 +202,11 @@ public class Simulateur {
     { 
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
-    	String[] argsBis = {"-mess","1234","-s"};
+    	//String[] argsBis = {"-mess","1234","-s"};
 		try 
 		{
-			simulateur = new Simulateur(argsBis); //(pour tester les arguments passés en argBis)
-			//simulateur = new Simulateur(args);
+			//simulateur = new Simulateur(argsBis); //(pour tester les arguments passés en argBis)
+			simulateur = new Simulateur(args);
 		}
 		catch (Exception e) 
 		{
