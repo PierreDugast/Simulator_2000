@@ -1,4 +1,5 @@
-﻿import sources.*;
+import sources.*;
+
 import destinations.*;
 import information.Information;
 import information.InformationNonConforme;
