@@ -8,8 +8,8 @@ import information.InformationNonConforme;
 
 public class EmetteurAnalogique <Destination, Source> extends Transmetteur <Destination, Source>{
 
-	Information<Float> informationEmise = new Information<Float>();
-	LinkedList <DestinationInterface <Float>> destinationsConnectees = new LinkedList <DestinationInterface <Float>>();
+	//Information<Float> informationEmise = new Information<Float>();
+	//LinkedList <DestinationInterface <Float>> destinationsConnectees = new LinkedList <DestinationInterface <Float>>();
 	
  	public EmetteurAnalogique() {
 		
@@ -21,7 +21,8 @@ public class EmetteurAnalogique <Destination, Source> extends Transmetteur <Dest
 	 * a l'aide de la methode emettre 
 	 */
 	public void recevoir(Information information) throws InformationNonConforme {
-		float symbole;
+		Information<Float> signal = new Information<Float>();
+		float symbole= 0;
 		informationRecue = information;
 		for(int i=0 ; i<information.nbElements() ; i++) {
 			if(information.iemeElement(i).equals(true)) {
@@ -30,9 +31,10 @@ public class EmetteurAnalogique <Destination, Source> extends Transmetteur <Dest
 				symbole = -1;
 			}
 			for(int j=0 ; j < 30 ; j++) {
-				informationEmise.add(symbole);     
+				signal.add(symbole);     
 			}
 		}
+		informationEmise.add(signal);
 		System.out.println(informationEmise);
 	}
 
@@ -41,7 +43,7 @@ public class EmetteurAnalogique <Destination, Source> extends Transmetteur <Dest
 	 * vers la destination connectee 
 	 */
 	public void emettre() throws InformationNonConforme {
-		for (DestinationInterface<Float> destinationConnectee : destinationsConnectees) {
+		for (DestinationInterface<Source> destinationConnectee : destinationsConnectees) {
 			destinationConnectee.recevoir(informationEmise);
     	}
 	}
