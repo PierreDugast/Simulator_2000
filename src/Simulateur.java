@@ -7,14 +7,14 @@ import transmetteurs.*;
 import visualisations.*;
 import java.util.Iterator;
 
+import ExceptionsGlobales.AnalogicArgumentException;
 import ExceptionsGlobales.ArgumentsException;
-/*BLABLA*/
 /** La classe Simulateur permet de construire et simuler une chaîne de
  * transmission composée d'une Source, d'un nombre variable de
  * Transmetteur(s) et d'une Destination.
  * @author cousin
  * @author prou
- * @author Arnaud Rohé et Pierre Dugast, FIP 2021
+ * @author Arnaud Rohe, Pierre Dugast, Jeremie Rafinesque, Guillaume Chiquet 
  */
 public class Simulateur {
       	
@@ -42,8 +42,12 @@ public class Simulateur {
    	
     /** le  composant Source de la chaine de transmission */
     private Source <Boolean>  source = null;
-    /** le  composant Transmetteur parfait logique de la chaine de transmission */
-    private Transmetteur <Boolean, Boolean>  transmetteurLogique = null;
+    /** le composant emetteur analogique de la chaine de transmission */
+    private Transmetteur <Boolean,Float> emetteurAnalogique = null;
+    /** le  composant Transmetteur analogique parfait logique de la chaine de transmission */
+    private Transmetteur <Float, Float>  transmetteurAnalogique = null;
+    /** le composant recepteur analogique de la chaine de transmission */
+    private Transmetteur <Float, Boolean> recepteurAnalogique = null;
     /** le  composant Destination de la chaine de transmission */
     private Destination <Boolean>  destination = null;
    	
@@ -57,9 +61,10 @@ public class Simulateur {
      * @param args le tableau des différents arguments.
      *
      * @throws ArgumentsException si un des arguments est incorrect
+     * @throws AnalogicArgumentException 
      *
      */   
-    public  Simulateur(String [] args) throws ArgumentsException 
+    public  Simulateur(String [] args) throws ArgumentsException, AnalogicArgumentException 
     {
       	// analyser et récupérer les arguments
     	analyseArguments(args);
@@ -67,18 +72,31 @@ public class Simulateur {
       	// assemblage des composants de la chaine de transmission pour le TP1 :
     	
       	if (messageAleatoire)
-      	{
       		this.source = new SourceAleatoire(this.nbBitsMess);
-      	}
       	if (!(messageAleatoire))
-      	{
       		this.source = new SourceFixe(this.messageString,this.nbBitsMess);
+      	if (this.messageAnalogicEncoding == "RZ") 
+      	{
+      		this.emetteurAnalogique = new EmetteurRz(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
+      		this.recepteurAnalogique = new RecepteurRz(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
       	}
-      	this.transmetteurLogique = new TransmetteurParfait();
+      	if (this.messageAnalogicEncoding == "NRZ") 
+      	{
+      		this.emetteurAnalogique = new EmetteurNrz(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
+      		this.recepteurAnalogique = new RecepteurNrz(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
+      	}
+      	if (this.messageAnalogicEncoding == "NRZT") 
+      	{
+      		this.emetteurAnalogique = new EmetteurNrzt(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
+      		this.recepteurAnalogique = new RecepteurNrzt(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
+      	}
+      	this.transmetteurAnalogique = new TransmetteurParfait();
       	this.destination = new DestinationFinale();
       	
-      	this.source.connecter(this.transmetteurLogique);
-      	this.transmetteurLogique.connecter(this.destination);
+      	this.source.connecter(this.emetteurAnalogique);
+      	this.emetteurAnalogique.connecter(this.transmetteurAnalogique);
+      	this.transmetteurAnalogique.connecter(this.recepteurAnalogique);
+      	this.recepteurAnalogique.connecter(this.destination);
     }
    
    
@@ -194,10 +212,14 @@ public class Simulateur {
       	//Si l'affichage des sondes est demandée :
       	if(this.affichage)
       	{
-      		SondeLogique sonde1 = new SondeLogique("Sonde sortie générateur",720);
+      		SondeLogique sonde1 = new SondeLogique("Sonde sortie source logique",720);
       		sonde1.recevoir(this.source.getInformationEmise());
-      		SondeLogique sonde2 = new SondeLogique("Sonde sortie transmetteur",720);
-      		sonde2.recevoir(this.transmetteurLogique.getInformationEmise());
+      		SondeAnalogique sonde2 = new SondeAnalogique("Sonde sortie emetteur analogique");
+      		sonde2.recevoir(this.emetteurAnalogique.getInformationEmise());
+      		SondeAnalogique sonde3 = new SondeAnalogique("Sonde sortie transmetteur analogique");
+      		sonde3.recevoir(this.transmetteurAnalogique.getInformationEmise());
+      		SondeLogique sonde4 = new SondeLogique("Sonde sortie r�cepteur analogique",720);
+      		sonde4.recevoir(this.recepteurAnalogique.getInformationEmise());
       	}
     }
    
