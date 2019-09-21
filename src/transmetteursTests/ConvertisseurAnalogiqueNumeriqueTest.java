@@ -37,8 +37,8 @@ public class ConvertisseurAnalogiqueNumeriqueTest {
 	public void ConvertisseurAnalogiqueNumeriqueTestOk()
 	{
 		int nbEchantillon = 100;
-		Float amplitudeMax = (float) 5.0;
-		Float amplitudeMin = (float) -5;
+		Float amplitudeMax = (float) 5;
+		Float amplitudeMin = (float) 1;
 		try {EmetteurNrz emetteurNrz = new EmetteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);} 
 		catch (Exception e) { collector.addError(new Throwable("Erreur détecté : Constructeur EmetteurNrz obtient une erreur innatendue"));}
 		try {EmetteurNrzt emetteurNrzt = new EmetteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);}
@@ -57,130 +57,164 @@ public class ConvertisseurAnalogiqueNumeriqueTest {
 	public void ConvertisseurAnalogiqueNumeriqueTestKoNbech0()
 	{
 		int nbEchantillon = 0;
-		Float amplitudeMax = (float) 5.0;
-		Float amplitudeMin = (float) -5;
+		Float amplitudeMax = (float) 5;
+		Float amplitudeMin = (float) 1;
 		String errorMessage = " ne rejette pas l'erreur attendue pour nbEchantillon = 0";
-		try {EmetteurNrz emetteurNrz = new EmetteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);} 
-		catch (AnalogicArgumentException e) { collector.addError(new Throwable("Erreur détecté : Constructeur EmetteurNrz"+errorMessage));}
-		try {EmetteurNrzt emetteurNrzt = new EmetteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : constructeur EmetteurNrzt"+errorMessage));}
-		try {EmetteurRz emetteurRz = new EmetteurRz(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : constructeur EmetteurRz"+errorMessage));}
-		try {RecepteurNrz recepteurNrz = new RecepteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : constructeur RecepteurNrz"+errorMessage));}
-		try {RecepteurNrzt recepteurNrzt = new RecepteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : Constructeur RecepteurNrzt"+errorMessage));}
-		try {RecepteurRz recepteurRz = new RecepteurRz(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : Constructeur ReccepteurRz"+errorMessage));}
+		try {EmetteurNrz emetteurNrz = new EmetteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : Constructeur EmetteurNrz"+errorMessage));} 
+		catch (AnalogicArgumentException e) {}
+		try {EmetteurNrzt emetteurNrzt = new EmetteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : constructeur EmetteurNrzt"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {EmetteurRz emetteurRz = new EmetteurRz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : constructeur EmetteurRz"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {RecepteurNrz recepteurNrz = new RecepteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : constructeur RecepteurNrz"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {RecepteurNrzt recepteurNrzt = new RecepteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : Constructeur RecepteurNrzt"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {RecepteurRz recepteurRz = new RecepteurRz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : Constructeur ReccepteurRz"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
 	}
 	
 	@Test
 	public void ConvertisseurAnalogiqueNumeriqueTestKoNbechNeg()
 	{
 		int nbEchantillon = -10;
-		Float amplitudeMax = (float) 5.0;
-		Float amplitudeMin = (float) -5;
-		String errorMessage = " ne rejette pas l'erreur attendue pour nbEchantillon négatif";
-		try {EmetteurNrz emetteurNrz = new EmetteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);} 
-		catch (AnalogicArgumentException e) { collector.addError(new Throwable("Erreur détecté : Constructeur EmetteurNrz"+errorMessage));}
-		try {EmetteurNrzt emetteurNrzt = new EmetteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : constructeur EmetteurNrzt"+errorMessage));}
-		try {EmetteurRz emetteurRz = new EmetteurRz(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : constructeur EmetteurRz"+errorMessage));}
-		try {RecepteurNrz recepteurNrz = new RecepteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : constructeur RecepteurNrz"+errorMessage));}
-		try {RecepteurNrzt recepteurNrzt = new RecepteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : Constructeur RecepteurNrzt"+errorMessage));}
-		try {RecepteurRz recepteurRz = new RecepteurRz(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : Constructeur ReccepteurRz"+errorMessage));}
+		Float amplitudeMax = (float) 5;
+		Float amplitudeMin = (float) 1;
+		String errorMessage = " ne rejette pas l'erreur attendue pour nbEchantillon = -10";
+		try {EmetteurNrz emetteurNrz = new EmetteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : Constructeur EmetteurNrz"+errorMessage));} 
+		catch (AnalogicArgumentException e) {}
+		try {EmetteurNrzt emetteurNrzt = new EmetteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : constructeur EmetteurNrzt"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {EmetteurRz emetteurRz = new EmetteurRz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : constructeur EmetteurRz"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {RecepteurNrz recepteurNrz = new RecepteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : constructeur RecepteurNrz"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {RecepteurNrzt recepteurNrzt = new RecepteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : Constructeur RecepteurNrzt"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {RecepteurRz recepteurRz = new RecepteurRz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : Constructeur ReccepteurRz"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
 	}
 	
 	@Test
 	public void ConvertisseurAnalogiqueNumeriqueTestKoAmplitudeMax()
 	{
-		int nbEchantillon = 100;
+		int nbEchantillon = 0;
 		Float amplitudeMax = (float) -1;
-		Float amplitudeMin = (float) -5;
-		String errorMessage = " ne rejette pas l'erreur attendue pour amplitudeMax < 0";
-		try {EmetteurNrz emetteurNrz = new EmetteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);} 
-		catch (AnalogicArgumentException e) { collector.addError(new Throwable("Erreur détecté : Constructeur EmetteurNrz"+errorMessage));}
-		try {EmetteurNrzt emetteurNrzt = new EmetteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : constructeur EmetteurNrzt"+errorMessage));}
-		try {EmetteurRz emetteurRz = new EmetteurRz(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : constructeur EmetteurRz"+errorMessage));}
-		try {RecepteurNrz recepteurNrz = new RecepteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : constructeur RecepteurNrz"+errorMessage));}
-		try {RecepteurNrzt recepteurNrzt = new RecepteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : Constructeur RecepteurNrzt"+errorMessage));}
-		try {RecepteurRz recepteurRz = new RecepteurRz(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : Constructeur ReccepteurRz"+errorMessage));}
+		Float amplitudeMin = (float) 1;
+		String errorMessage = " ne rejette pas l'erreur attendue pour amplitudeMax<0";
+		try {EmetteurNrz emetteurNrz = new EmetteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : Constructeur EmetteurNrz"+errorMessage));} 
+		catch (AnalogicArgumentException e) {}
+		try {EmetteurNrzt emetteurNrzt = new EmetteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : constructeur EmetteurNrzt"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {EmetteurRz emetteurRz = new EmetteurRz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : constructeur EmetteurRz"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {RecepteurNrz recepteurNrz = new RecepteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : constructeur RecepteurNrz"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {RecepteurNrzt recepteurNrzt = new RecepteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : Constructeur RecepteurNrzt"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {RecepteurRz recepteurRz = new RecepteurRz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : Constructeur ReccepteurRz"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
 	}
 	
 	@Test
 	public void ConvertisseurAnalogiqueNumeriqueTestKoAmplitudeMin()
 	{
-		int nbEchantillon = 100;
+		int nbEchantillon = 0;
 		Float amplitudeMax = (float) 5;
-		Float amplitudeMin = (float) 2;
-		String errorMessage = " ne rejette pas l'erreur attendue pour amplitudeMin > 0";
-		try {EmetteurNrz emetteurNrz = new EmetteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);} 
-		catch (AnalogicArgumentException e) { collector.addError(new Throwable("Erreur détecté : Constructeur EmetteurNrz"+errorMessage));}
-		try {EmetteurNrzt emetteurNrzt = new EmetteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : constructeur EmetteurNrzt"+errorMessage));}
-		try {EmetteurRz emetteurRz = new EmetteurRz(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : constructeur EmetteurRz"+errorMessage));}
-		try {RecepteurNrz recepteurNrz = new RecepteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : constructeur RecepteurNrz"+errorMessage));}
-		try {RecepteurNrzt recepteurNrzt = new RecepteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : Constructeur RecepteurNrzt"+errorMessage));}
-		try {RecepteurRz recepteurRz = new RecepteurRz(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : Constructeur ReccepteurRz"+errorMessage));}
+		Float amplitudeMin = (float) -1;
+		String errorMessage = " ne rejette pas l'erreur attendue pour amplitudeMin<0";
+		try {EmetteurNrz emetteurNrz = new EmetteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : Constructeur EmetteurNrz"+errorMessage));} 
+		catch (AnalogicArgumentException e) {}
+		try {EmetteurNrzt emetteurNrzt = new EmetteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : constructeur EmetteurNrzt"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {EmetteurRz emetteurRz = new EmetteurRz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : constructeur EmetteurRz"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {RecepteurNrz recepteurNrz = new RecepteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : constructeur RecepteurNrz"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {RecepteurNrzt recepteurNrzt = new RecepteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : Constructeur RecepteurNrzt"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {RecepteurRz recepteurRz = new RecepteurRz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : Constructeur ReccepteurRz"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
 	}
 	
 	@Test
 	public void ConvertisseurAnalogiqueNumeriqueTestKoAmplitudeDiff()
 	{
-		int nbEchantillon = 100;
-		Float amplitudeMax = (float) 0;
-		Float amplitudeMin = (float) 0;
-		String errorMessage = " ne rejette pas l'erreur attendue pour amplitudeMax <= amplitudeMin";
-		try {EmetteurNrz emetteurNrz = new EmetteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);} 
-		catch (AnalogicArgumentException e) { collector.addError(new Throwable("Erreur détecté : Constructeur EmetteurNrz"+errorMessage));}
-		try {EmetteurNrzt emetteurNrzt = new EmetteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : constructeur EmetteurNrzt"+errorMessage));}
-		try {EmetteurRz emetteurRz = new EmetteurRz(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : constructeur EmetteurRz"+errorMessage));}
-		try {RecepteurNrz recepteurNrz = new RecepteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : constructeur RecepteurNrz"+errorMessage));}
-		try {RecepteurNrzt recepteurNrzt = new RecepteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : Constructeur RecepteurNrzt"+errorMessage));}
-		try {RecepteurRz recepteurRz = new RecepteurRz(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : Constructeur ReccepteurRz"+errorMessage));}
+		int nbEchantillon = 0;
+		Float amplitudeMax = (float) 1;
+		Float amplitudeMin = (float) 5;
+		String errorMessage = " ne rejette pas l'erreur attendue pour amplitudeMax<amplitudeMin";
+		try {EmetteurNrz emetteurNrz = new EmetteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : Constructeur EmetteurNrz"+errorMessage));} 
+		catch (AnalogicArgumentException e) {}
+		try {EmetteurNrzt emetteurNrzt = new EmetteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : constructeur EmetteurNrzt"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {EmetteurRz emetteurRz = new EmetteurRz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : constructeur EmetteurRz"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {RecepteurNrz recepteurNrz = new RecepteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : constructeur RecepteurNrz"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {RecepteurNrzt recepteurNrzt = new RecepteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : Constructeur RecepteurNrzt"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {RecepteurRz recepteurRz = new RecepteurRz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : Constructeur ReccepteurRz"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
 	}
 	
 	@Test
 	public void EmetteurRecepteurNrztTest()
 	{
 		int nbEchantillon = 1;
-		Float amplitudeMax = (float) 0;
-		Float amplitudeMin = (float) 0;
+		Float amplitudeMax = (float) 5;
+		Float amplitudeMin = (float) 1;
 		String errorMessage = " ne rejette pas l'erreur attendue pour nbEchantillon = 1 (doit être supérieur ou égal à 2)";
-		try {EmetteurNrzt emetteurNrzt = new EmetteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : constructeur EmetteurNrzt"+errorMessage));}
-		try {RecepteurNrzt recepteurNrzt = new RecepteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : Constructeur RecepteurNrzt"+errorMessage));}
+		try {EmetteurNrzt emetteurNrzt = new EmetteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : constructeur EmetteurNrzt"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {RecepteurNrzt recepteurNrzt = new RecepteurNrzt(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : Constructeur RecepteurNrzt"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
 	}
 	
 	@Test
 	public void EmetteurRecepteurRzTest()
 	{
 		int nbEchantillon = 2;
-		Float amplitudeMax = (float) 0;
-		Float amplitudeMin = (float) 0;
+		Float amplitudeMax = (float) 5;
+		Float amplitudeMin = (float) 1;
 		String errorMessage = " ne rejette pas l'erreur attendue pour nbEchantillon = 2 (doit être supérieur ou égal à 3)";
-		try {EmetteurRz emetteurRz = new EmetteurRz(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : constructeur EmetteurRz"+errorMessage));}
-		try {RecepteurRz recepteurRz = new RecepteurRz(nbEchantillon, amplitudeMax, amplitudeMin);}
-		catch (AnalogicArgumentException e) {collector.addError(new Throwable("Erreur détecté : Constructeur ReccepteurRz"+errorMessage));}
+		try {EmetteurRz emetteurRz = new EmetteurRz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : constructeur EmetteurRz"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
+		try {RecepteurRz recepteurRz = new RecepteurRz(nbEchantillon, amplitudeMax, amplitudeMin);
+		collector.addError(new Throwable("Erreur détecté : Constructeur ReccepteurRz"+errorMessage));}
+		catch (AnalogicArgumentException e) {}
 	}
 }

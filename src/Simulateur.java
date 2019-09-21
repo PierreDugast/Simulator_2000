@@ -28,9 +28,17 @@ public class Simulateur {
     private Integer seed = null;
     /** la longueur du message aléatoire à transmettre si un message n'est pas impose */
     private int nbBitsMess = 100; 
+    /** pr�cise l'�chantillonnage du signal analogique */
+    private Integer nbEchantillon = 30;
+    /** indique la valeur d'amplitude maximum */
+    private Float amplitudeMax = 1.0f;
+    /** indique la valeur d'amplitude minimum */
+    private Float amplitudeMin = 0.0f;
     /** la chaîne de caractères correspondant à m dans l'argument -mess m */
     private String messageString = "100";
-   
+    /** indique la forme de l'onde choisie*/
+    private String messageAnalogicEncoding = "RZ";
+    
    	
     /** le  composant Source de la chaine de transmission */
     private Source <Boolean>  source = null;
@@ -135,6 +143,38 @@ public class Simulateur {
 	        	else 
 	        		throw new ArgumentsException("Valeur du parametre -mess invalide : " + args[i]);
 	        }
+	        else if (args[i].matches("-form"))
+	        {
+	        	i++;
+	        	if (args[i].matches("NRZ")||args[i].matches("NRZT")||args[i].matches("RZ")) 
+	        	{
+	        		this.messageAnalogicEncoding = args[i];
+	        	}
+	        	else
+	        		throw new ArgumentsException ("Valeur du parametre -form invalide : " + args[i]);
+	        }
+			else if (args[i].matches("-nbEch"))
+			{
+				i++;
+				if (args[i].matches("[0-9]{1,10}"))
+					this.nbEchantillon = new Integer(args[i]);
+				else
+	        		throw new ArgumentsException ("Valeur du parametre -nbEch invalide : " + args[i]);
+			}
+			else if (args[i].matches("-ampl"))
+			{
+				i++;
+				if (args[i].matches("[0-9]{1,10}"))
+					this.amplitudeMin = Float.parseFloat(args[i]);
+				else
+	        		throw new ArgumentsException ("Valeur du parametre -ampl invalide : " + args[i]);
+				i++;
+				if (args[i].matches("[0-9]{1,10}"))
+					this.amplitudeMax = Float.parseFloat(args[i]);
+				else
+	        		throw new ArgumentsException ("Valeur du parametre -ampl invalide : " + args[i]);
+				
+			}
 	        else 
 	        	throw new ArgumentsException("Option invalide :"+ args[i]);
 		}
