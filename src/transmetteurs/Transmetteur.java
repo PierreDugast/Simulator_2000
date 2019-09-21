@@ -1,8 +1,8 @@
 package transmetteurs;
-
+import information.Information;
+import information.InformationNonConforme;
 import sources.*;
 import destinations.*;
-import information.*;
 
 import java.util.*;
 
@@ -12,7 +12,7 @@ import java.util.*;
  * l'entrée du transmetteur implémente l'interface
  * DestinationInterface, la sortie du transmetteur implémente
  * l'interface SourceInterface
- * @author prou
+ * @author 
  */
 public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, SourceInterface <E> {
    

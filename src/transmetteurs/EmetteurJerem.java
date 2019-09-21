@@ -6,12 +6,12 @@ import destinations.DestinationInterface;
 import information.Information;
 import information.InformationNonConforme;
 
-public class EmetteurAnalogique <Destination, Source> extends Transmetteur <Destination, Source>{
+public class EmetteurJerem <Destination, Source> extends Transmetteur <Destination, Source>{
 
 	//Information<Float> informationEmise = new Information<Float>();
 	//LinkedList <DestinationInterface <Float>> destinationsConnectees = new LinkedList <DestinationInterface <Float>>();
 	
- 	public EmetteurAnalogique() {
+ 	public EmetteurJerem() {
 		
 	}
 	
@@ -21,6 +21,7 @@ public class EmetteurAnalogique <Destination, Source> extends Transmetteur <Dest
 	 * a l'aide de la methode emettre 
 	 */
 	public void recevoir(Information information) throws InformationNonConforme {
+		/*
 		Information<Float> signal = new Information<Float>();
 		float symbole= 0;
 		informationRecue = information;
@@ -36,6 +37,7 @@ public class EmetteurAnalogique <Destination, Source> extends Transmetteur <Dest
 		}
 		informationEmise.add(signal);
 		System.out.println(informationEmise);
+		*/
 	}
 
 	/**
