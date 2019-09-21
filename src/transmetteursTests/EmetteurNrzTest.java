@@ -31,14 +31,16 @@ public class EmetteurNrzTest {
 	}
 	
 	@Test
-	public void emettreTest()
+	public void EmetteurNrzTest()
 	{
 		int nbEchantillon = 100;
 		Float amplitudeMax = (float) 5.0;
 		Float amplitudeMin = (float) -5;
 		Boolean [] bool = {true, false, true};
 		Information information = new Information(bool);
-		EmetteurNrz emetteur = new EmetteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);
+		try {
+			EmetteurNrzTest()
+		}
 		
 	}
 }

@@ -1,11 +1,12 @@
 package transmetteurs;
 
+import ExceptionsGlobales.AnalogicArgumentException;
 import information.InformationNonConforme;
 
 public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 {
 
-	public EmetteurNrzt(int nbEchantillon, Float amplitudeMax, Float amplitudeMin) 
+	public EmetteurNrzt(int nbEchantillon, Float amplitudeMax, Float amplitudeMin) throws AnalogicArgumentException 
 	{
 		super(nbEchantillon, amplitudeMax, amplitudeMin);
 	}

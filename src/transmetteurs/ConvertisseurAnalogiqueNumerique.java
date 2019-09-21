@@ -1,5 +1,6 @@
 package transmetteurs;
 
+import ExceptionsGlobales.AnalogicArgumentException;
 import information.Information;
 import information.InformationNonConforme;
 
@@ -9,7 +10,7 @@ public abstract class ConvertisseurAnalogiqueNumerique<R,T> extends Transmetteur
 	protected Float amplitudeMax;
 	protected Float amplitudeMin;
 	
-	public ConvertisseurAnalogiqueNumerique(int nbEchantillon,Float amplitudeMax,Float amplitudeMin)
+	public ConvertisseurAnalogiqueNumerique(int nbEchantillon,Float amplitudeMax,Float amplitudeMin) throws AnalogicArgumentException
 	{
 		this.nbEchantillon = nbEchantillon;
 		this.amplitudeMax = amplitudeMax;
