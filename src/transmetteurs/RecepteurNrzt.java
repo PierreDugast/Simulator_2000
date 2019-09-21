@@ -5,7 +5,7 @@ import information.InformationNonConforme;
 public class RecepteurNrzt<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 {
 
-	RecepteurNrzt(int nbEchantillon, Float amplitudeMax, Float amplitudeMin) 
+	public RecepteurNrzt(int nbEchantillon, Float amplitudeMax, Float amplitudeMin) 
 	{
 		super(nbEchantillon, amplitudeMax, amplitudeMin);
 		// TODO Auto-generated constructor stub

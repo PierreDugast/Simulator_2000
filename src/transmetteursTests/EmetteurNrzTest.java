@@ -1,4 +1,4 @@
-package transmetteurTests;
+package transmetteursTests;
 
 import org.junit.After;
 import org.junit.Before;
@@ -8,15 +8,20 @@ import org.junit.Rule;
 import org.junit.rules.ErrorCollector;
 import static org.hamcrest.CoreMatchers.is;
 
-public class EmetteurNrzTest {
 
+
+import transmetteurs.EmetteurNrz;
+import information.*;
+
+public class EmetteurNrzTest {
+	
 	@Rule
 	public ErrorCollector collector = new ErrorCollector();
 	
 	@Before
 	public void setUp()
 	{
-		//TODO:
+		
 	}
 
 	@After
@@ -28,6 +33,12 @@ public class EmetteurNrzTest {
 	@Test
 	public void emettreTest()
 	{
-		//TODO:
+		int nbEchantillon = 100;
+		Float amplitudeMax = (float) 5.0;
+		Float amplitudeMin = (float) -5;
+		Boolean [] bool = {true, false, true};
+		Information information = new Information(bool);
+		EmetteurNrz emetteur = new EmetteurNrz(nbEchantillon, amplitudeMax, amplitudeMin);
+		
 	}
 }
