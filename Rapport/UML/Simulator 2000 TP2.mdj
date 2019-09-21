@@ -5374,7 +5374,7 @@
 											"top": 839,
 											"width": 332.0078125,
 											"height": 13,
-											"text": "EmetteurZr"
+											"text": "EmetteurRz"
 										},
 										{
 											"_type": "LabelView",
@@ -6902,7 +6902,7 @@
 											"top": 839,
 											"width": 339.244140625,
 											"height": 13,
-											"text": "Class3"
+											"text": "RecepteurRz"
 										},
 										{
 											"_type": "LabelView",
@@ -7373,7 +7373,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFtTzXtxCTMaFA="
 									},
-									"name": "T[ ]"
+									"name": "T[ ]",
+									"type": ""
 								}
 							]
 						},
@@ -7938,7 +7939,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFtT0AX4yYaGRs="
 									},
-									"name": "DestinationInterface"
+									"name": "DestinationInterface",
+									"type": ""
 								}
 							]
 						},
@@ -8379,7 +8381,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFtT0aVlSabSTA="
 									},
-									"name": "DestinationInterface"
+									"name": "DestinationInterface",
+									"type": ""
 								}
 							]
 						},
@@ -9355,7 +9358,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "EmetteurZr",
+					"name": "EmetteurRz",
 					"ownedElements": [
 						{
 							"_type": "UMLGeneralization",
@@ -10006,7 +10009,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Class3",
+					"name": "RecepteurRz",
 					"ownedElements": [
 						{
 							"_type": "UMLGeneralization",
