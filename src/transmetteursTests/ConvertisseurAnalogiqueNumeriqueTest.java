@@ -21,18 +21,6 @@ public class ConvertisseurAnalogiqueNumeriqueTest {
 	@Rule
 	public ErrorCollector collector = new ErrorCollector();
 	
-	@Before
-	public void setUp()
-	{
-		//TODO:
-	}
-
-	@After
-	public void tearDown()
-	{
-		//TODO:
-	}
-	
 	@Test
 	public void ConvertisseurAnalogiqueNumeriqueTestOk()
 	{

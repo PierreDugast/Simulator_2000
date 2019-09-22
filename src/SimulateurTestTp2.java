@@ -18,11 +18,14 @@ import java.util.Iterator;
 import ExceptionsGlobales.AnalogicArgumentException;
 import ExceptionsGlobales.ArgumentsException;
 
-
 public class SimulateurTestTp2 {
-
+	
+	@Rule
+	public ErrorCollector collector = new ErrorCollector();
+	
 	@Test
-	public void test() {
+	public void SimulateurTest1() 
+	{
 		fail("Not yet implemented");
 	}
 
