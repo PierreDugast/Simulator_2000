@@ -47,7 +47,7 @@ public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 			}
 			
 	}
-		Information inforEnvoye = new Information<Float>(infoAnalogique); 
+		this.informationEmise = new Information(infoAnalogique); 
 		for (int i=0; i< destinationsConnectees.size(); i++) {
 			destinationsConnectees.get(i).recevoir(informationEmise); 
 		}
