@@ -35,7 +35,7 @@ public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 				}
 			if((boolean) informationRecue.iemeElement(i)) {
 				for(int j=tier; j<2*tier; j++) {
-					infoAnalogique[j*nbEchantillon+j]=amplitudeMax; 
+					infoAnalogique[i*nbEchantillon+j]=amplitudeMax; 
 				}
 			}
 			else {
@@ -48,7 +48,7 @@ public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 			}
 			
 	}
-		Information inforEnvoye = new Information<Float>(infoAnalogique); 
+		Information infoEnvoye = new Information<Float>(infoAnalogique); 
 		for (int i=0; i< destinationsConnectees.size(); i++) {
 			destinationsConnectees.get(i).recevoir(informationEmise); 
 		}
