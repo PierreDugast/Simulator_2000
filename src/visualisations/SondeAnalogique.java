@@ -1,5 +1,4 @@
 package visualisations;
-	
 import information.Information;
 
 /** 

@@ -20,7 +20,6 @@ public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 	public EmetteurRz(int nbEchantillon, Float amplitudeMax, Float amplitudeMin) throws AnalogicArgumentException 
 	{
 		super(nbEchantillon, amplitudeMax, amplitudeMin);
-		
 	}
 	
 	public void emettre() throws InformationNonConforme {
@@ -35,7 +34,7 @@ public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 				}
 			if((boolean) informationRecue.iemeElement(i)) {
 				for(int j=tier; j<2*tier; j++) {
-					infoAnalogique[i*nbEchantillon+j]=amplitudeMax; 
+					infoAnalogique[j*nbEchantillon+j]=amplitudeMax; 
 				}
 			}
 			else {
@@ -48,7 +47,7 @@ public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 			}
 			
 	}
-		Information infoEnvoye = new Information<Float>(infoAnalogique); 
+		Information inforEnvoye = new Information<Float>(infoAnalogique); 
 		for (int i=0; i< destinationsConnectees.size(); i++) {
 			destinationsConnectees.get(i).recevoir(informationEmise); 
 		}

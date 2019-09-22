@@ -41,15 +41,15 @@ public class Simulateur {
     
    	
     /** le  composant Source de la chaine de transmission */
-    private Source <Boolean>  source = null;
+    public Source <Boolean>  source = null;
     /** le composant emetteur analogique de la chaine de transmission */
-    private Transmetteur <Boolean,Float> emetteurAnalogique = null;
+    public Transmetteur <Boolean,Float> emetteurAnalogique = null;
     /** le  composant Transmetteur analogique parfait logique de la chaine de transmission */
-    private Transmetteur <Float, Float>  transmetteurAnalogique = null;
+    public Transmetteur <Float, Float>  transmetteurAnalogique = null;
     /** le composant recepteur analogique de la chaine de transmission */
-    private Transmetteur <Float, Boolean> recepteurAnalogique = null;
+    public Transmetteur <Float, Boolean> recepteurAnalogique = null;
     /** le  composant Destination de la chaine de transmission */
-    private Destination <Boolean>  destination = null;
+    public Destination <Boolean>  destination = null;
    	
    
     /** Le constructeur de Simulateur construit une chaîne de
