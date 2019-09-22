@@ -42,7 +42,7 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		
 		while (i < informationRecue.nbElements()) {
 			while (i < (((nbBitDecode+0.5) * nbEchantillon) + marge)) {
-				if(informationRecue.iemeElement() > seuil){
+				if(this.informationRecue.iemeElement(i) > seuil){
 					info.add(true);
 					decode=true;
 					break;
