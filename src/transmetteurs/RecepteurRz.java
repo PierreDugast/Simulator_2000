@@ -18,17 +18,15 @@ import java.util.List;
  */
 public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 {
-	private float seuil; 
-
 	public RecepteurRz(int nbEchantillon, Float amplitudeMax, Float amplitudeMin) throws AnalogicArgumentException 
 	{
 		super(nbEchantillon, amplitudeMax, amplitudeMin);
-		this.nbEchantillon=nbEchantillon;
-		//Le seuil sera egal a la difference entre les deux amplitudes max et min divise par 2 
-		seuil = (amplitudeMax - amplitudeMin) / 2; 
+		
 	}
 	
 	public void emettre() throws InformationNonConforme {
+		//Le seuil sera egal a la difference entre les deux amplitudes max et min divise par 2 
+		Float seuil = (amplitudeMax - amplitudeMin) / ((float)2); 
 		//on cree une liste pour connaitre le nombre de bit envoye
 		//un true renvoiera 1 et un false 0
 		List<Boolean> info = new LinkedList<Boolean>();
