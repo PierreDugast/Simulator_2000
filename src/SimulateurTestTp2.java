@@ -20,7 +20,9 @@ import ExceptionsGlobales.ArgumentsException;
 
 /*
  * Classe en construction : 
- * - tests de chaque argument possible. Néanmoins, difficile à vérifier...
+ * - tests de chaque argument possible
+ * 
+ * !!! EN CONSTRUCTION !!!
  */
 
 public class SimulateurTestTp2 {

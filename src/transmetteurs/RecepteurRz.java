@@ -8,7 +8,6 @@ import java.util.List;
 
 
 /**
- * 
  * @author PC-CHIQUET
  *Cette classe permet de decoder le cas d une onde impulsionnelle de type RZ 
  *dans l intervalle [(nbBitDecode+0.5)*nbEchantillon-marge; (nbBitDecode+0.5)*nbEchantillon+marge]
@@ -20,48 +19,47 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 {
 	public RecepteurRz(int nbEchantillon, Float amplitudeMax, Float amplitudeMin) throws AnalogicArgumentException 
 	{
-		super(nbEchantillon, amplitudeMax, amplitudeMin);
-		
+		super(nbEchantillon, amplitudeMax, amplitudeMin);	
 	}
 	
-	public void emettre() throws InformationNonConforme {
-		//Le seuil sera egal a la difference entre les deux amplitudes max et min divise par 2 
-		Float seuil = (amplitudeMax - amplitudeMin) / ((float)2); 
-		//on cree une liste pour connaitre le nombre de bit envoye
-		//un true renvoiera 1 et un false 0
-		List<Boolean> info = new LinkedList<Boolean>();
-		//on va stocker dans la variable nbBitDecode le nombre de bit decode 
-		int nbBitDecode = 0;
-		//la variable marge va nous permettre de definir l intervalle sur laquelle nous allons 
-		//regarder si le bit est a 1 ou 0
-		int marge = nbEchantillon / 3;
-		//permet de savoir si un bit a ete decode dans l intervalle ou non
-		Boolean decode = false;
-		int i = (nbEchantillon/2)-marge;
-		
-		
-		while (i < informationRecue.nbElements()) {
-			while (i < (((nbBitDecode+0.5) * nbEchantillon) + marge)) {
-				if(this.informationRecue.iemeElement(i) > seuil){
-					info.add(true);
-					decode=true;
-					break;
+	public void emettre() throws InformationNonConforme 
+	{
+		Boolean [] emission = new Boolean [this.informationRecue.nbElements()/this.nbEchantillon];
+		//compteur du nombre de "packet" de taille nbElement parcourrut
+		int nbPacket = 0;
+		//compteur interne à chaque packet
+		int i = 0;
+		//tant qu'il reste un element non parcourrut dans la liste
+		while((nbPacket*this.nbEchantillon+i)<this.informationRecue.nbElements())
+		{
+			//tant que i < à la taille d'un échantillon
+			while (i<this.nbEchantillon)
+			{
+				//Si la valeur de l'information actuelle est celle de l'amplitude max, c'est que la packet est forcément un 1 logique.
+				if (this.informationRecue.iemeElement(nbPacket*this.nbEchantillon+i)==this.amplitudeMax)
+				{
+					//Assigner la valeur dans la liste de sortie
+					emission[nbPacket] = true;
+					//incrémenter directement le nombre de packet (éviter les calculs inutils)
+					nbPacket++;
+					//remettre i à -1 (il va être incrémenté juste après)
+					i = -1;
 				}
+				//Sinon, incrémenter i
 				i++;
 			}
-			//ici dans aucune valeur ne depasse le seuil, nous aurons donc 0
-			if(!decode){ 
-				info.add(false);
-			}
-			decode=false;
-			nbBitDecode++;
-			i = (int) (((nbBitDecode + 0.5) * nbEchantillon) - marge);
-	}
-		Boolean[] infoRecu = new Boolean[info.size()];
-		infoRecu = (Boolean[]) info.toArray(infoRecu);
-		Information<Boolean> infoEnvoye = new Information<Boolean>(infoRecu);
-		for(int j=0;i<destinationsConnectees.size();j++){
-			destinationsConnectees.get(j).recevoir(informationEmise);
+			//une fois arrivé à la taille de l'échantillon, aucun bit à Amax n'a été détecté, c'est forcément un 0 logique.
+			emission[nbPacket] = false;
+			nbPacket++;
+			i=0;
+			//et rebelotte
 		}
-}
+		
+		//Déclanchement de la methode recevoir des destinations connectes
+		this.informationEmise = new Information(emission);
+		for(int j=0;j<destinationsConnectees.size();j++)
+		{
+			destinationsConnectees.get(j).recevoir(this.informationEmise);
+		}
+	}
 }

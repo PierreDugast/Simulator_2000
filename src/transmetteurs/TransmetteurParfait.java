@@ -18,8 +18,8 @@ public class TransmetteurParfait<R,T> extends Transmetteur<R,T>
 	
 	public void emettre() throws InformationNonConforme 
 	{
-	Information<T> info = (Information<T>) informationRecue;
-		
+		Information<T> info = (Information<T>) informationRecue;
+			
 		for(int i=0;i<destinationsConnectees.size();i++)
 		{
 			destinationsConnectees.get(i).recevoir(info);
