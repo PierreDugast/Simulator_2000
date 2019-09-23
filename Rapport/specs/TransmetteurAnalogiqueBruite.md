@@ -12,11 +12,14 @@
 ## Méthodes 
 
 * +TransmetteurAnalogiqueBruite(int nbEchantillon, float SNR)
+  * 
 
 * +recevoir(Information)
 * +emettre()
 * -calculPuissance( int nbEchantillon, Information informationRecue): Float
+  * Somme des échantillons² / nbEchantillons 
 * -calculSigma(Float puissanceBruit, Float snr): Float
+  * 
 * -generationBruitBlanc(Float sigma): Information<Float>
 * -ajoutSignalBruite(Information bruitBlanc)
 * +equals(Object obj): Boolean
