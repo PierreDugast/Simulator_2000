@@ -107,4 +107,8 @@ public  class Information <T>  implements Iterable <T> {
     {
     	return content.iterator();
     }
+    
+    public boolean equals (Object obj) {
+    	return (obj instanceof Information); 
+    }
 }

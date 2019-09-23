@@ -37,4 +37,8 @@ public  abstract class Destination <T> implements DestinationInterface <T> {
      */
     @Override
 	public  abstract void recevoir(Information <T> information) throws InformationNonConforme;  
+    
+    public boolean equals (Object obj) {
+    	return (obj instanceof Destination); 
+    }
 }
