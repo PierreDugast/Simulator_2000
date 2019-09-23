@@ -19,15 +19,16 @@ public class EmetteurNrz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		
 		int c=0;
 		for(int i=0 ; i<informationRecue.nbElements() ; i++) {
+			int j = c;
 			if(informationRecue.iemeElement(i).equals(true)) {
 				//for(c; c<this.nbEchantillon; c++)
 				
-				while(c<(c+this.nbEchantillon)) {
+				while(c<(j+nbEchantillon)) {
 					emission[c] = amplitudeMax;
 					c++;
 				}
 			} else {
-				while(c<(c+this.nbEchantillon)) {
+				while(c<(j+this.nbEchantillon)) {
 					emission[c] = amplitudeMin;
 					c++;
 				}
