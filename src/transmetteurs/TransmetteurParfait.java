@@ -26,4 +26,9 @@ public class TransmetteurParfait<R,T> extends Transmetteur<R,T>
 		}
 		informationEmise = info;
 	}
+	
+	public boolean equals (Object obj) {
+		return (obj instanceof TransmetteurParfait);
+	}
+	
 }

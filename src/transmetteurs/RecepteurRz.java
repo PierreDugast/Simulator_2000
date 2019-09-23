@@ -10,8 +10,6 @@ import java.util.List;
 /**
  * @author PC-CHIQUET
  *Cette classe permet de decoder le cas d une onde impulsionnelle de type RZ 
- *dans l intervalle [(nbBitDecode+0.5)*nbEchantillon-marge; (nbBitDecode+0.5)*nbEchantillon+marge]
- *si il y a une valeur qui depasse le seuil alors on a un true 1, si aucune valeur alors on a false 0
  * @param <R>
  * @param <T>
  */

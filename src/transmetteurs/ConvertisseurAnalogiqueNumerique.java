@@ -6,9 +6,9 @@ import information.InformationNonConforme;
 
 public abstract class ConvertisseurAnalogiqueNumerique<R,T> extends Transmetteur<R,T>
 {
-	protected int nbEchantillon;
-	protected Float amplitudeMax;
-	protected Float amplitudeMin;
+	public int nbEchantillon;
+	public Float amplitudeMax;
+	public Float amplitudeMin;
 	
 	public ConvertisseurAnalogiqueNumerique(int nbEchantillon,Float amplitudeMax,Float amplitudeMin) throws AnalogicArgumentException
 	{
@@ -32,4 +32,13 @@ public abstract class ConvertisseurAnalogiqueNumerique<R,T> extends Transmetteur
 	}
 	
 	public abstract void emettre() throws InformationNonConforme;
+
+
+	public boolean equals (Object obj) {
+		return (obj instanceof ConvertisseurAnalogiqueNumerique) && 
+				((ConvertisseurAnalogiqueNumerique)obj.nbEchantillon== this.nbEchantillon) &&
+				((ConvertisseurAnalogiqueNumerique)obj.amplitudeMax== this.amplitudeMax) &&
+				((ConvertisseurAnalogiqueNumerique)obj.amplitudeMin== this.amplitudeMin); 
+	}
 }
+	//faire pareil pour source, destination, transmetteurAnalogiquebruite et transmetteur parfait 
