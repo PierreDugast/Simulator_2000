@@ -14,7 +14,7 @@ import information.InformationNonConforme;
  * @param <R>
  * @param <T>
  */
-//test guigui
+
 public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 
 	public EmetteurRz(int nbEchantillon, Float amplitudeMax, Float amplitudeMin) throws AnalogicArgumentException 
