@@ -10,6 +10,7 @@ public abstract class ConvertisseurAnalogiqueNumerique<R,T> extends Transmetteur
 	public Float amplitudeMax;
 	public Float amplitudeMin;
 	
+
 	public ConvertisseurAnalogiqueNumerique(int nbEchantillon,Float amplitudeMax,Float amplitudeMin) throws AnalogicArgumentException
 	{
 		if (nbEchantillon <= 0)
@@ -36,9 +37,8 @@ public abstract class ConvertisseurAnalogiqueNumerique<R,T> extends Transmetteur
 
 	public boolean equals (Object obj) {
 		return (obj instanceof ConvertisseurAnalogiqueNumerique) && 
-				((ConvertisseurAnalogiqueNumerique)obj.nbEchantillon== this.nbEchantillon) &&
-				((ConvertisseurAnalogiqueNumerique)obj.amplitudeMax== this.amplitudeMax) &&
-				((ConvertisseurAnalogiqueNumerique)obj.amplitudeMin== this.amplitudeMin); 
+				(((ConvertisseurAnalogiqueNumerique)obj).nbEchantillon== this.nbEchantillon) &&
+				(((ConvertisseurAnalogiqueNumerique)obj).amplitudeMax== this.amplitudeMax) &&
+				(((ConvertisseurAnalogiqueNumerique)obj).amplitudeMin== this.amplitudeMin); 
 	}
 }
-	//faire pareil pour source, destination, transmetteurAnalogiquebruite et transmetteur parfait 

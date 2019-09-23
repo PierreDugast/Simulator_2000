@@ -76,5 +76,5 @@ public  abstract class Source <T> implements  SourceInterface <T> {
     
     public boolean equals (Object obj) {
     	return (obj instanceof Source); 
-    }s
+    }
 }
