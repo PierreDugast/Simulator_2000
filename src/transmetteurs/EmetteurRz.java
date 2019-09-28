@@ -36,7 +36,7 @@ public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 				}
 			if((boolean) informationRecue.iemeElement(i)) {
 				for(int j=tier; j<2*tier; j++) {
-					infoAnalogique[j*nbEchantillon+j]=amplitudeMax; 
+					infoAnalogique[i*nbEchantillon+j]=amplitudeMax; 
 				}
 			}
 			else {
