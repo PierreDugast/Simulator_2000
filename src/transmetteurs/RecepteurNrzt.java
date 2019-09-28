@@ -34,17 +34,8 @@ public class RecepteurNrzt<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 	 */
 	public void emettre() throws InformationNonConforme {
 		
-		// Déclaration du tableau qui va contenir les booleans.
-		Boolean [] emission;
-		
-		// Initialisation du tableau
-		// Si le nombre d'échantillon est pair on utilise cette initialisation. Sinon on utilise celle du else.
-		// Ceci permet d'éviter d'avoir une taille de tableau qui n'est pas entière.
-		if (nbEchantillon%2==0) {
-			emission = new Boolean[this.informationRecue.nbElements()/nbEchantillon];
-		} else {
-			emission = new Boolean[this.informationRecue.nbElements()/(nbEchantillon+1)];
-		}
+		// Déclaration et initialisation du tableau qui va contenir les booleans.
+		Boolean [] emission = new Boolean[this.informationRecue.nbElements()/nbEchantillon];		
 		
 		// Compteur permettant de savoir quel élèment du tableau doit être modifié
 		int c=0;

@@ -42,7 +42,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		Float [] emission = new Float[this.informationRecue.nbElements()*this.nbEchantillon];
 		
 		int compteurEchantillon=0;
-		int tier = nbEchantillon/3;
+		int tier=nbEchantillon/3;
 		for(int i=0 ; i<informationRecue.nbElements() ; i++) {
 			int symbolCourant=compteurEchantillon;
 			if(informationRecue.iemeElement(i).equals(true) && informationRecue.iemeElement(i+1).equals(false)) {				
@@ -52,7 +52,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 					} else if (compteurEchantillon<symbolCourant+2*tier){
 						emission[compteurEchantillon] = amplitudeMax;
 					} else if (compteurEchantillon<symbolCourant+3*tier) {
-						emission[compteurEchantillon] = amplitudeMax + (symbolCourant-compteurEchantillon)*amplitudeMax/tier;
+						emission[compteurEchantillon] = amplitudeMax + ((symbolCourant+nbEchantillon)-compteurEchantillon)*amplitudeMax/tier;
 					}
 					compteurEchantillon++;
 				}
@@ -61,11 +61,11 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 				while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 					emission[compteurEchantillon] = amplitudeMin;
 					if (compteurEchantillon<symbolCourant+tier) {
-						emission[compteurEchantillon] = (symbolCourant-compteurEchantillon)*amplitudeMin/tier;
+						emission[compteurEchantillon] = (compteurEchantillon-symbolCourant)*amplitudeMin/tier;
 					} else if (compteurEchantillon<symbolCourant+2*tier){
 						emission[compteurEchantillon] = amplitudeMin;
 					} else if (compteurEchantillon<symbolCourant+3*tier) {
-						emission[compteurEchantillon] = amplitudeMin + (compteurEchantillon-symbolCourant)*amplitudeMin/tier;
+						emission[compteurEchantillon] = amplitudeMin + ((symbolCourant+nbEchantillon)-compteurEchantillon)*amplitudeMin/tier;
 					}
 					compteurEchantillon++;
 				}
@@ -97,7 +97,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 				if(informationRecue.iemeElement(i-1).equals(true)) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						if (compteurEchantillon<symbolCourant+tier) {
-							emission[compteurEchantillon] = (symbolCourant-compteurEchantillon)*amplitudeMin/tier;
+							emission[compteurEchantillon] = ((symbolCourant+nbEchantillon)-compteurEchantillon)*amplitudeMin/tier;
 						} else if (compteurEchantillon<symbolCourant+3*tier){
 							emission[compteurEchantillon] = amplitudeMin;
 						}
