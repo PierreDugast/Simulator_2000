@@ -215,6 +215,7 @@ public class Simulateur {
       		SondeLogique sonde1 = new SondeLogique("Sonde sortie source logique",720);
       		sonde1.recevoir(this.source.getInformationEmise());
       		SondeAnalogique sonde2 = new SondeAnalogique("Sonde sortie emetteur analogique");
+      		System.out.println(this.emetteurAnalogique.getInformationEmise());
       		sonde2.recevoir(this.emetteurAnalogique.getInformationEmise());
       		SondeAnalogique sonde3 = new SondeAnalogique("Sonde sortie transmetteur analogique");
       		sonde3.recevoir(this.transmetteurAnalogique.getInformationEmise());
@@ -264,11 +265,11 @@ public class Simulateur {
     { 
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
-    	//String[] argsBis = {"-mess","1234","-s"};
+    	String[] argsBis = {"-s","-form","NRZT","-ampl","0","5"};
 		try 
 		{
-			//simulateur = new Simulateur(argsBis); //(pour tester les arguments passés en argBis)
-			simulateur = new Simulateur(args);
+			simulateur = new Simulateur(argsBis); //(pour tester les arguments passés en argBis)
+			//simulateur = new Simulateur(args);
 		}
 		catch (Exception e) 
 		{
