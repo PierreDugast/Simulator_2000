@@ -19,7 +19,7 @@ public  abstract class Sonde <T> extends Destination <T> {
      * @param nom  le nom de la fenêtre d'affichage
      */   
     public Sonde(String nom) {
-	this.nom = nom;
+    	this.nom = nom;
     }
 		
     /**

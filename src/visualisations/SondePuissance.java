@@ -14,18 +14,18 @@ public class SondePuissance extends Sonde <Float> {
      * @param nom  le nom de la fenêtre d'affichage
      */
     public SondePuissance(String nom) {
-	super(nom);
+    	super(nom);
     }
    	 
     @Override
 	public void recevoir (Information <Float> information) { 
-	informationRecue = information;
-	int nbElements = information.nbElements();
-	Double puissance = 0.0;
-	for (int i = 0; i < nbElements; i++) {
+    	informationRecue = information;
+    	int nbElements = information.nbElements();
+    	Double puissance = 0.0;
+    	for (int i = 0; i < nbElements; i++) {
             puissance +=  information.iemeElement(i) *  information.iemeElement(i);
-	}
-	puissance = puissance / nbElements;
-	new VueValeur (puissance,  nom); 
+    	}
+    	puissance = puissance / nbElements;
+    	new VueValeur (puissance,  nom); 
     }
 }

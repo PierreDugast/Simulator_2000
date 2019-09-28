@@ -18,14 +18,14 @@ public class SondeAnalogique extends Sonde <Float> {
    	 
     @Override
 	public void recevoir (Information <Float> information) { 
-	informationRecue = information;
-	int nbElements = information.nbElements();
-	float [] table = new float[nbElements];
-	int i = 0;
-	for (float f : information) {
+    	informationRecue = information;
+    	int nbElements = information.nbElements();
+    	float [] table = new float[nbElements];
+    	int i = 0;
+    	for (float f : information) {
             table[i] = f;
             i++;
-	}
-	new VueCourbe (table, nom); 
+    	}
+    	new VueCourbe (table, nom); 
     }
 }
