@@ -27,6 +27,8 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		int nbPacket = 0;
 		//compteur interne à chaque packet
 		int i = 0;
+		//Valeur numerique du bit
+		Boolean value = false;
 		//tant qu'il reste un element non parcourrut dans la liste
 		while((nbPacket*this.nbEchantillon+i)<this.informationRecue.nbElements())
 		{
@@ -36,9 +38,7 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 				if (this.informationRecue.iemeElement(nbPacket*this.nbEchantillon+i)==this.amplitudeMax)
 				{
 					//Assigner la valeur dans la liste de sortie
-					emission[nbPacket] = true;
-					//incrémenter directement le nombre de packet (éviter les calculs inutils)
-					nbPacket++;
+					value = true;
 					//remettre i à -1 (il va être incrémenté juste après)
 					break;
 				}
@@ -47,12 +47,13 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 				i++;
 			}
 			//une fois arrivé à la taille de l'échantillon, aucun bit à Amax n'a été détecté, c'est forcément un 0 logique.
-			emission[nbPacket] = false;
+			emission[nbPacket] = value;
+			//Remise des compteurs aux valeurs initiales
 			nbPacket++;
 			i=0;
+			value = false;
 			//et rebelotte
 		}
-
 		
 		//Déclanchement de la methode recevoir des destinations connectes
 		this.informationEmise = new Information(emission);
