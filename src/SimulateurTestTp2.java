@@ -50,7 +50,7 @@ public class SimulateurTestTp2 {
 			collector.checkThat("Test recepteurAnalogique par defaut",simulateur.recepteurAnalogique,is(new RecepteurRz<Float,Boolean>(30,1.0f,0.0f)));
 			
 		}
-		catch (Exception e) {collector.addError(new Throwable("Erreur constructeur avec args : "+args.toString()));} 		
+		catch (Exception e) {collector.addError(new Throwable("Erreur constructeur avec args : ")); e.printStackTrace();} 		
 		try {
 			simulateur.execute();
 			Float zeroFloat = 0f;

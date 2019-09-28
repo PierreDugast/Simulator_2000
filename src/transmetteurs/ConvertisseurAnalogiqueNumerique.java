@@ -15,10 +15,6 @@ public abstract class ConvertisseurAnalogiqueNumerique<R,T> extends Transmetteur
 	{
 		if (nbEchantillon <= 0)
 			throw new AnalogicArgumentException("erreur : nbEchantillon<=0");
-		if (amplitudeMax <= 0)
-			throw new AnalogicArgumentException("erreur : amplitudeMax>=0");
-		if (amplitudeMin <= 0)
-			throw new AnalogicArgumentException("erreur : amplitudeMax>=0");
 		if (amplitudeMax <= amplitudeMin)
 			throw new AnalogicArgumentException("erreur : amplitudeMax<=amplitudeMin");
 		this.nbEchantillon = nbEchantillon;
