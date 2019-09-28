@@ -43,9 +43,11 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		
 		int compteurEchantillon=0;
 		int tier=nbEchantillon/3;
+		//Boucle de mise en forme de l'information
 		for(int i=0 ; i<informationRecue.nbElements() ; i++) {
 			int symbolCourant=compteurEchantillon;
-			if(informationRecue.iemeElement(i).equals(true) && informationRecue.iemeElement(i+1).equals(false)) {				
+			//Cas ou le symbole est true, que le suivant est false et que le précèdent est false
+			if(informationRecue.iemeElement(i).equals(true) && informationRecue.iemeElement(i+1).equals(false) && informationRecue.iemeElement(i-1).equals(false) ) {				
 				while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 					if (compteurEchantillon<symbolCourant+tier) {
 						emission[compteurEchantillon] = (compteurEchantillon-symbolCourant)*amplitudeMax/tier;
@@ -56,8 +58,9 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 					}
 					compteurEchantillon++;
 				}
-			} 
-			if(informationRecue.iemeElement(i).equals(false) && informationRecue.iemeElement(i+1).equals(true)) {
+			}
+			//Cas ou le symbole est false, que le suivant est true et que le précèdent est true
+			if(informationRecue.iemeElement(i).equals(false) && informationRecue.iemeElement(i+1).equals(true) && informationRecue.iemeElement(i-1).equals(true)) {
 				while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 					emission[compteurEchantillon] = amplitudeMin;
 					if (compteurEchantillon<symbolCourant+tier) {
@@ -70,13 +73,16 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 					compteurEchantillon++;
 				}
 			}
+			//Cas ou le symbole est true que le suivant est true
 			if(informationRecue.iemeElement(i).equals(true) && informationRecue.iemeElement(i+1).equals(true)) {
+				//Sous cas ou le précèdent est true
 				if(informationRecue.iemeElement(i-1).equals(true)) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						emission[compteurEchantillon] = amplitudeMax;
 						compteurEchantillon++;
 					}
 				}
+				//Sous cas ou le précèdent est false
 				if(informationRecue.iemeElement(i-1).equals(false)) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						if (compteurEchantillon<symbolCourant+tier) {
@@ -87,13 +93,16 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 					}
 				}
 			}
+			//Cas ou le symbole est false, le suivant est false
 			if(informationRecue.iemeElement(i).equals(false) && informationRecue.iemeElement(i+1).equals(false)) {
+				//Sous cas ou le précèdent est false
 				if(informationRecue.iemeElement(i-1).equals(false)) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						emission[compteurEchantillon] = amplitudeMin;
 						compteurEchantillon++;
 					}
 				}
+				//Sous cas ou le précèdent est true
 				if(informationRecue.iemeElement(i-1).equals(true)) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						if (compteurEchantillon<symbolCourant+tier) {
@@ -105,9 +114,10 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 				}
 			}
 		}
-		
+		//Création de l'information à émettre
 		this.informationEmise = new Information(emission);
 		
+		//Envoie l'information aux différentes destinations connectees présente dans la variable destinationsConnectees
 		for(int j=0;j<destinationsConnectees.size();j++){
 			destinationsConnectees.get(j).recevoir(this.informationEmise);
 		}
