@@ -12,15 +12,20 @@
 ## Méthodes 
 
 * +TransmetteurAnalogiqueBruite(int nbEchantillon, float SNR)
-  * 
-
+  
+* nbEchantillon doit être supérieur à 0
+  * SNR entre ±∞
+  
 * +recevoir(Information)
+
+  * 
 
 * +emettre()
 
 * -calculPuissance( int nbEchantillon, Information informationRecue): Float
 
   * Somme des échantillons² / nbEchantillons 
+  * 
 
 * -calculSigma(Float puissanceBruit, Float snr): Float
 
