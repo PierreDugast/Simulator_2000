@@ -215,7 +215,6 @@ public class Simulateur {
       		SondeLogique sonde1 = new SondeLogique("Sonde sortie source logique",720);
       		sonde1.recevoir(this.source.getInformationEmise());
       		SondeAnalogique sonde2 = new SondeAnalogique("Sonde sortie emetteur analogique");
-      		System.out.println(this.emetteurAnalogique.getInformationEmise());
       		sonde2.recevoir(this.emetteurAnalogique.getInformationEmise());
       		SondeAnalogique sonde3 = new SondeAnalogique("Sonde sortie transmetteur analogique");
       		sonde3.recevoir(this.transmetteurAnalogique.getInformationEmise());
