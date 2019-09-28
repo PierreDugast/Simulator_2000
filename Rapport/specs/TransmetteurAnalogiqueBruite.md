@@ -14,6 +14,7 @@
 * +TransmetteurAnalogiqueBruite(int nbEchantillon, float SNR)
   
 * nbEchantillon doit être supérieur à 0
+  
   * SNR entre ±∞
   
 * +recevoir(Information)
@@ -42,5 +43,3 @@
 * -ajoutSignalBruite(Information bruitBlanc)
 
 * +equals(Object obj): Boolean
-
-# 
