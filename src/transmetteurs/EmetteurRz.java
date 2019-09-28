@@ -48,7 +48,7 @@ public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 				infoAnalogique[i*nbEchantillon+j]=amplitudeMin; 
 			}
 			
-	}
+		}
 		this.informationEmise = new Information(infoAnalogique); 
 		for (int i=0; i< destinationsConnectees.size(); i++) {
 			destinationsConnectees.get(i).recevoir(this.informationEmise); 
