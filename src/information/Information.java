@@ -14,7 +14,7 @@ public  class Information <T>  implements Iterable <T> {
      * pour construire une information vide
      */
     public Information() {
-	this.content = new LinkedList <T> (); 
+    	this.content = new LinkedList <T> (); 
     }
    
     /**
@@ -35,7 +35,7 @@ public  class Information <T>  implements Iterable <T> {
      * @return le nombre d'éléments de l'information
      */
     public int nbElements() {
-	return this.content.size();
+    	return this.content.size();
     }
    
     /**
@@ -43,14 +43,14 @@ public  class Information <T>  implements Iterable <T> {
      * @return le ieme élément de l'information
      */
     public T iemeElement(int i) {
-	return this.content.get(i);
+    	return this.content.get(i);
     }
    
     /**
      * pour modifier le ième élément d'une information
      */
     public void setIemeElement(int i, T v) {
-	this.content.set(i, v);
+    	this.content.set(i, v);
     }
    
     /**
@@ -58,7 +58,7 @@ public  class Information <T>  implements Iterable <T> {
      * @param valeur  l'élément à rajouter
      */
     public void add(T valeur) {
-	this.content.add(valeur);
+    	this.content.add(valeur);
     }
    
    
