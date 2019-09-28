@@ -63,5 +63,11 @@ public class RecepteurNrzt<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 			destinationsConnectees.get(j).recevoir(this.informationEmise);
 		}		
 	}
+	public boolean equals (Object obj) {
+		return (obj instanceof RecepteurNrzt)&& 
+				(((RecepteurNrzt)obj).nbEchantillon== this.nbEchantillon) &&
+				(((RecepteurNrzt)obj).amplitudeMax== this.amplitudeMax) &&
+				(((RecepteurNrz)obj).amplitudeMin== this.amplitudeMin); 
+	}
 	
 }

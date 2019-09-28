@@ -47,10 +47,10 @@ public class SimulateurTestTp2 {
 			//Test de l'emetteur analogique par defaut
 			collector.checkThat("Test emetteurAnalogique par defaut", simulateur.emetteurAnalogique,is(new EmetteurRz<Boolean,Float>(30,1.0f,0.0f)));
 			//Test du recepteur analogique par defaut
-			collector.checkThat("Test recepteurAnalogique par defaut",simulateur.recepteurAnalogique,is(new RecepteurRz<Float,Boolean>(30,1.0f,0.0f)));
-			
+			collector.checkThat("Test recepteurAnalogique par defaut",simulateur.recepteurAnalogique,is(new RecepteurRz<Float,Boolean>(30,1.0f,0.0f)));			
 		}
 		catch (Exception e) {collector.addError(new Throwable("Erreur constructeur avec args : ")); e.printStackTrace();} 		
+		
 		try {
 			simulateur.execute();
 			Float zeroFloat = 0f;
@@ -140,4 +140,3 @@ public class SimulateurTestTp2 {
 		catch (Exception e) {collector.addError(new Throwable("Erreur exectution avec args : "+args.toString()));} 
 	}
 }
-
