@@ -182,7 +182,7 @@ public class Simulateur {
 			else if (args[i].matches("-ampl"))
 			{
 				i++;
-				if (args[i].matches("[0-9]{1,10}"))
+				if (args[i].matches("[-][0-9]{1,10}"))
 					this.amplitudeMin = Float.parseFloat(args[i]);
 				else
 	        		throw new ArgumentsException ("Valeur du parametre -ampl invalide : " + args[i]);
@@ -215,7 +215,6 @@ public class Simulateur {
       		SondeLogique sonde1 = new SondeLogique("Sonde sortie source logique",720);
       		sonde1.recevoir(this.source.getInformationEmise());
       		SondeAnalogique sonde2 = new SondeAnalogique("Sonde sortie emetteur analogique");
-      		System.out.println(this.emetteurAnalogique.getInformationEmise());
       		sonde2.recevoir(this.emetteurAnalogique.getInformationEmise());
       		SondeAnalogique sonde3 = new SondeAnalogique("Sonde sortie transmetteur analogique");
       		sonde3.recevoir(this.transmetteurAnalogique.getInformationEmise());
@@ -265,7 +264,7 @@ public class Simulateur {
     { 
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
-    	String[] argsBis = {"-mess","00001111","-s","-form","RZ","-ampl","0","5"};
+    	String[] argsBis = {"-mess","00001111","-s","-form","NRZ","-ampl","-1","5"};
 		try 
 		{
 			simulateur = new Simulateur(argsBis); //(pour tester les arguments passés en argBis)

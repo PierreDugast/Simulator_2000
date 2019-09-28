@@ -62,6 +62,7 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 			destinationsConnectees.get(j).recevoir(this.informationEmise);
 		}
 	}
+	
 	public boolean equals (Object obj) {
 		return (obj instanceof RecepteurRz)&& 
 				(((RecepteurRz)obj).nbEchantillon== this.nbEchantillon) &&
