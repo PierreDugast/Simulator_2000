@@ -44,4 +44,17 @@ public class EmetteurNrz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		
 	}
 	
+	public boolean equals(Object o)
+	{
+		Boolean rep = false;
+		EmetteurNrz<R,T> e;
+		if(o instanceof EmetteurNrz)
+		{
+			e = (EmetteurNrz<R,T>) o;
+			if ((e.amplitudeMax==this.amplitudeMax)&&(e.amplitudeMin==this.amplitudeMin)&&(e.nbEchantillon==this.nbEchantillon))
+				rep = true;
+		}
+		
+		return rep;
+	}
 }

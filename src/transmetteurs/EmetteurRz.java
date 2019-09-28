@@ -52,4 +52,18 @@ public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 			destinationsConnectees.get(i).recevoir(informationEmise); 
 		}
 	}
+	
+	public boolean equals(Object o)
+	{
+		Boolean rep = false;
+		EmetteurRz<R,T> e;
+		if(o instanceof EmetteurRz)
+		{
+			e = (EmetteurRz<R,T>) o;
+			if ((e.amplitudeMax==this.amplitudeMax)&&(e.amplitudeMin==this.amplitudeMin)&&(e.nbEchantillon==this.nbEchantillon))
+				rep = true;
+		}
+		
+		return rep;
+	}
 }
