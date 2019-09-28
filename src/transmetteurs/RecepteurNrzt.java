@@ -42,7 +42,7 @@ public class RecepteurNrzt<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		
 		// Remplissage du tableau de boolean en fonction des valeurs des échantillons de l'information reçu
 		for(int i=0 ; i<informationRecue.nbElements() ; i++) {
-			if(i%nbEchantillon/2==0) {
+			if(i%nbEchantillon/2==0 && i%10!=0) {
 				String elementI = informationRecue.iemeElement(i).toString();
 				float valeurElementI = Float.parseFloat(elementI);
 				if(valeurElementI>amplitudeMax/2) {
