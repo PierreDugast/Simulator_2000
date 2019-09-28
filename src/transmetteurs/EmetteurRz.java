@@ -24,34 +24,32 @@ public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 	
 	public void emettre() throws InformationNonConforme {
 		
-		//float nbMesure = this.informationRecue.nbElements()*this.nbEchantillon; 
-		//Float[] infoAnalogique = new Float[nbMesure];
-		Float [] infoAnalogique = new Float[this.informationRecue.nbElements()*this.nbEchantillon];
+		Float [] emission = new Float[this.informationRecue.nbElements()*this.nbEchantillon];
 		
 		int tier = (nbEchantillon / 3); 
 		
 		for (int i=0; i < informationRecue.nbElements(); i++) {
 			for (int j=0; j < tier; j++) {
-				infoAnalogique[i*nbEchantillon+j] =amplitudeMin; 
+				emission[i*nbEchantillon+j] =amplitudeMin; 
 				}
 			if((boolean) informationRecue.iemeElement(i)) {
 				for(int j=tier; j<2*tier; j++) {
-					infoAnalogique[i*nbEchantillon+j]=amplitudeMax; 
+					emission[i*nbEchantillon+j]=amplitudeMax; 
 				}
 			}
 			else {
 				for (int j=tier; j<2*tier; j++) {
-					infoAnalogique[i*nbEchantillon+j]=amplitudeMin; 
+					emission[i*nbEchantillon+j]=amplitudeMin; 
 				}
 			}
 			for (int j=2*tier; j<nbEchantillon; j++) {
-				infoAnalogique[i*nbEchantillon+j]=amplitudeMin; 
+				emission[i*nbEchantillon+j]=amplitudeMin; 
 			}
 			
 		}
-		this.informationEmise = new Information(infoAnalogique); 
-		for (int i=0; i< destinationsConnectees.size(); i++) {
-			destinationsConnectees.get(i).recevoir(this.informationEmise); 
+		this.informationEmise = new Information(emission);
+		for(int j=0;j<destinationsConnectees.size();j++){
+			destinationsConnectees.get(j).recevoir(this.informationEmise);
 		}
 	}
 	
@@ -65,7 +63,6 @@ public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 			if ((e.amplitudeMax==this.amplitudeMax)&&(e.amplitudeMin==this.amplitudeMin)&&(e.nbEchantillon==this.nbEchantillon))
 				rep = true;
 		}
-		
 		return rep;
 	}
 }
