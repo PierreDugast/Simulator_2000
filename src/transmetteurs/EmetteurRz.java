@@ -49,7 +49,7 @@ public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 	}
 		this.informationEmise = new Information(infoAnalogique); 
 		for (int i=0; i< destinationsConnectees.size(); i++) {
-			destinationsConnectees.get(i).recevoir(informationEmise); 
+			destinationsConnectees.get(i).recevoir(this.informationEmise); 
 		}
 	}
 	

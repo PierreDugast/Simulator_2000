@@ -7,6 +7,8 @@ import static org.junit.Assert.*;
 import org.junit.Rule;
 import org.junit.rules.ErrorCollector;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.equalTo;
+import org.junit.Rule;
 
 import sources.*;
 import destinations.*;
@@ -43,11 +45,11 @@ public class SimulateurTestTp2 {
 		try {
 			simulateur = new Simulateur(args);
 			//Test de la source par defaut
-			collector.checkThat("Test source par defaut",simulateur.source, is(new SourceAleatoire(100)));
+			collector.checkThat("Test source par defaut",simulateur.source, equalTo(new SourceAleatoire(100)));
 			//Test de l'emetteur analogique par defaut
-			collector.checkThat("Test emetteurAnalogique par defaut", simulateur.emetteurAnalogique,is(new EmetteurRz<Boolean,Float>(30,1.0f,0.0f)));
+			collector.checkThat("Test emetteurAnalogique par defaut", simulateur.emetteurAnalogique,equalTo(new EmetteurRz<Boolean,Float>(30,1.0f,0.0f)));
 			//Test du recepteur analogique par defaut
-			collector.checkThat("Test recepteurAnalogique par defaut",simulateur.recepteurAnalogique,is(new RecepteurRz<Float,Boolean>(30,1.0f,0.0f)));			
+			collector.checkThat("Test recepteurAnalogique par defaut",simulateur.recepteurAnalogique,equalTo(new RecepteurRz<Float,Boolean>(30,1.0f,0.0f)));			
 		}
 		catch (Exception e) {collector.addError(new Throwable("Erreur constructeur avec args : ")); e.printStackTrace();} 		
 		
@@ -70,9 +72,9 @@ public class SimulateurTestTp2 {
 		try {
 			simulateur = new Simulateur(args);
 			//Test de la source par defaut
-			collector.checkThat("Test source par defaut",simulateur.source, is(new SourceAleatoire(100)));
+			collector.checkThat("Test source par defaut",simulateur.source, equalTo(new SourceAleatoire(100)));
 			//Test de l'emetteur analogique par defaut
-			collector.checkThat("Test emetteurAnalogique NRZT", simulateur.emetteurAnalogique,is(new EmetteurNrzt<Boolean,Float>(30,1.0f,0.0f)));
+			collector.checkThat("Test emetteurAnalogique NRZT", simulateur.emetteurAnalogique,equalTo(new EmetteurNrzt<Boolean,Float>(30,1.0f,0.0f)));
 			//Test du recepteur analogique par defaut
 			collector.checkThat("Test recepteurAnalogique NRZT",simulateur.recepteurAnalogique,is(new RecepteurNrzt<Float,Boolean>(30,1.0f,0.0f)));
 			
