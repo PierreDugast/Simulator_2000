@@ -36,9 +36,9 @@ public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, 
      * réalisations de la classe abstraite Transmetteur
      */
     public Transmetteur() {
-	destinationsConnectees = new LinkedList <DestinationInterface <E>> ();
-	informationRecue = null;
-	informationEmise = null;
+    	destinationsConnectees = new LinkedList <DestinationInterface <E>> ();
+    	informationRecue = null;
+    	informationEmise = null;
     }
    	
     /**
@@ -48,7 +48,7 @@ public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, 
      */
     @Override
 	public Information <R>  getInformationRecue() {
-	return this.informationRecue;
+    	return this.informationRecue;
     }
 
     /**
@@ -58,7 +58,7 @@ public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, 
      */
     @Override
 	public Information <E>  getInformationEmise() {
-	return this.informationEmise;
+    	return this.informationEmise;
     }
 
     /**
@@ -67,7 +67,7 @@ public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, 
      */
     @Override
 	public void connecter (DestinationInterface <E> destination) {
-	destinationsConnectees.add(destination); 
+    	destinationsConnectees.add(destination); 
     }
 
     /**
@@ -75,7 +75,7 @@ public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, 
      * @param destination  la destination à déconnecter
      */
     public void deconnecter (DestinationInterface <E> destination) {
-	destinationsConnectees.remove(destination); 
+    	destinationsConnectees.remove(destination); 
     }
    	    
     /**
