@@ -29,12 +29,4 @@ public abstract class ConvertisseurAnalogiqueNumerique<R,T> extends Transmetteur
 	}
 	
 	public abstract void emettre() throws InformationNonConforme;
-
-
-	public boolean equals (Object obj) {
-		return (obj instanceof ConvertisseurAnalogiqueNumerique) && 
-				(((ConvertisseurAnalogiqueNumerique)obj).nbEchantillon== this.nbEchantillon) &&
-				(((ConvertisseurAnalogiqueNumerique)obj).amplitudeMax== this.amplitudeMax) &&
-				(((ConvertisseurAnalogiqueNumerique)obj).amplitudeMin== this.amplitudeMin); 
-	}
 }
