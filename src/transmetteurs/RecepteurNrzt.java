@@ -15,20 +15,28 @@ public class RecepteurNrzt<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 
 	@Override
 	public void emettre() throws InformationNonConforme {
-		boolean [] emission = new boolean[this.informationRecue.nbElements()/nbEchantillon];
+		Boolean [] emission;
+		if (nbEchantillon%2==0) {
+			emission = new Boolean[this.informationRecue.nbElements()/nbEchantillon];
+		} else {
+			emission = new Boolean[this.informationRecue.nbElements()/(nbEchantillon+1)];
+		}
+		
 		
 		int c=0;
-		int tier = nbEchantillon/3;
 		for(int i=0 ; i<informationRecue.nbElements() ; i++) {
 			if(i%nbEchantillon/2==0) {
-				if(informationRecue.iemeElement(i)>amplitudeMax/2) {
+				String elementI = informationRecue.iemeElement(i).toString();
+				float valeurElementI = Float.parseFloat(elementI);
+				if(valeurElementI>amplitudeMax/2) {
 					emission[c] = true;
 				}
-				if(informationRecue.iemeElement(i)<amplitudeMin/2) {
+				if(valeurElementI<amplitudeMin/2) {
 					emission[c] = false;
 				}
 			}
 		}
+		
 		this.informationEmise = new Information(emission);
 		
 		for(int j=0;j<destinationsConnectees.size();j++){
