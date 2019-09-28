@@ -24,8 +24,10 @@ public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 	
 	public void emettre() throws InformationNonConforme {
 		
-		int nbMesure = nbEchantillon * informationRecue.nbElements();
-		Float[] infoAnalogique = new Float[nbMesure];
+		//float nbMesure = this.informationRecue.nbElements()*this.nbEchantillon; 
+		//Float[] infoAnalogique = new Float[nbMesure];
+		Float [] infoAnalogique = new Float[this.informationRecue.nbElements()*this.nbEchantillon];
+		
 		int tier = (nbEchantillon / 3); 
 		
 		for (int i=0; i < informationRecue.nbElements(); i++) {
