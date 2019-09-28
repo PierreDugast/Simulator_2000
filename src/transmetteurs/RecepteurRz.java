@@ -30,10 +30,9 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		//tant qu'il reste un element non parcourrut dans la liste
 		while((nbPacket*this.nbEchantillon+i)<this.informationRecue.nbElements())
 		{
-			//tant que i < à la taille d'un échantillon
-			while (i<this.nbEchantillon)
+			while ((i<this.nbEchantillon))
 			{
-				//Si la valeur de l'information actuelle est celle de l'amplitude max, c'est que la packet est forcément un 1 logique.
+				//Si la valeur de l'information actuelle est celle de l'amplitude max, c'est que le packet est forcément un 1 logique.
 				if (this.informationRecue.iemeElement(nbPacket*this.nbEchantillon+i)==this.amplitudeMax)
 				{
 					//Assigner la valeur dans la liste de sortie
@@ -41,8 +40,9 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 					//incrémenter directement le nombre de packet (éviter les calculs inutils)
 					nbPacket++;
 					//remettre i à -1 (il va être incrémenté juste après)
-					i = -1;
+					break;
 				}
+				//System.out.print(""+(nbPacket)+" "+(nbPacket*this.nbEchantillon+i)+" | ");
 				//Sinon, incrémenter i
 				i++;
 			}
@@ -52,6 +52,7 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 			i=0;
 			//et rebelotte
 		}
+
 		
 		//Déclanchement de la methode recevoir des destinations connectes
 		this.informationEmise = new Information(emission);
