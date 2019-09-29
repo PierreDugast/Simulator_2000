@@ -188,12 +188,12 @@ public class Simulateur {
 			else if (args[i].matches("-ampl"))
 			{
 				i++;
-				if (args[i].matches("[-][0-9]{1,10}"))
+				if (args[i].matches("[-]?[0-9]{1,10}"))
 					this.amplitudeMin = Float.parseFloat(args[i]);
 				else
 	        		throw new ArgumentsException ("Valeur du parametre -ampl invalide : " + args[i]);
 				i++;
-				if (args[i].matches("[0-9]{1,10}"))
+				if (args[i].matches("[-]?[0-9]{1,10}"))
 					this.amplitudeMax = Float.parseFloat(args[i]);
 				else
 	        		throw new ArgumentsException ("Valeur du parametre -ampl invalide : " + args[i]);
@@ -282,7 +282,7 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-mess","1010101010","-s","-form","NRZT","-ampl","-2","2"};
+    	String[] argsBis = {"-mess","1010101010","-s","-form","RZ","-ampl","-2","2"};
     	
 		try 
 		{
