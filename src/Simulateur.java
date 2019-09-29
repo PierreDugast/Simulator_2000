@@ -286,7 +286,7 @@ public class Simulateur {
     	
 		try 
 		{
-			simulateur = new Simulateur(argsBis); //(pour tester les arguments passés en argBis)
+			//simulateur = new Simulateur(argsBis); //(pour tester les arguments passés en argBis)
 			simulateur = new Simulateur(args);
 		}
 		catch (Exception e) 
