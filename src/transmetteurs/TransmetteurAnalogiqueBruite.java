@@ -32,8 +32,16 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 		informationRecue=information; 
 		emettre(); 
 	}
-	public void emettre() throws InformationNonConforme {
+	public void emettre() throws InformationNonConforme 
+	{
+		float puissanceSignal = this.calculPuissance(this.nbEchantillon, this.informationRecue);
+		float sigma = this.calculSigma(puissanceSignal, this.SNR);
+		Information<Float> bruitBlanc = this.generationBruitBlanc(sigma);
+		this.ajoutSignalBruite(bruitBlanc);
 		
+		for(int j=0;j<destinationsConnectees.size();j++){
+			destinationsConnectees.get(j).recevoir(this.informationEmise);
+		}
 	}
 	
 	/**
@@ -102,6 +110,7 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 	
 	public boolean equals (Object obj) {
 		return (obj instanceof TransmetteurAnalogiqueBruite); 
+		//TODO : finir l'implémentation de la méthode
 	}
 	  
 }
