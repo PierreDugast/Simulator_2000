@@ -95,7 +95,7 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 		}
 		Information<Float> generationBruitBlanc = new Information<Float>(bruitBlanc);
 		
-		//this.exportInformation(generationBruitBlanc); //permet d'exporter le bruit blanc créé vers un fichier txt
+		this.exportInformation(generationBruitBlanc); //permet d'exporter le bruit blanc créé vers un fichier txt
 		return generationBruitBlanc;
 	}
 	
@@ -113,17 +113,14 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 	
 	private void exportInformation(Information<Float> information)
 	{
-		DataOutputStream dos;
+		File f = new File("export_BB_Simulation.txt");
 		try {
-			dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File("export_BB_Simulation.txt"))));
-			int i = 0;
-			while(i<information.nbElements())
-			{
-				dos.writeFloat(information.iemeElement(i));
-			}
+			FileWriter fw = new FileWriter(f);
+			fw.write(""+information.toString());
+			fw.flush();
+			fw.close();
 		} catch (Exception e) {e.printStackTrace();}
 	}
-	
 	public boolean equals (Object obj) {
 		return (obj instanceof TransmetteurAnalogiqueBruite); 
 		//TODO : finir l'implémentation de la méthode
