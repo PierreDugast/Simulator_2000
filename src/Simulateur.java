@@ -28,7 +28,7 @@ public class Simulateur {
     private Integer seed = null;
     /** la longueur du message alÃ©atoire Ã  transmettre si un message n'est pas impose */
     private int nbBitsMess = 100; 
-    /** précise l'échantillonnage du signal analogique */
+    /** prï¿½cise l'ï¿½chantillonnage du signal analogique */
     private Integer nbEchantillon = 30;
     /** indique la valeur d'amplitude maximum */
     private Float amplitudeMax = 1.0f;
@@ -38,6 +38,10 @@ public class Simulateur {
     private String messageString = "100";
     /** indique la forme de l'onde choisie*/
     private String messageAnalogicEncoding = "RZ";
+    /** indique l'utilisation d'un SNR*/
+    private boolean isSNR = false; 
+    /** indique la valeur du SNR dans le cas d'un signal analogique bruitï¿½*/
+    private Float SNR;
     
    	
     /** le  composant Source de la chaine de transmission */
@@ -45,7 +49,7 @@ public class Simulateur {
     /** le composant emetteur analogique de la chaine de transmission */
     public Transmetteur <Boolean,Float> emetteurAnalogique = null;
     /** le  composant Transmetteur analogique parfait logique de la chaine de transmission */
-    public Transmetteur <Float, Float>  transmetteurAnalogique = null;
+    public Transmetteur <Float, Float>  transmetteurAnalogique = new TransmetteurParfait();
     /** le composant recepteur analogique de la chaine de transmission */
     public Transmetteur <Float, Boolean> recepteurAnalogique = null;
     /** le  composant Destination de la chaine de transmission */
@@ -90,7 +94,9 @@ public class Simulateur {
       		this.emetteurAnalogique = new EmetteurNrzt(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
       		this.recepteurAnalogique = new RecepteurNrzt(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
       	}
-      	this.transmetteurAnalogique = new TransmetteurParfait();
+      	if (this.isSNR)
+      		this.transmetteurAnalogique = new TransmetteurAnalogiqueBruite(this.nbEchantillon,  this.SNR);
+      	
       	this.destination = new DestinationFinale();
       	
       	this.source.connecter(this.emetteurAnalogique);
@@ -193,6 +199,17 @@ public class Simulateur {
 	        		throw new ArgumentsException ("Valeur du parametre -ampl invalide : " + args[i]);
 				
 			}
+			else if (args[i].matches("-snr"))
+			{
+				i++;
+				if (args[i].matches("[0-9]{1,10}"))
+				{
+					this.SNR = new Float(args[i]);
+					this.isSNR = true;
+				}
+				else
+	        		throw new ArgumentsException ("Valeur du parametre -nbEch invalide : " + args[i]);
+			}
 	        else 
 	        	throw new ArgumentsException("Option invalide :"+ args[i]);
 		}
@@ -218,7 +235,7 @@ public class Simulateur {
       		sonde2.recevoir(this.emetteurAnalogique.getInformationEmise());
       		SondeAnalogique sonde3 = new SondeAnalogique("Sonde sortie transmetteur analogique");
       		sonde3.recevoir(this.transmetteurAnalogique.getInformationEmise());
-      		SondeLogique sonde4 = new SondeLogique("Sonde sortie récepteur analogique",720);
+      		SondeLogique sonde4 = new SondeLogique("Sonde sortie rï¿½cepteur analogique",720);
       		sonde4.recevoir(this.recepteurAnalogique.getInformationEmise());
       	}
     }
@@ -265,7 +282,7 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-mess","15","-s","-form","NRZ","-ampl","-2","2"};
+    	String[] argsBis = {"-mess","15","-s","-form","RZ","-ampl","-2","2","-snr","2"};
     	
 		try 
 		{

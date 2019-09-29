@@ -3,10 +3,7 @@ import information.Information;
 import information.InformationNonConforme;
 import java.util.*;
 import java.lang.*;
-import java.math.*;
-import java.lang.Math;
-import java.util.Random; 
-
+import java.io.*;
 
 /**
  * 
@@ -93,9 +90,13 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 			Double valueI;
 			valueI = sigma*Math.sqrt(-2*Math.log(1-a1))*Math.cos(2*Math.PI*a2);
 			bruitBlanc[i] = valueI.floatValue();
+			System.out.print(bruitBlanc[i]);
 			i++;
 		}
-		Information<Float> generationBruitBlanc = new Information<Float>(bruitBlanc);		
+		
+		Information<Float> generationBruitBlanc = new Information<Float>(bruitBlanc);
+		
+		//this.exportInformation(generationBruitBlanc); //permet d'exporter le bruit blanc créé vers un fichier txt
 		return generationBruitBlanc;
 	}
 	
@@ -109,6 +110,19 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 			infoEmiseList[i] = (Float) this.informationRecue.iemeElement(i) + (Float) bruitBlanc.iemeElement(i);
 		}
 		this.informationEmise = new Information(infoEmiseList);
+	}
+	
+	private void exportInformation(Information<Float> information)
+	{
+		DataOutputStream dos;
+		try {
+			dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File("export_BB_Simulation.txt"))));
+			int i = 0;
+			while(i<information.nbElements())
+			{
+				dos.writeFloat(information.iemeElement(i));
+			}
+		} catch (Exception e) {e.printStackTrace();}
 	}
 	
 	public boolean equals (Object obj) {
