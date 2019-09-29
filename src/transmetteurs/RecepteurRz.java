@@ -37,7 +37,6 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		Boolean value = false;
 		//tant qu'il reste un element non parcourrut dans la liste
 		
-		//on va chercher dans l intervalle [(nbPacket+0.5)*nbEchantillon-marge, (nbPacket+0.5)*nbEchantillon+marge)]
 		
 		while((nbPacket*this.nbEchantillon+i)<this.informationRecue.nbElements())
 		{
