@@ -15,9 +15,15 @@ import java.util.List;
  */
 public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 {
+	
+	Float seuil; 
+	
 	public RecepteurRz(int nbEchantillon, Float amplitudeMax, Float amplitudeMin) throws AnalogicArgumentException 
 	{
 		super(nbEchantillon, amplitudeMax, amplitudeMin);	
+		//le seuil est egal a la difference des deux amplitudes divisees par 2 
+		seuil = (amplitudeMax - amplitudeMin) / 2; 
+		
 	}
 	
 	public void emettre() throws InformationNonConforme 
@@ -30,15 +36,18 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		//Valeur numerique du bit
 		Boolean value = false;
 		//tant qu'il reste un element non parcourrut dans la liste
+		
+		//on va chercher dans l intervalle [(nbPacket+0.5)*nbEchantillon-marge, (nbPacket+0.5)*nbEchantillon+marge)]
+		
 		while((nbPacket*this.nbEchantillon+i)<this.informationRecue.nbElements())
 		{
 			while ((i<this.nbEchantillon))
 			{
 				//Si la valeur de l'information actuelle est celle de l'amplitude max, c'est que le packet est forcément un 1 logique.
-				if (this.informationRecue.iemeElement(nbPacket*this.nbEchantillon+i)==this.amplitudeMax)
+				if (((float) this.informationRecue.iemeElement((nbPacket)*this.nbEchantillon+i) >= (float) seuil))
 				{
 					//Assigner la valeur dans la liste de sortie
-					value = true;
+					value = true; 
 					//remettre i à -1 (il va être incrémenté juste après)
 					break;
 				}

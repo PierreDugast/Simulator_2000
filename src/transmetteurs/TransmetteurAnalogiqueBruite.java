@@ -3,6 +3,10 @@ import information.Information;
 import information.InformationNonConforme;
 import java.util.*;
 import java.lang.*;
+import java.math.*;
+import java.lang.Math;
+import java.util.Random; 
+
 
 /**
  * 
@@ -91,7 +95,6 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 			bruitBlanc[i] = valueI.floatValue();
 			i++;
 		}
-		
 		Information<Float> generationBruitBlanc = new Information<Float>(bruitBlanc);		
 		return generationBruitBlanc;
 	}
