@@ -43,7 +43,7 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 	 * @param informationRecue
 	 * @return
 	 */
-	public float calculPuissance(int nbEchantillon, Information informationRecue) {
+	private float calculPuissance(int nbEchantillon, Information informationRecue) {
 		float calculPuissance = 0; 
 		float carreValeurs;
 		int sum = 0;
@@ -62,14 +62,14 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 
 	}
 	
-	public float calculSigma(float puissanceSignal, float SNR) {
+	private float calculSigma(float puissanceSignal, float SNR) {
 		float sigma = 0;
 		//calcul la valeur de sigma en fonction de la puissance du signal et du SNR
 		sigma = (float) Math.sqrt(puissanceSignal/Math.pow(10, (SNR/10)));
 		return sigma;
 	}
 	
-	public Information<Float> generationBruitBlanc (Float sigma)
+	private Information<Float> generationBruitBlanc (Float sigma)
 	{
 		Float [] bruitBlanc = new Float[this.informationRecue.nbElements()];
 		Random r = new Random();
@@ -88,8 +88,16 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 		return generationBruitBlanc;
 	}
 	
-	public void ajoutSignalBruite (Information<Float> bruitBlanc) {
+	private void ajoutSignalBruite (Information<Float> bruitBlanc) 
+	{
+		Float [] infoEmiseList = new Float[this.informationRecue.nbElements()];
 		
+		int i = 0;
+		while(i>this.informationRecue.nbElements())
+		{
+			infoEmiseList[i] = (Float) this.informationRecue.iemeElement(i) + (Float) bruitBlanc.iemeElement(i);
+		}
+		this.informationEmise = new Information(infoEmiseList);
 	}
 	
 	public boolean equals (Object obj) {
