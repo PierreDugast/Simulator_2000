@@ -42,7 +42,7 @@ public class RecepteurNrzt<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		
 		// Remplissage du tableau de boolean en fonction des valeurs des échantillons de l'information reçu
 		for(int i=0 ; i<informationRecue.nbElements() ; i++) {
-			if(i%nbEchantillon/2==0 && i%10!=0) {
+			if(i%15==0 && i%30!=0) {
 				String elementI = informationRecue.iemeElement(i).toString();
 				float valeurElementI = Float.parseFloat(elementI);
 				if(valeurElementI>amplitudeMax/2) {
@@ -57,12 +57,14 @@ public class RecepteurNrzt<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		
 		// Création de l'information contenant les valeur du tableau de boolean créé dans la boucle précèdente
 		this.informationEmise = new Information(emission);
-		
+		System.out.println(informationEmise);
 		// Envoie de l'information mise en forme vers les destinations connectées
 		for(int j=0;j<destinationsConnectees.size();j++){
 			destinationsConnectees.get(j).recevoir(this.informationEmise);
 		}		
 	}
+	
+	
 	public boolean equals (Object obj) {
 		return (obj instanceof RecepteurNrzt)&& 
 				(((RecepteurNrzt)obj).nbEchantillon== this.nbEchantillon) &&
