@@ -60,10 +60,11 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 
 	}
 	
-	
-	public float calculSigma(float puissanceBruit, float SNR) {
-		return SNR;
-		
+	public float calculSigma(float puissanceSignal, float SNR) {
+		float sigma = 0;
+		//calcul la valeur de sigma en fonction de la puissance du signal et du SNR
+		sigma = (float) Math.sqrt(puissanceSignal/Math.pow(10, (SNR/10)));
+		return sigma;
 	}
 	
 	public Information<Float> generationBruitBlanc (Float sigma){
