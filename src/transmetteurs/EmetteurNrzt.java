@@ -153,7 +153,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 					}
 					
 				}
-			} else if(i==0) {
+			} else if(i==0 && informationRecue.nbElements()>1) {
 				//Ici on ne s'intéresse qu'au premier symbole
 				//Cas ou le symbole est true et le suivant est false 
 				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("true") && informationRecue.iemeElement(i+1).toString().equalsIgnoreCase("false")) {
@@ -204,7 +204,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 					}
 				}
 			//Ici on ne s'intéresse qu'au dernier symbole
-			} else if (i==(informationRecue.nbElements()-1)) {
+			} else if (i==(informationRecue.nbElements()-1) && informationRecue.nbElements()>1) {
 				//Cas ou le symbole est true et le précèdent est false
 				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("true") && informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("false")) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
@@ -238,7 +238,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 						} else if (compteurEchantillon<symbolCourant+2*tier){
 							emission[compteurEchantillon] = amplitudeMin;
 						} else if (compteurEchantillon<symbolCourant+3*tier) {
-							emission[compteurEchantillon] = amplitudeMin-(compteurEchantillon-symbolCourant-2*tier)*amplitudeMin/tier;
+							emission[compteurEchantillon] = (symbolCourant+nbEchantillon-compteurEchantillon)*amplitudeMin/tier;
 						}
 						compteurEchantillon++;
 					}
@@ -250,7 +250,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 						if (compteurEchantillon<symbolCourant+2*tier){
 							emission[compteurEchantillon] = amplitudeMin;
 						} else if (compteurEchantillon<symbolCourant+3*tier) {
-							emission[compteurEchantillon] = (compteurEchantillon-symbolCourant-2*tier)*amplitudeMin/tier;
+							emission[compteurEchantillon] = (symbolCourant+nbEchantillon-compteurEchantillon)*amplitudeMin/tier;
 						}
 						compteurEchantillon++;
 					}
