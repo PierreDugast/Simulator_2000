@@ -18,6 +18,7 @@ import information.InformationNonConforme;
 public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 {
 	
+	
 	/**
 	 * Constructeur permettant de créer un émetteur NRZT à partir du constructeur de transmetteur avec trois parammètres
 	 * @param nbEchantillon
