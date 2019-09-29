@@ -168,6 +168,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 						compteurEchantillon++;
 					}
 				}
+				//Cas ou le symbole est true et le suivant est true
 				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("true") && informationRecue.iemeElement(i+1).toString().equalsIgnoreCase("true")) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						if (compteurEchantillon<symbolCourant+tier) {
@@ -178,6 +179,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 						compteurEchantillon++;
 					}
 				}
+				//Cas ou le symbole est false et le suivant est true
 				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("false") && informationRecue.iemeElement(i+1).toString().equalsIgnoreCase("true")) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						if (compteurEchantillon<symbolCourant+tier) {
@@ -190,6 +192,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 						compteurEchantillon++;
 					}
 				}
+				//Cas ou le symbole est false et le suivant est false
 				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("false") && informationRecue.iemeElement(i+1).toString().equalsIgnoreCase("false") ) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						if (compteurEchantillon<symbolCourant+tier) {
@@ -202,6 +205,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 				}
 			//Ici on ne s'intéresse qu'au dernier symbole
 			} else if (i==(informationRecue.nbElements()-1)) {
+				//Cas ou le symbole est true et le précèdent est false
 				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("true") && informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("false")) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						if (compteurEchantillon<symbolCourant+tier) {
@@ -214,6 +218,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 						compteurEchantillon++;
 					}
 				}
+				//Cas ou le symbole est true et le précèdent est true
 				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("true") && informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("true")) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						if (compteurEchantillon<symbolCourant+2*tier){
@@ -224,6 +229,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 						compteurEchantillon++;
 					}
 				}
+				//Cas ou le symbole est false et le précèdent est true
 				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("false") && informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("true") ) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						emission[compteurEchantillon] = amplitudeMin;
@@ -237,6 +243,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 						compteurEchantillon++;
 					}
 				}
+				//Cas ou le symbole est false et le précèdent est false
 				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("false") && informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("false")) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						emission[compteurEchantillon] = amplitudeMin;
@@ -249,11 +256,6 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 					}
 				}
 			}
-			/*
-			for(int k=0;k<nbEchantillon;k++) {
-				//System.out.print(informationRecue.iemeElement(k).toString()+"\n");
-			}
-			System.out.println("\nmot");*/
 		}
 		//Création de l'information à émettre
 		this.informationEmise = new Information(emission);
@@ -265,16 +267,9 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 			destinationsConnectees.get(j).recevoir(this.informationEmise);
 		}
 		
-	}
-	/*
-	public boolean equalsElement(Boolean trueOrFalse) {
-		if(informationRecue.iemeElement(i)==trueOrFalse) {
-			return true;
-		}
-		return false;
-	}*/
+	}	
 	
-	
+	//Equals de Guigui
 	public boolean equals(Object o)
 	{
 		Boolean rep = false;
@@ -285,7 +280,6 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 			if ((e.amplitudeMax==this.amplitudeMax)&&(e.amplitudeMin==this.amplitudeMin)&&(e.nbEchantillon==this.nbEchantillon))
 				rep = true;
 		}
-		
 		return rep;
 	}
 
