@@ -40,7 +40,6 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 	 */
 	public void emettre() throws InformationNonConforme {
 		Float [] emission = new Float[this.informationRecue.nbElements()*this.nbEchantillon];
-		System.out.println(informationRecue);
 		int compteurEchantillon=0;
 		int tier=nbEchantillon/3;
 		//Boucle de mise en forme de l'information
@@ -240,8 +239,6 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		}
 		//Création de l'information à émettre
 		this.informationEmise = new Information(emission);
-		System.out.println(informationEmise);
-		System.out.println(informationEmise.nbElements());
 		
 		//Envoie l'information aux différentes destinations connectees présente dans la variable destinationsConnectees
 		for(int j=0;j<destinationsConnectees.size();j++){

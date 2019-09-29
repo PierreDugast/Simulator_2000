@@ -25,7 +25,7 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 	
 	public void emettre() throws InformationNonConforme 
 	{
-		Float seuil = (amplitudeMax - amplitudeMin)/2); 
+		Float seuil = (amplitudeMax - amplitudeMin)/2;
 		Boolean [] emission = new Boolean [this.informationRecue.nbElements()/this.nbEchantillon];
 		//compteur du nombre de "packet" de taille nbElement parcourrut
 		int nbPacket = 0;
@@ -35,14 +35,11 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		Boolean value = false;
 		//tant qu'il reste un element non parcourrut dans la liste
 		
-		
 		while((nbPacket*this.nbEchantillon+i)<this.informationRecue.nbElements())
 		{
 			while ((i<this.nbEchantillon))
 			{
 				//Si la valeur de l'information actuelle est celle de l'amplitude max, c'est que le packet est forcément un 1 logique.
-				System.out.println(this.informationRecue.iemeElement((nbPacket)*this.nbEchantillon+i));
-				System.out.print(" | "+seuil);
 				if (((Float)this.informationRecue.iemeElement((nbPacket)*this.nbEchantillon+i) >= seuil))
 				{
 					//Assigner la valeur dans la liste de sortie
