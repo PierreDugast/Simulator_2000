@@ -40,15 +40,19 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 	 */
 	public void emettre() throws InformationNonConforme {
 		Float [] emission = new Float[this.informationRecue.nbElements()*this.nbEchantillon];
+		System.out.println(informationRecue);
 		int compteurEchantillon=0;
 		int tier=nbEchantillon/3;
 		//Boucle de mise en forme de l'information
 		for(int i=0 ; i<informationRecue.nbElements() ; i++) {
 			int symbolCourant=compteurEchantillon;
+			//Ici on ne s'intéresse qu'aux symboles entre le premier et le dernier exclu
 			if(i>=1 && i<(informationRecue.nbElements()-1)) {
-				//Cas ou le symbole est true, que le suivant est false et que le précèdent est false
+				//Cas ou le symbole est true
 				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("true")) {
+					//Cas ou le symbole est true et le suivant false
 					if(informationRecue.iemeElement(i+1).toString().equalsIgnoreCase("false")) {
+						//cas ou le symbole est true, le suivant est false et le précèdent est false
 						if( informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("false")) {
 							while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 								if (compteurEchantillon<symbolCourant+tier) {
@@ -61,6 +65,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 								compteurEchantillon++;
 							}
 						}
+						//cas ou le symbole est true, le suivant est false et le précèdent est true
 						if( informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("true")) {
 							while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 								if (compteurEchantillon<symbolCourant+2*tier){
@@ -72,7 +77,9 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 							}
 						}
 					}
+					//cas ou le symbole est true, le suivant est true
 					if(informationRecue.iemeElement(i+1).toString().equalsIgnoreCase("true")) {
+						//cas ou le symbole est true, le suivant est true et le précèdent est false
 						if( informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("false")) {
 							while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 								if (compteurEchantillon<symbolCourant+tier) {
@@ -83,6 +90,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 								compteurEchantillon++;
 							}
 						}
+						//cas ou le symbole est true, le suivant est true et le précèdent est true
 						if( informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("true")) {
 							while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 							    emission[compteurEchantillon] = amplitudeMax;
@@ -92,8 +100,11 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 						
 					}
 				}
+				//cas ou le symbole est false
 				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("false")) {
+					//Cas ou le symbole est false et le suivant est true
 					if(informationRecue.iemeElement(i+1).toString().equalsIgnoreCase("true")) {
+						//Cas ou le symbole est false, le suivant est true et le précèdent est true
 						if( informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("true")) {
 							while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 								if (compteurEchantillon<symbolCourant+tier) {
@@ -106,6 +117,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 								compteurEchantillon++;
 							}
 						}
+						//Cas ou le symbole est false, le suivant est true et le précèdent est false
 						if( informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("false")) {
 							while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 								if (compteurEchantillon<symbolCourant+2*tier){
@@ -117,7 +129,9 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 							}
 						}
 					}
+					//Cas ou le symbole est false, le suivant est false
 					if(informationRecue.iemeElement(i+1).toString().equalsIgnoreCase("false")) {
+						//Cas ou le symbole est false, le suivant est false et le précèdent est true
 						if( informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("true")) {
 							while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 								if (compteurEchantillon<symbolCourant+tier) {
@@ -128,6 +142,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 								compteurEchantillon++;
 							}
 						}
+						//Cas ou le symbole est false, le suivant est false et le précèdent est false
 						if( informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("false")) {
 							while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 							    emission[compteurEchantillon] = amplitudeMin;
@@ -139,6 +154,8 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 					
 				}
 			} else if(i==0) {
+				//Ici on ne s'intéresse qu'au premier symbole
+				//Cas ou le symbole est true et le suivant est false 
 				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("true") && informationRecue.iemeElement(i+1).toString().equalsIgnoreCase("false")) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						if (compteurEchantillon<symbolCourant+tier) {
@@ -183,6 +200,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 						compteurEchantillon++;
 					}
 				}
+			//Ici on ne s'intéresse qu'au dernier symbole
 			} else if (i==(informationRecue.nbElements()-1)) {
 				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("true") && informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("false")) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
@@ -214,7 +232,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 						} else if (compteurEchantillon<symbolCourant+2*tier){
 							emission[compteurEchantillon] = amplitudeMin;
 						} else if (compteurEchantillon<symbolCourant+3*tier) {
-							emission[compteurEchantillon] = amplitudeMin-(compteurEchantillon-symbolCourant)*amplitudeMin/tier;
+							emission[compteurEchantillon] = amplitudeMin-(compteurEchantillon-symbolCourant-2*tier)*amplitudeMin/tier;
 						}
 						compteurEchantillon++;
 					}
@@ -225,7 +243,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 						if (compteurEchantillon<symbolCourant+2*tier){
 							emission[compteurEchantillon] = amplitudeMin;
 						} else if (compteurEchantillon<symbolCourant+3*tier) {
-							emission[compteurEchantillon] = (compteurEchantillon-symbolCourant)*amplitudeMin/tier;
+							emission[compteurEchantillon] = (compteurEchantillon-symbolCourant-2*tier)*amplitudeMin/tier;
 						}
 						compteurEchantillon++;
 					}
@@ -239,6 +257,8 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		}
 		//Création de l'information à émettre
 		this.informationEmise = new Information(emission);
+		System.out.println(informationEmise);
+		System.out.println(informationEmise.nbElements());
 		
 		//Envoie l'information aux différentes destinations connectees présente dans la variable destinationsConnectees
 		for(int j=0;j<destinationsConnectees.size();j++){
