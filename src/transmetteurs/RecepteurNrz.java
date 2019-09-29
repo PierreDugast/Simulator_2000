@@ -7,11 +7,13 @@ import information.Information;
 
 public class RecepteurNrz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 {
-
+	Float seuil;
+	
 	public RecepteurNrz(int nbEchantillon, Float amplitudeMax, Float amplitudeMin) throws AnalogicArgumentException 
 	{
 		super(nbEchantillon, amplitudeMax, amplitudeMin);
-		// TODO Auto-generated constructor stub
+		//le seuil est egal a la difference des deux amplitudes divisees par 2 
+		seuil = (amplitudeMax - amplitudeMin) / 2; 
 	}
 
 	@Override
@@ -28,7 +30,7 @@ public class RecepteurNrz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 			while (i<this.nbEchantillon)
 			{
 				//Si la valeur de l'information actuelle est celle de l'amplitude max, c'est que la packet est forcément un 1 logique.
-				if (this.informationRecue.iemeElement(nbPacket*this.nbEchantillon+i)==this.amplitudeMax)
+				if ((float) this.informationRecue.iemeElement(nbPacket*this.nbEchantillon+i) >= (float) seuil)
 				{
 					//Assigner la valeur dans la liste de sortie
 					emission[nbPacket] = true;
@@ -36,7 +38,7 @@ public class RecepteurNrz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 					
 			
 				}
-				else if (this.informationRecue.iemeElement(nbPacket*this.nbEchantillon+i)==this.amplitudeMin) {
+				else if ((float) this.informationRecue.iemeElement(nbPacket*this.nbEchantillon+i) <= (float) seuil) {
 					emission[nbPacket] = false;
 					
 				}
