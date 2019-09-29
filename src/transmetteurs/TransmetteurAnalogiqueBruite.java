@@ -95,7 +95,7 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 		}
 		Information<Float> generationBruitBlanc = new Information<Float>(bruitBlanc);
 		
-		this.exportInformation(generationBruitBlanc); //permet d'exporter le bruit blanc créé vers un fichier txt
+		//this.exportInformation(generationBruitBlanc); //permet d'exporter le bruit blanc créé vers un fichier txt
 		return generationBruitBlanc;
 	}
 	
