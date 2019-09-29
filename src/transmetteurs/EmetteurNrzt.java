@@ -18,7 +18,6 @@ import information.InformationNonConforme;
 public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 {
 	
-	
 	/**
 	 * Constructeur permettant de créer un émetteur NRZT à partir du constructeur de transmetteur avec trois parammètres
 	 * @param nbEchantillon
@@ -41,7 +40,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 	 */
 	public void emettre() throws InformationNonConforme {
 		Float [] emission = new Float[this.informationRecue.nbElements()*this.nbEchantillon];
-		
+		System.out.println(informationRecue);
 		int compteurEchantillon=0;
 		int tier=nbEchantillon/3;
 		//Boucle de mise en forme de l'information
@@ -49,43 +48,43 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 			int symbolCourant=compteurEchantillon;
 			if(i>=1 && i<(informationRecue.nbElements()-1)) {
 				//Cas ou le symbole est true, que le suivant est false et que le précèdent est false
-				if(informationRecue.iemeElement(i).equals(true)) {
-					if(informationRecue.iemeElement(i+1).equals(false)) {
-						if( informationRecue.iemeElement(i-1).equals(false) ) {
+				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("true")) {
+					if(informationRecue.iemeElement(i+1).toString().equalsIgnoreCase("false")) {
+						if( informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("false")) {
 							while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 								if (compteurEchantillon<symbolCourant+tier) {
 									emission[compteurEchantillon] = (compteurEchantillon-symbolCourant)*amplitudeMax/tier;
 								} else if (compteurEchantillon<symbolCourant+2*tier && compteurEchantillon>=symbolCourant+tier){
 									emission[compteurEchantillon] = amplitudeMax;
 								} else if (compteurEchantillon<symbolCourant+3*tier) {
-									emission[compteurEchantillon] = amplitudeMax - (compteurEchantillon-symbolCourant)*amplitudeMax/tier;
+									emission[compteurEchantillon] = (symbolCourant+nbEchantillon-compteurEchantillon)*amplitudeMax/tier;
 								}
 								compteurEchantillon++;
 							}
 						}
-						if( informationRecue.iemeElement(i-1).equals(true) ) {
+						if( informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("true")) {
 							while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 								if (compteurEchantillon<symbolCourant+2*tier){
 									emission[compteurEchantillon] = amplitudeMax;
 								} else if (compteurEchantillon<symbolCourant+3*tier) {
-									emission[compteurEchantillon] = amplitudeMax - (compteurEchantillon-symbolCourant)*amplitudeMax/tier;
+									emission[compteurEchantillon] = (symbolCourant+nbEchantillon-compteurEchantillon)*amplitudeMax/tier;
 								}
 								compteurEchantillon++;
 							}
 						}
 					}
-					if(informationRecue.iemeElement(i+1).equals(true)) {
-						if( informationRecue.iemeElement(i-1).equals(false) ) {
+					if(informationRecue.iemeElement(i+1).toString().equalsIgnoreCase("true")) {
+						if( informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("false")) {
 							while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 								if (compteurEchantillon<symbolCourant+tier) {
 									emission[compteurEchantillon] = (compteurEchantillon-symbolCourant)*amplitudeMax/tier;
-								} else if (compteurEchantillon<symbolCourant+3*tier && compteurEchantillon>symbolCourant+tier){
+								} else if (compteurEchantillon<symbolCourant+3*tier){
 									emission[compteurEchantillon] = amplitudeMax;
 								}
 								compteurEchantillon++;
 							}
 						}
-						if( informationRecue.iemeElement(i-1).equals(true) ) {
+						if( informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("true")) {
 							while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 							    emission[compteurEchantillon] = amplitudeMax;
 								compteurEchantillon++;
@@ -94,33 +93,33 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 						
 					}
 				}
-				if(informationRecue.iemeElement(i).equals(false)) {
-					if(informationRecue.iemeElement(i+1).equals(true)) {
-						if( informationRecue.iemeElement(i-1).equals(true) ) {
+				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("false")) {
+					if(informationRecue.iemeElement(i+1).toString().equalsIgnoreCase("true")) {
+						if( informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("true")) {
 							while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 								if (compteurEchantillon<symbolCourant+tier) {
 									emission[compteurEchantillon] = (compteurEchantillon-symbolCourant)*amplitudeMin/tier;
 								} else if (compteurEchantillon<symbolCourant+2*tier){
 									emission[compteurEchantillon] = amplitudeMin;
 								} else if (compteurEchantillon<symbolCourant+3*tier) {
-									emission[compteurEchantillon] = amplitudeMin - (compteurEchantillon-symbolCourant)*amplitudeMin/tier;
+									emission[compteurEchantillon] = amplitudeMin - (compteurEchantillon-symbolCourant-2*tier)*amplitudeMin/tier;
 								}
 								compteurEchantillon++;
 							}
 						}
-						if( informationRecue.iemeElement(i-1).equals(false) ) {
+						if( informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("false")) {
 							while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 								if (compteurEchantillon<symbolCourant+2*tier){
 									emission[compteurEchantillon] = amplitudeMin;
 								} else if (compteurEchantillon<symbolCourant+3*tier) {
-									emission[compteurEchantillon] = amplitudeMin - (compteurEchantillon-symbolCourant)*amplitudeMin/tier;
+									emission[compteurEchantillon] = amplitudeMin - (compteurEchantillon-symbolCourant-2*tier)*amplitudeMin/tier;
 								}
 								compteurEchantillon++;
 							}
 						}
 					}
-					if(informationRecue.iemeElement(i+1).equals(false)) {
-						if( informationRecue.iemeElement(i-1).equals(true) ) {
+					if(informationRecue.iemeElement(i+1).toString().equalsIgnoreCase("false")) {
+						if( informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("true")) {
 							while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 								if (compteurEchantillon<symbolCourant+tier) {
 									emission[compteurEchantillon] = (compteurEchantillon-symbolCourant)*amplitudeMin/tier;
@@ -130,7 +129,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 								compteurEchantillon++;
 							}
 						}
-						if( informationRecue.iemeElement(i-1).equals(false) ) {
+						if( informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("false")) {
 							while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 							    emission[compteurEchantillon] = amplitudeMin;
 								compteurEchantillon++;
@@ -141,19 +140,19 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 					
 				}
 			} else if(i==0) {
-				if(informationRecue.iemeElement(i).equals(true) && informationRecue.iemeElement(i+1).equals(false)) {
+				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("true") && informationRecue.iemeElement(i+1).toString().equalsIgnoreCase("false")) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						if (compteurEchantillon<symbolCourant+tier) {
 							emission[compteurEchantillon] = (compteurEchantillon-symbolCourant)*amplitudeMax/tier;
 						} else if (compteurEchantillon<symbolCourant+2*tier){
 							emission[compteurEchantillon] = amplitudeMax;
 						} else if (compteurEchantillon<symbolCourant+3*tier) {
-							emission[compteurEchantillon] = amplitudeMax - (compteurEchantillon-symbolCourant)*amplitudeMax/tier;
+							emission[compteurEchantillon] = (symbolCourant+nbEchantillon-compteurEchantillon)*amplitudeMax/tier;
 						}
 						compteurEchantillon++;
 					}
 				}
-				if(informationRecue.iemeElement(i).equals(true) && informationRecue.iemeElement(i+1).equals(true)) {
+				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("true") && informationRecue.iemeElement(i+1).toString().equalsIgnoreCase("true")) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						if (compteurEchantillon<symbolCourant+tier) {
 							emission[compteurEchantillon] = (compteurEchantillon-symbolCourant)*amplitudeMax/tier;
@@ -163,19 +162,19 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 						compteurEchantillon++;
 					}
 				}
-				if(informationRecue.iemeElement(i).equals(false) && informationRecue.iemeElement(i+1).equals(true) ) {
+				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("false") && informationRecue.iemeElement(i+1).toString().equalsIgnoreCase("true")) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						if (compteurEchantillon<symbolCourant+tier) {
 							emission[compteurEchantillon] = (compteurEchantillon-symbolCourant)*amplitudeMin/tier;
 						} else if (compteurEchantillon<symbolCourant+2*tier){
 							emission[compteurEchantillon] = amplitudeMin;
 						} else if (compteurEchantillon<symbolCourant+3*tier) {
-							emission[compteurEchantillon] = amplitudeMin-(compteurEchantillon-symbolCourant)*amplitudeMin/tier;
+							emission[compteurEchantillon] = amplitudeMin-(compteurEchantillon-symbolCourant-2*tier)*amplitudeMin/tier;
 						}
 						compteurEchantillon++;
 					}
 				}
-				if(informationRecue.iemeElement(i).equals(false) && informationRecue.iemeElement(i+1).equals(false) ) {
+				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("false") && informationRecue.iemeElement(i+1).toString().equalsIgnoreCase("false") ) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						if (compteurEchantillon<symbolCourant+tier) {
 							emission[compteurEchantillon] = (compteurEchantillon-symbolCourant)*amplitudeMin/tier;
@@ -186,19 +185,19 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 					}
 				}
 			} else if (i==(informationRecue.nbElements()-1)) {
-				if(informationRecue.iemeElement(i).equals(true) && informationRecue.iemeElement(i-1).equals(false)) {
+				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("true") && informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("false")) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						if (compteurEchantillon<symbolCourant+tier) {
 							emission[compteurEchantillon] = (compteurEchantillon-symbolCourant)*amplitudeMax/tier;
 						} else if (compteurEchantillon<symbolCourant+2*tier){
 							emission[compteurEchantillon] = amplitudeMax;
 						} else if (compteurEchantillon<symbolCourant+3*tier) {
-							emission[compteurEchantillon] = amplitudeMax - (compteurEchantillon-symbolCourant)*amplitudeMax/tier;
+							emission[compteurEchantillon] = (symbolCourant+nbEchantillon-compteurEchantillon)*amplitudeMax/tier;
 						}
 						compteurEchantillon++;
 					}
 				}
-				if(informationRecue.iemeElement(i).equals(true) && informationRecue.iemeElement(i-1).equals(true)) {
+				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("true") && informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("true")) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						if (compteurEchantillon<symbolCourant+2*tier){
 							emission[compteurEchantillon] = amplitudeMax;
@@ -208,7 +207,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 						compteurEchantillon++;
 					}
 				}
-				if(informationRecue.iemeElement(i).equals(false) && informationRecue.iemeElement(i-1).equals(true) ) {
+				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("false") && informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("true") ) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						emission[compteurEchantillon] = amplitudeMin;
 						if (compteurEchantillon<symbolCourant+tier) {
@@ -221,7 +220,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 						compteurEchantillon++;
 					}
 				}
-				if(informationRecue.iemeElement(i).equals(false) && informationRecue.iemeElement(i-1).equals(false) ) {
+				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("false") && informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("false")) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 						emission[compteurEchantillon] = amplitudeMin;
 						if (compteurEchantillon<symbolCourant+2*tier){
@@ -233,10 +232,11 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 					}
 				}
 			}
+			/*
 			for(int k=0;k<nbEchantillon;k++) {
-				System.out.print(emission[k]);
+				//System.out.print(informationRecue.iemeElement(k).toString()+"\n");
 			}
-			System.out.println("\nmot");
+			System.out.println("\nmot");*/
 		}
 		//Création de l'information à émettre
 		this.informationEmise = new Information(emission);
@@ -249,6 +249,14 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		}
 		
 	}
+	/*
+	public boolean equalsElement(Boolean trueOrFalse) {
+		if(informationRecue.iemeElement(i)==trueOrFalse) {
+			return true;
+		}
+		return false;
+	}*/
+	
 	
 	public boolean equals(Object o)
 	{
