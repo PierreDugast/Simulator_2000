@@ -46,6 +46,35 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		//Boucle de mise en forme de l'information
 		for(int i=0 ; i<informationRecue.nbElements() ; i++) {
 			int symbolCourant=compteurEchantillon;
+			//Ici on ne s'intéresse qu'aux informations ne contenant que 1 symbole
+			if(i==0 && informationRecue.nbElements()==1) {
+				//Cas ou le symbole est true
+				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("true")) {
+					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
+						if (compteurEchantillon<symbolCourant+tier) {
+							emission[compteurEchantillon] = (compteurEchantillon-symbolCourant)*amplitudeMax/tier;
+						} else if (compteurEchantillon<symbolCourant+2*tier){
+							emission[compteurEchantillon] = amplitudeMax;
+						} else if (compteurEchantillon<symbolCourant+3*tier) {
+							emission[compteurEchantillon] = (symbolCourant+nbEchantillon-compteurEchantillon)*amplitudeMax/tier;
+						}
+						compteurEchantillon++;
+					}
+				}
+				//Cas ou le symbole est false
+				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("false")) {
+					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
+						if (compteurEchantillon<symbolCourant+tier) {
+							emission[compteurEchantillon] = (compteurEchantillon-symbolCourant)*amplitudeMin/tier;
+						} else if (compteurEchantillon<symbolCourant+2*tier){
+							emission[compteurEchantillon] = amplitudeMin;
+						} else if (compteurEchantillon<symbolCourant+3*tier) {
+							emission[compteurEchantillon] = (symbolCourant+nbEchantillon-compteurEchantillon)*amplitudeMin/tier;
+						}
+						compteurEchantillon++;
+					}
+				}
+			}
 			//Ici on ne s'intéresse qu'aux symboles entre le premier et le dernier exclu
 			if(i>=1 && i<(informationRecue.nbElements()-1)) {
 				//Cas ou le symbole est true
@@ -57,7 +86,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 							while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
 								if (compteurEchantillon<symbolCourant+tier) {
 									emission[compteurEchantillon] = (compteurEchantillon-symbolCourant)*amplitudeMax/tier;
-								} else if (compteurEchantillon<symbolCourant+2*tier && compteurEchantillon>=symbolCourant+tier){
+								} else if (compteurEchantillon<symbolCourant+2*tier){
 									emission[compteurEchantillon] = amplitudeMax;
 								} else if (compteurEchantillon<symbolCourant+3*tier) {
 									emission[compteurEchantillon] = (symbolCourant+nbEchantillon-compteurEchantillon)*amplitudeMax/tier;
@@ -112,7 +141,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 								} else if (compteurEchantillon<symbolCourant+2*tier){
 									emission[compteurEchantillon] = amplitudeMin;
 								} else if (compteurEchantillon<symbolCourant+3*tier) {
-									emission[compteurEchantillon] = amplitudeMin - (compteurEchantillon-symbolCourant-2*tier)*amplitudeMin/tier;
+									emission[compteurEchantillon] = (symbolCourant+nbEchantillon-compteurEchantillon)*amplitudeMin/tier;
 								}
 								compteurEchantillon++;
 							}
@@ -123,7 +152,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 								if (compteurEchantillon<symbolCourant+2*tier){
 									emission[compteurEchantillon] = amplitudeMin;
 								} else if (compteurEchantillon<symbolCourant+3*tier) {
-									emission[compteurEchantillon] = amplitudeMin - (compteurEchantillon-symbolCourant-2*tier)*amplitudeMin/tier;
+									emission[compteurEchantillon] = (symbolCourant+nbEchantillon-compteurEchantillon)*amplitudeMin/tier;
 								}
 								compteurEchantillon++;
 							}
@@ -187,7 +216,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 						} else if (compteurEchantillon<symbolCourant+2*tier){
 							emission[compteurEchantillon] = amplitudeMin;
 						} else if (compteurEchantillon<symbolCourant+3*tier) {
-							emission[compteurEchantillon] = amplitudeMin-(compteurEchantillon-symbolCourant-2*tier)*amplitudeMin/tier;
+							emission[compteurEchantillon] = (symbolCourant+nbEchantillon-compteurEchantillon)*amplitudeMin/tier;
 						}
 						compteurEchantillon++;
 					}
