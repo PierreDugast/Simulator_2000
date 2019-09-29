@@ -1,6 +1,8 @@
 package transmetteurs;
 import information.Information;
 import information.InformationNonConforme;
+import java.util.*;
+import java.lang.*;
 
 /**
  * 
@@ -67,17 +69,26 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 		return sigma;
 	}
 	
-	public Information<Float> generationBruitBlanc (Float sigma){
+	public Information<Float> generationBruitBlanc (Float sigma)
+	{
+		Float [] bruitBlanc = new Float[this.informationRecue.nbElements()];
+		Random r = new Random();
+		int i = 0;
+		while(i<this.informationRecue.nbElements())
+		{
+			Double a1 = r.nextGaussian();
+			Double a2 = r.nextGaussian();
+			Double valueI;
+			valueI = sigma*Math.sqrt(-2*Math.log(1-a1))*Math.cos(2*Math.PI*a2);
+			bruitBlanc[i] = valueI.floatValue();
+			i++;
+		}
 		
-		
-		
-		
-		
-		return null;
-		
+		Information<Float> generationBruitBlanc = new Information<Float>(bruitBlanc);		
+		return generationBruitBlanc;
 	}
 	
-	public void ajoutSignalBruite (Information bruitBlanc) {
+	public void ajoutSignalBruite (Information<Float> bruitBlanc) {
 		
 	}
 	
