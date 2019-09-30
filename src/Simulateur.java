@@ -72,7 +72,6 @@ public class Simulateur {
     {
       	// analyser et récupérer les arguments
     	analyseArguments(args);
-    	
       	// assemblage des composants de la chaine de transmission pour le TP1 :
     	
       	if (messageAleatoire)
@@ -202,7 +201,7 @@ public class Simulateur {
 			else if (args[i].matches("-snr"))
 			{
 				i++;
-				if (args[i].matches("[0-9]{1,10}"))
+				if (args[i].matches("[-]?[0-9]{1,10}"))
 				{
 					this.SNR = new Float(args[i]);
 					this.isSNR = true;
@@ -282,12 +281,12 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	//String[] argsBis = {"-mess","1010101010","-s","-form","RZ","-ampl","-2","2"};
+    	String[] argsBis = {"-mess","1010101010","-s","-form","NRZT","-ampl","-2","2","-snr","-5"};
     	
 		try 
 		{
-			//simulateur = new Simulateur(argsBis); //(pour tester les arguments passés en argBis)
-			simulateur = new Simulateur(args);
+			simulateur = new Simulateur(argsBis); //(pour tester les arguments passés en argBis)
+			//simulateur = new Simulateur(args);
 		}
 		catch (Exception e) 
 		{
