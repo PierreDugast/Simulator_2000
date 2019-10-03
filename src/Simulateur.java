@@ -176,7 +176,7 @@ public class Simulateur {
 		        	i++;
 		        	if (args[i].matches("NRZ")||args[i].matches("NRZT")||args[i].matches("RZ")) 
 		        	{
-		        		if(args != null && args[i] !=null) {
+		        		if(args != null && args[i] ==null) {
 		        			this.messageAnalogicEncoding = args[i];
 		        		}
 		        	}
@@ -320,8 +320,8 @@ public class Simulateur {
     	
 		try 
 		{
-			simulateur = new Simulateur(argsBis); //(pour tester les arguments passés en argBis)
-			//simulateur = new Simulateur(args);
+			//simulateur = new Simulateur(argsBis); //(pour tester les arguments passés en argBis)
+			simulateur = new Simulateur(args);
 		}
 		catch (Exception e) 
 		{
