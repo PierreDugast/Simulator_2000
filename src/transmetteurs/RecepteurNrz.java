@@ -30,7 +30,7 @@ public class RecepteurNrz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 			while (i<this.nbEchantillon)
 			{
 				//Si la valeur de l'information actuelle est celle de l'amplitude max, c'est que la packet est forcément un 1 logique.
-				if ((float) this.informationRecue.iemeElement(nbPacket*this.nbEchantillon+i) >= (float) seuil)
+				if ((Float) this.informationRecue.iemeElement(nbPacket*this.nbEchantillon+i) >= (Float) seuil)
 				{
 					//Assigner la valeur dans la liste de sortie
 					emission[nbPacket] = true;
@@ -38,7 +38,7 @@ public class RecepteurNrz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 					
 			
 				}
-				else if ((float) this.informationRecue.iemeElement(nbPacket*this.nbEchantillon+i) <= (float) seuil) {
+				else if ((Float) this.informationRecue.iemeElement(nbPacket*this.nbEchantillon+i) <= (Float) seuil) {
 					emission[nbPacket] = false;
 					
 				}

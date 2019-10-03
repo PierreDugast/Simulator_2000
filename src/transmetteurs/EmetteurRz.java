@@ -32,7 +32,7 @@ public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 			for (int j=0; j < tier; j++) {
 				emission[i*nbEchantillon+j] =amplitudeMin; 
 				}
-			if((boolean) informationRecue.iemeElement(i)) {
+			if((Boolean) informationRecue.iemeElement(i)) {
 				for(int j=tier; j<2*tier; j++) {
 					emission[i*nbEchantillon+j]=amplitudeMax; 
 				}
