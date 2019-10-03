@@ -25,13 +25,13 @@ public class TransmetteurAnalogiqueMultitrajet<R,T> extends Transmetteur<R,T> {
 	@Override
 	public void emettre() throws InformationNonConforme 
 	{
-		this.informationEmise = this.creerMultitrajet(this.dtList, this.arList, this.informationRecue);
+		this.informationEmise = (Information<T>) this.creerMultitrajet(dtList, arList, informationRecue);
 		for(int j=0;j<destinationsConnectees.size();j++){
 			destinationsConnectees.get(j).recevoir(this.informationEmise);
 		}
 	}
 	
-	private Information<Float> creerMultitrajet(Integer[] dtList, Float[] arList, Information<Float> informationRecue) 
+	private Information<Float> creerMultitrajet(Integer[] dtList, Float[] arList, Information informationRecue) 
 	{
 		//Variable de type Information destinee a etre retounee
 		Information<Float> informationMultitrajet;
@@ -65,7 +65,7 @@ public class TransmetteurAnalogiqueMultitrajet<R,T> extends Transmetteur<R,T> {
 			i=0;
 			while (i<(informationRecue.nbElements()-dtList.length))
 			{
-				informationTrajet.add(arList[j]*informationRecue.iemeElement(i));
+				informationTrajet.add(arList[j]*((Float)informationRecue.iemeElement(i)));
 				i++;
 			}
 			
