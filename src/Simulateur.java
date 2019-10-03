@@ -170,19 +170,21 @@ public class Simulateur {
 	        	}
 	        	else 
 	        		throw new ArgumentsException("Valeur du parametre -mess invalide : " + args[i]);
-	        }
-	        else if (args[i].matches("-form"))
-	        {
-	        	i++;
-	        	if (args[i].matches("NRZ")||args[i].matches("NRZT")||args[i].matches("RZ")) 
-	        	{
-	        		this.messageAnalogicEncoding = args[i];
-	        	}
-	        	else
-	        		throw new ArgumentsException ("Valeur du parametre -form invalide : " + args[i]);
-	        }
-			else if (args[i].matches("-nbEch"))
-			{
+		        }
+		        else if (args[i].matches("-form"))
+		        {
+		        	i++;
+		        	if (args[i].matches("NRZ")||args[i].matches("NRZT")||args[i].matches("RZ")) 
+		        	{
+		        		if(args != null && args[i] !=null) {
+		        			this.messageAnalogicEncoding = args[i];
+		        		}
+		        	}
+		        	else
+		        		throw new ArgumentsException ("Valeur du parametre -form invalide : " + args[i]);
+		        }
+				else if (args[i].matches("-nbEch"))
+				{
 				i++;
 				if (args[i].matches("[0-9]{1,10}"))
 					this.nbEchantillon = new Integer(args[i]);
@@ -241,6 +243,8 @@ public class Simulateur {
 		System.out.print("Liste décalages : "+dtList[0]+" "+dtList[1]+" "+dtList[2]+" "+dtList[3]+" "+dtList[4]);
 		
 		System.out.print(" | Liste amplitudes : "+arList[0]+" "+arList[1]+" "+arList[2]+" "+arList[3]+" "+arList[4]);
+		
+		System.out.print(messageAnalogicEncoding);
 		
 		
 	}
@@ -312,7 +316,7 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-mess","1234","-s","-form","NRZ","-ampl","-2","2","-snr","10","-ti","3","4","5","6","7","8","9","10","5","6"};
+    	String[] argsBis = {"-mess","1234","-s","-form","NRZT","-ampl","-2","2","-snr","10","-ti","3","4","5","6","7","8","9","10","5","6"};
     	
 		try 
 		{
