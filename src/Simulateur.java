@@ -42,6 +42,11 @@ public class Simulateur {
     private boolean isSNR = false; 
     /** indique la valeur du SNR dans le cas d'un signal analogique bruitï¿½*/
     private Float SNR;
+    /** liste contenant les décalages (en nombre d'échantillons) dans le cas d'une transmission multi-trajets. **/
+    private Integer [] dtList = new Integer[5];
+    /** liste contenant les (en nombre d'échantillons) dans le cas d'une transmission multi-trajets. **/
+    private Float [] arList = new Float[5];
+    
     
    	
     /** le  composant Source de la chaine de transmission */
@@ -209,9 +214,35 @@ public class Simulateur {
 				else
 	        		throw new ArgumentsException ("Valeur du parametre -nbEch invalide : " + args[i]);
 			}
+			else if (args[i].matches("-ti"))
+			{
+					int j=0; //compteur pour remplir dtList et ArList
+					while (i<args.length-1) {
+					i++;
+					if (args[i].matches("[0-9]{1,10}")) {
+						this.dtList[j] = new Integer(args[i]);
+					}
+					else
+		        		throw new ArgumentsException ("Valeur du parametre -ti dt invalide : " + args[i]);
+					i++;
+					if (args[i].matches("[0-9]{1,10}")) {
+						this.arList[j] = new Float(args[i]);
+						j++;
+					}
+					
+					else
+		        		throw new ArgumentsException ("Valeur du parametre -ti -ar invalide : " + args[i]);
+				}
+			}
 	        else 
 	        	throw new ArgumentsException("Option invalide :"+ args[i]);
+			
 		}
+		System.out.print("Liste décalages : "+dtList[0]+" "+dtList[1]+" "+dtList[2]+" "+dtList[3]+" "+dtList[4]);
+		
+		System.out.print(" | Liste amplitudes : "+arList[0]+" "+arList[1]+" "+arList[2]+" "+arList[3]+" "+arList[4]);
+		
+		
 	}
      
     
@@ -281,7 +312,7 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-mess","1234","-s","-form","NRZ","-ampl","-2","2","-snr","10"};
+    	String[] argsBis = {"-mess","1234","-s","-form","NRZ","-ampl","-2","2","-snr","10","-ti","3","4","5","6","7","8","9","10","5","6"};
     	
 		try 
 		{
