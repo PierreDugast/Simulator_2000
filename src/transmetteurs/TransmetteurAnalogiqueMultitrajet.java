@@ -13,6 +13,8 @@ public class TransmetteurAnalogiqueMultitrajet<R,T> extends Transmetteur<R,T> {
 		super();
 		this.dtList=dtList;
 		this.arList=arList;
+		
+		System.out.println(""+this.dtList.toString());
 	}
 	
 	@Override
@@ -39,14 +41,19 @@ public class TransmetteurAnalogiqueMultitrajet<R,T> extends Transmetteur<R,T> {
 		Information<Float> informationTrajet; 
 		//Liked list permettant de stocker tous les informationTrajet.
 		LinkedList<Information<Float>> informationMultitrajetList = new LinkedList();
-
+		
+		//comptage du nombre de trajets à effectuer (la liste passee en argument est toujours de même longeur)
+		int nbTrajet = 0;
+		while (this.dtList[nbTrajet] != null)
+			nbTrajet++;
+		
 		//j est l'indice pour parcourrir les trajets
 		int j = 0;
 		//i est l'indice permettant de parcourrir un trajet.
-		int i;
+		int i=0;
 		
 		//Tant qu'il reste des trajets à effectuer
-		while (j<dtList.length)
+		while (j<nbTrajet)
 		{
 			//On instancie un nouveau trajet
 			informationTrajet = new Information<Float>();
@@ -63,7 +70,7 @@ public class TransmetteurAnalogiqueMultitrajet<R,T> extends Transmetteur<R,T> {
 			//Puis on ajoute les éléments de l'informationRecue initialement en enlevant les éléments finaux.
 			//On change également l'amplitude (en fonction du trajet) des valeurs de l'informationRecue.
 			i=0;
-			while (i<(informationRecue.nbElements()-dtList.length))
+			while (i<(informationRecue.nbElements()-dtList[j]))
 			{
 				informationTrajet.add(arList[j]*((Float)informationRecue.iemeElement(i)));
 				i++;
@@ -78,16 +85,24 @@ public class TransmetteurAnalogiqueMultitrajet<R,T> extends Transmetteur<R,T> {
 		//On ajoute également le trajet direct (informationRecue) à la LinkedList :
 		informationMultitrajetList.add(informationRecue);
 		
+		
+		
+		System.out.println("\nsignal refléchi : "+informationMultitrajetList.get(0).toString());
+		System.out.println("\nsignal : "+informationMultitrajetList.get(1).toString());
+		
+		
+		
+		
 		//une fois tous les trajets stockés dans la likedList d'Informations informationMultitrajetsList
 		//on additionne chaque élément à son emplacement dans l'Information retounee informationMutlitrajet :
 		i = 0;
 		Float [] info = new Float[informationRecue.nbElements()];
 		
-		while(i<informationMultitrajetList.size())
+		while(i<informationRecue.nbElements())
 		{
 			info[i] = 0f;
 			j=0;
-			while(j<dtList.length)
+			while(j<informationMultitrajetList.size())
 			{
 				info[i] = info[i] + informationMultitrajetList.get(j).iemeElement(i);
 				j++;
@@ -97,6 +112,8 @@ public class TransmetteurAnalogiqueMultitrajet<R,T> extends Transmetteur<R,T> {
 		
 		//On crée l'information à envoyer :
 		informationMultitrajet = new Information<Float>(info);
+		
+		System.out.println("\nsortie: "+informationMultitrajet.toString());
 		
 		return informationMultitrajet;
 	}

@@ -42,6 +42,8 @@ public class Simulateur {
     private boolean isSNR = false; 
     /** indique la valeur du SNR dans le cas d'un signal analogique bruitï¿½*/
     private Float SNR;
+    /**indique l'utilisation d'un transmetteur multi trajet*/
+    private Boolean isTi = false;
     /** liste contenant les décalages (en nombre d'échantillons) dans le cas d'une transmission multi-trajets. **/
     private Integer [] dtList = new Integer[5];
     /** liste contenant les (en nombre d'échantillons) dans le cas d'une transmission multi-trajets. **/
@@ -54,7 +56,9 @@ public class Simulateur {
     /** le composant emetteur analogique de la chaine de transmission */
     public Transmetteur <Boolean,Float> emetteurAnalogique = null;
     /** le  composant Transmetteur analogique parfait logique de la chaine de transmission */
-    public Transmetteur <Float, Float>  transmetteurAnalogique = new TransmetteurParfait();
+    public Transmetteur <Float, Float>  transmetteurAnalogique1 = new TransmetteurParfait();
+    /** un deuxième transmetteur analogique (par défaut parfait)*/
+    public Transmetteur <Float,Float> transmetteurAnalogique2 = new TransmetteurParfait();
     /** le composant recepteur analogique de la chaine de transmission */
     public Transmetteur <Float, Boolean> recepteurAnalogique = null;
     /** le  composant Destination de la chaine de transmission */
@@ -98,14 +102,19 @@ public class Simulateur {
       		this.emetteurAnalogique = new EmetteurNrzt(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
       		this.recepteurAnalogique = new RecepteurNrzt(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
       	}
-      	if (this.isSNR)
-      		this.transmetteurAnalogique = new TransmetteurAnalogiqueBruite(this.nbEchantillon,  this.SNR);
+      	if (this.isTi)
+      		this.transmetteurAnalogique1 = new TransmetteurAnalogiqueMultitrajet(this.dtList,this.arList); 
       	
+      	if (this.isSNR)
+      		this.transmetteurAnalogique2 = new TransmetteurAnalogiqueBruite(this.nbEchantillon,  this.SNR);
+
       	this.destination = new DestinationFinale();
       	
+      	
       	this.source.connecter(this.emetteurAnalogique);
-      	this.emetteurAnalogique.connecter(this.transmetteurAnalogique);
-      	this.transmetteurAnalogique.connecter(this.recepteurAnalogique);
+      	this.emetteurAnalogique.connecter(this.transmetteurAnalogique1);
+      	this.transmetteurAnalogique1.connecter(this.transmetteurAnalogique2);
+      	this.transmetteurAnalogique2.connecter(this.recepteurAnalogique);
       	this.recepteurAnalogique.connecter(this.destination);
     }
    
@@ -219,6 +228,7 @@ public class Simulateur {
 			else if (args[i].matches("-ti"))
 			{
 					int j=0; //compteur pour remplir dtList et ArList
+					this.isTi = true;
 					while (i<args.length-1) {
 					i++;
 					if (args[i].matches("[0-9]{1,10}")) {
@@ -227,24 +237,19 @@ public class Simulateur {
 					else
 		        		throw new ArgumentsException ("Valeur du parametre -ti dt invalide : " + args[i]);
 					i++;
-					if (args[i].matches("[0-9]{1,10}")) {
+					if (args[i].matches("[0-9]*.[0-9]")) {
 						this.arList[j] = new Float(args[i]);
 						j++;
 					}
-					
 					else
-		        		throw new ArgumentsException ("Valeur du parametre -ti -ar invalide : " + args[i]);
+		        		throw new ArgumentsException ("Valeur du parametre -ti ar invalide : " + args[i]);
 				}
 			}
 	        else 
 	        	throw new ArgumentsException("Option invalide :"+ args[i]);
 			
 		}
-		System.out.print("Liste décalages : "+dtList[0]+" "+dtList[1]+" "+dtList[2]+" "+dtList[3]+" "+dtList[4]);
-		
-		System.out.print(" | Liste amplitudes : "+arList[0]+" "+arList[1]+" "+arList[2]+" "+arList[3]+" "+arList[4]);
-		
-		System.out.print(messageAnalogicEncoding);
+		System.out.print("Liste décalages : "+dtList[0]+"\n"+arList.toString());
 		
 		
 	}
@@ -268,7 +273,7 @@ public class Simulateur {
       		SondeAnalogique sonde2 = new SondeAnalogique("Sonde sortie emetteur analogique");
       		sonde2.recevoir(this.emetteurAnalogique.getInformationEmise());
       		SondeAnalogique sonde3 = new SondeAnalogique("Sonde sortie transmetteur analogique");
-      		sonde3.recevoir(this.transmetteurAnalogique.getInformationEmise());
+      		sonde3.recevoir(this.transmetteurAnalogique2.getInformationEmise());
       		SondeLogique sonde4 = new SondeLogique("Sonde sortie recepteur analogique",720);
       		sonde4.recevoir(this.recepteurAnalogique.getInformationEmise());
       	}
@@ -316,15 +321,16 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-mess","1234","-s","-form","NRZT","-ampl","-2","2","-snr","10","-ti","3","4","5","6","7","8","9","10","5","6"};
+    	String[] argsBis = {"-mess","00001111","-s","-form","NRZT","-ti","3","0.2"};
     	
 		try 
 		{
-			//simulateur = new Simulateur(argsBis); //(pour tester les arguments passÃ©s en argBis)
-			simulateur = new Simulateur(args);
+			simulateur = new Simulateur(argsBis); //(pour tester les arguments passÃ©s en argBis)
+			//simulateur = new Simulateur(args);
 		}
 		catch (Exception e) 
 		{
+			e.printStackTrace();
 		    System.out.println(e); 
 		    System.exit(-1);
 		} 		
