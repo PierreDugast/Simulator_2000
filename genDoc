@@ -1,8 +1,8 @@
 #!/bin/bash
 
 cd src
-javadoc **/*.java -d ../docs
-javadoc *.java -d ../docs
+javadoc  -encoding ISO-8859-1 **/*.java -d ../docs
+javadoc  -encoding ISO-8859-1 *.java -d ../docs
 
 cd ../docs
 echo "Docs générées :"
