@@ -13,7 +13,7 @@ public class RecepteurNrz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 	{
 		super(nbEchantillon, amplitudeMax, amplitudeMin);
 		//le seuil est egal a la difference des deux amplitudes divisees par 2 
-		seuil = (amplitudeMax - amplitudeMin) / 2; 
+		seuil = (amplitudeMax + amplitudeMin) / 2; 
 	}
 
 	@Override

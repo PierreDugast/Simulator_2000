@@ -25,11 +25,11 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 	
 	public void emettre() throws InformationNonConforme 
 	{
-		Float seuil = amplitudeMin+((amplitudeMax - amplitudeMin)/2);
+		Float seuil = (amplitudeMax + amplitudeMin)/2;
 		Boolean [] emission = new Boolean [this.informationRecue.nbElements()/this.nbEchantillon];
 		//compteur du nombre de "packet" de taille nbElement parcourrut
 		int nbPacket = 0;
-		//compteur interne à chaque packet
+		//compteur interne ï¿½ chaque packet
 		int i = 0;
 		//Valeur numerique du bit
 		Boolean value = false;
@@ -39,19 +39,19 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		{
 			while ((i<this.nbEchantillon))
 			{
-				//Si la valeur de l'information actuelle est celle de l'amplitude max, c'est que le packet est forcément un 1 logique.
+				//Si la valeur de l'information actuelle est celle de l'amplitude max, c'est que le packet est forcï¿½ment un 1 logique.
 				if (((Float)this.informationRecue.iemeElement((nbPacket)*this.nbEchantillon+i) >= seuil))
 				{
 					//Assigner la valeur dans la liste de sortie
 					value = true; 
-					//remettre i à -1 (il va être incrémenté juste après)
+					//remettre i ï¿½ -1 (il va ï¿½tre incrï¿½mentï¿½ juste aprï¿½s)
 					break;
 				}
 				//System.out.print(""+(nbPacket)+" "+(nbPacket*this.nbEchantillon+i)+" | ");
-				//Sinon, incrémenter i
+				//Sinon, incrï¿½menter i
 				i++;
 			}
-			//une fois arrivé à la taille de l'échantillon, aucun bit à Amax n'a été détecté, c'est forcément un 0 logique.
+			//une fois arrivï¿½ ï¿½ la taille de l'ï¿½chantillon, aucun bit ï¿½ Amax n'a ï¿½tï¿½ dï¿½tectï¿½, c'est forcï¿½ment un 0 logique.
 			emission[nbPacket] = value;
 			//Remise des compteurs aux valeurs initiales
 			nbPacket++;
@@ -60,7 +60,7 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 			//et rebelotte
 		}
 		
-		//Déclanchement de la methode recevoir des destinations connectes
+		//Dï¿½clanchement de la methode recevoir des destinations connectes
 		this.informationEmise = new Information(emission);
 		for(int j=0;j<destinationsConnectees.size();j++)
 		{
