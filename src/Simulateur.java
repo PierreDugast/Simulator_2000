@@ -185,7 +185,7 @@ public class Simulateur {
 		        	i++;
 		        	if (args[i].matches("NRZ")||args[i].matches("NRZT")||args[i].matches("RZ")) 
 		        	{
-		        		if(args != null && args[i] ==null) {
+		        		if(args != null && args[i] != null) {
 		        			this.messageAnalogicEncoding = args[i];
 		        		}
 		        	}
@@ -276,6 +276,10 @@ public class Simulateur {
       		sonde3.recevoir(this.transmetteurAnalogique2.getInformationEmise());
       		SondeLogique sonde4 = new SondeLogique("Sonde sortie recepteur analogique",720);
       		sonde4.recevoir(this.recepteurAnalogique.getInformationEmise());
+      		
+      		
+      		System.out.println(""+this.amplitudeMax+" "+this.amplitudeMin+" "+this.SNR+" "+this.messageAnalogicEncoding);
+      		
       	}
     }
    
@@ -321,7 +325,7 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-mess","00001111","-s","-form","NRZT","-ti","3","0.2"};
+    	String[] argsBis = {"-mess","0101010101","-s","-form","RZ","-ampl","-2","2","-snr","10"};
     	
 		try 
 		{

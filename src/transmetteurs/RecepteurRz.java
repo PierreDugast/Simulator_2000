@@ -25,7 +25,7 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 	
 	public void emettre() throws InformationNonConforme 
 	{
-		Float seuil = (amplitudeMax - amplitudeMin)/2;
+		Float seuil = amplitudeMin+((amplitudeMax - amplitudeMin)/2);
 		Boolean [] emission = new Boolean [this.informationRecue.nbElements()/this.nbEchantillon];
 		//compteur du nombre de "packet" de taille nbElement parcourrut
 		int nbPacket = 0;
