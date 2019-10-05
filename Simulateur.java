@@ -292,6 +292,10 @@ public class Simulateur {
       	{
       		SondeLogique sonde1 = new SondeLogique("Sonde sortie source logique",720);
       		sonde1.recevoir(this.source.getInformationEmise());
+      		if(this.unCodeur) {
+      			SondeLogique sonde5 = new SondeLogique("Sonde sortie  Codage", 720);
+          		sonde5.recevoir(this.emetteurCodeur.getInformationEmise());
+      		}
       		SondeAnalogique sonde2 = new SondeAnalogique("Sonde sortie emetteur analogique");
       		sonde2.recevoir(this.emetteurAnalogique.getInformationEmise());
       		if(this.isSNR) {
@@ -300,9 +304,7 @@ public class Simulateur {
       		}
       		SondeLogique sonde4 = new SondeLogique("Sonde sortie recepteur analogique",720);
       		sonde4.recevoir(this.recepteurAnalogique.getInformationEmise());
-      		if(this.unCodeur) {
-      			SondeLogique sonde5 = new SondeLogique("Sonde sortie  Codage", 720);
-          		sonde5.recevoir(this.emetteurCodeur.getInformationEmise());
+          	if(this.unCodeur) {
           		SondeLogique sonde6 = new SondeLogique("Sonde sortie recepteur codeur",720);
           		sonde6.recevoir(this.recepteurCodeur.getInformationEmise());
       		}
@@ -354,7 +356,7 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-mess","0101010101","-s","-form","NRZ","-ampl","-2","2","-snr","10"};
+    	String[] argsBis = {"-mess","0101010101","-s","-form","NRZT","-ampl","-2","2","-snr","10"};
     	
 		try 
 		{
