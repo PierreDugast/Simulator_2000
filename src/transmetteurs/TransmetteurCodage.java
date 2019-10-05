@@ -62,7 +62,7 @@ public class TransmetteurCodage <R,T> extends Transmetteur<R,T>{
 		}
 		//Création de l'information à émettre
 		this.informationEmise = new Information(emission);
-		System.out.println(informationEmise);
+
 		//Envoie l'information aux différentes destinations connectées présente dans la variable destinationsConnectees
 		for(int i=0;i<destinationsConnectees.size();i++){
 			destinationsConnectees.get(i).recevoir(this.informationEmise);
