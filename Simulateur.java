@@ -44,10 +44,12 @@ public class Simulateur {
     private Float SNR;
     /**indique l'utilisation d'un transmetteur multi trajet*/
     private Boolean isTi = false;
-    /** liste contenant les dï¿½calages (en nombre d'ï¿½chantillons) dans le cas d'une transmission multi-trajets. **/
+    /** liste contenant les décalages (en nombre d'échantillons) dans le cas d'une transmission multi-trajets. **/
     private Integer [] dtList = new Integer[5];
-    /** liste contenant les (en nombre d'ï¿½chantillons) dans le cas d'une transmission multi-trajets. **/
+    /** liste contenant les (en nombre d'échantillons) dans le cas d'une transmission multi-trajets. **/
     private Float [] arList = new Float[5];
+    /** indique l'utilisation d'un codeur*/
+    private boolean unCodeur = false; 
     
     
    	
@@ -57,8 +59,10 @@ public class Simulateur {
     public Transmetteur <Boolean,Float> emetteurAnalogique = null;
     /** le  composant Transmetteur analogique parfait logique de la chaine de transmission */
     public Transmetteur <Float, Float>  transmetteurAnalogique1 = new TransmetteurParfait();
-    /** un deuxiï¿½me transmetteur analogique (par dï¿½faut parfait)*/
+    /** un deuxième transmetteur analogique pour les multiples trajets (par défaut parfait)*/
     public Transmetteur <Float,Float> transmetteurAnalogique2 = new TransmetteurParfait();
+    /** un troisième transmetteur analogique pour le codeur(par défaut parfait)*/
+    public Transmetteur <Boolean,Boolean> transmetteurAnalogique3 = new TransmetteurParfait();
     /** le composant recepteur analogique de la chaine de transmission */
     public Transmetteur <Float, Boolean> recepteurAnalogique = null;
     /** le  composant Destination de la chaine de transmission */
@@ -83,10 +87,12 @@ public class Simulateur {
     	analyseArguments(args);
       	// assemblage des composants de la chaine de transmission pour le TP1 :
     	
-      	if (messageAleatoire)
+      	if (messageAleatoire) {
       		this.source = new SourceAleatoire(this.nbBitsMess);
-      	if (!(messageAleatoire))
+      	}	
+      	if (!(messageAleatoire)) {
       		this.source = new SourceFixe(this.messageString,this.nbBitsMess);
+      	}	
       	if (this.messageAnalogicEncoding == "RZ") 
       	{
       		this.emetteurAnalogique = new EmetteurRz(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
@@ -102,16 +108,22 @@ public class Simulateur {
       		this.emetteurAnalogique = new EmetteurNrzt(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
       		this.recepteurAnalogique = new RecepteurNrzt(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
       	}
-      	if (this.isTi)
-      		this.transmetteurAnalogique1 = new TransmetteurAnalogiqueMultitrajet(this.dtList,this.arList); 
-      	
-      	if (this.isSNR)
+      	if (this.isTi) {
+      		this.transmetteurAnalogique1 = new TransmetteurAnalogiqueMultitrajet(this.dtList,this.arList);
+      	}	 
+      	if (this.isSNR) {
       		this.transmetteurAnalogique2 = new TransmetteurAnalogiqueBruite(this.nbEchantillon,  this.SNR);
+      	}
+      	if (this.unCodeur) {
+      		this.transmetteurAnalogique3 = new TransmetteurCodage(this.nbEchantillon);
+      	}
+      		
 
       	this.destination = new DestinationFinale();
       	
       	
-      	this.source.connecter(this.emetteurAnalogique);
+      	this.source.connecter(this.transmetteurAnalogique3);
+      	this.transmetteurAnalogique3.connecter(this.emetteurAnalogique);
       	this.emetteurAnalogique.connecter(this.transmetteurAnalogique1);
       	this.transmetteurAnalogique1.connecter(this.transmetteurAnalogique2);
       	this.transmetteurAnalogique2.connecter(this.recepteurAnalogique);
@@ -183,20 +195,12 @@ public class Simulateur {
 		        else if (args[i].matches("-form"))
 		        {
 		        	i++;
-		        	if (args[i].matches("NRZ"))
+		        	if (args[i].matches("NRZ")||args[i].matches("NRZT")||args[i].matches("RZ")) 
 		        	{
-		        		
-		        			this.messageAnalogicEncoding ="NRZ";
-		        	
+		        		if(args != null && args[i] != null) {
+		        			this.messageAnalogicEncoding = args[i];
+		        		}
 		        	}
-				else if (args[i].matches("NRZT")){
-
-						this.messageAnalogicEncoding ="NRZT";
-				}
-				else if (args[i].matches("RZ")){
-
-						this.messageAnalogicEncoding ="RZ";
-				}
 		        	else
 		        		throw new ArgumentsException ("Valeur du parametre -form invalide : " + args[i]);
 		        }
@@ -253,13 +257,14 @@ public class Simulateur {
 		        		throw new ArgumentsException ("Valeur du parametre -ti ar invalide : " + args[i]);
 				}
 			}
+			else if (args[i].matches("-cod"))
+			{
+				this.unCodeur = true;
+			}
 	        else 
 	        	throw new ArgumentsException("Option invalide :"+ args[i]);
 			
-		}
-		System.out.print(messageAnalogicEncoding);
-		
-		
+		}		
 	}
      
     
@@ -278,12 +283,18 @@ public class Simulateur {
       	{
       		SondeLogique sonde1 = new SondeLogique("Sonde sortie source logique",720);
       		sonde1.recevoir(this.source.getInformationEmise());
+      		SondeLogique sonde5 = new SondeLogique("Sonde sortie  Codage", 720);
+      		sonde5.recevoir(this.transmetteurAnalogique3.getInformationEmise());
       		SondeAnalogique sonde2 = new SondeAnalogique("Sonde sortie emetteur analogique");
       		sonde2.recevoir(this.emetteurAnalogique.getInformationEmise());
       		SondeAnalogique sonde3 = new SondeAnalogique("Sonde sortie transmetteur analogique");
       		sonde3.recevoir(this.transmetteurAnalogique2.getInformationEmise());
       		SondeLogique sonde4 = new SondeLogique("Sonde sortie recepteur analogique",720);
       		sonde4.recevoir(this.recepteurAnalogique.getInformationEmise());
+      		
+      		
+      		System.out.println(""+this.amplitudeMax+" "+this.amplitudeMin+" "+this.SNR+" "+this.messageAnalogicEncoding);
+      		
       	}
     }
    
@@ -329,12 +340,12 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	//String[] argsBis = {"-mess","00001111","-s","-form","NRZT","-ti","3","0.2"};
+    	String[] argsBis = {"-mess","0101010101","-s","-form","NRZT","-ampl","-2","2","-snr","10","-cod"};
     	
 		try 
 		{
-			//simulateur = new Simulateur(argsBis); //(pour tester les arguments passÃ©s en argBis)
-			simulateur = new Simulateur(args);
+			simulateur = new Simulateur(argsBis); //(pour tester les arguments passÃ©s en argBis)
+			//simulateur = new Simulateur(args);
 		}
 		catch (Exception e) 
 		{
