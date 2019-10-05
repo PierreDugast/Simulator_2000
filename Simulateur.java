@@ -61,8 +61,10 @@ public class Simulateur {
     public Transmetteur <Float, Float>  transmetteurAnalogique1 = new TransmetteurParfait();
     /** un deuxième transmetteur analogique pour les multiples trajets (par défaut parfait)*/
     public Transmetteur <Float,Float> transmetteurAnalogique2 = new TransmetteurParfait();
-    /** un troisième transmetteur analogique pour le codeur(par défaut parfait)*/
-    public Transmetteur <Boolean,Boolean> transmetteurAnalogique3 = new TransmetteurParfait();
+    /** un transmetteur pour le codeur(par défaut parfait)*/
+    public Transmetteur <Boolean,Boolean> emetteurCodeur = new TransmetteurParfait();
+    /** un transmetteur pour le codeur(par défaut parfait)*/
+    public Transmetteur <Boolean,Boolean> recepteurCodeur = new TransmetteurParfait();
     /** le composant recepteur analogique de la chaine de transmission */
     public Transmetteur <Float, Boolean> recepteurAnalogique = null;
     /** le  composant Destination de la chaine de transmission */
@@ -115,19 +117,26 @@ public class Simulateur {
       		this.transmetteurAnalogique2 = new TransmetteurAnalogiqueBruite(this.nbEchantillon,  this.SNR);
       	}
       	if (this.unCodeur) {
-      		this.transmetteurAnalogique3 = new TransmetteurCodage(this.nbEchantillon);
+      		this.emetteurCodeur = new TransmetteurCodage(this.nbEchantillon);
+      		this.recepteurCodeur = new RecepteurCodeur(this.nbEchantillon);
       	}
       		
 
       	this.destination = new DestinationFinale();
       	
       	
-      	this.source.connecter(this.transmetteurAnalogique3);
-      	this.transmetteurAnalogique3.connecter(this.emetteurAnalogique);
+      	this.source.connecter(this.emetteurCodeur);
+      	this.emetteurCodeur.connecter(this.emetteurAnalogique);
       	this.emetteurAnalogique.connecter(this.transmetteurAnalogique1);
       	this.transmetteurAnalogique1.connecter(this.transmetteurAnalogique2);
       	this.transmetteurAnalogique2.connecter(this.recepteurAnalogique);
-      	this.recepteurAnalogique.connecter(this.destination);
+      	if(this.unCodeur) {
+      		this.recepteurAnalogique.connecter(this.recepteurCodeur);
+          	this.recepteurCodeur.connecter(this.destination);
+      	} else {
+      		this.recepteurAnalogique.connecter(this.destination);
+      	}
+      	
     }
    
    
@@ -283,15 +292,20 @@ public class Simulateur {
       	{
       		SondeLogique sonde1 = new SondeLogique("Sonde sortie source logique",720);
       		sonde1.recevoir(this.source.getInformationEmise());
-      		SondeLogique sonde5 = new SondeLogique("Sonde sortie  Codage", 720);
-      		sonde5.recevoir(this.transmetteurAnalogique3.getInformationEmise());
       		SondeAnalogique sonde2 = new SondeAnalogique("Sonde sortie emetteur analogique");
       		sonde2.recevoir(this.emetteurAnalogique.getInformationEmise());
-      		SondeAnalogique sonde3 = new SondeAnalogique("Sonde sortie transmetteur analogique");
-      		sonde3.recevoir(this.transmetteurAnalogique2.getInformationEmise());
+      		if(this.isSNR) {
+      			SondeAnalogique sonde3 = new SondeAnalogique("Sonde sortie transmetteur analogique");
+          		sonde3.recevoir(this.transmetteurAnalogique2.getInformationEmise());
+      		}
       		SondeLogique sonde4 = new SondeLogique("Sonde sortie recepteur analogique",720);
       		sonde4.recevoir(this.recepteurAnalogique.getInformationEmise());
-      		
+      		if(this.unCodeur) {
+      			SondeLogique sonde5 = new SondeLogique("Sonde sortie  Codage", 720);
+          		sonde5.recevoir(this.emetteurCodeur.getInformationEmise());
+          		SondeLogique sonde6 = new SondeLogique("Sonde sortie recepteur codeur",720);
+          		sonde6.recevoir(this.recepteurCodeur.getInformationEmise());
+      		}
       		
       		System.out.println(""+this.amplitudeMax+" "+this.amplitudeMin+" "+this.SNR+" "+this.messageAnalogicEncoding);
       		
@@ -340,7 +354,7 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-mess","0101010101","-s","-form","NRZT","-ampl","-2","2","-snr","10","-cod"};
+    	String[] argsBis = {"-mess","0101010101","-s","-form","NRZ","-ampl","-2","2","-snr","10"};
     	
 		try 
 		{
