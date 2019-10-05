@@ -37,32 +37,34 @@ public class TransmetteurCodage <R,T> extends Transmetteur<R,T>{
 	 * remplacer les 1 par trois bits à 101 et à remplacer les 0 par trois bits à 010.
 	 */
 	public void emettre() throws InformationNonConforme {
-		System.out.println(informationRecue);
 		//Tableau qui va contenir la nouvelle suite de bits
-		Float [] emission = new Float[this.informationRecue.nbElements()*3];
+		Boolean [] emission = new Boolean[this.informationRecue.nbElements()*3];
 		int j=0;
 		//Boucle permettant de créer pour chaque bits reçu trois bits à 101 pour un 1 reçu et trois bits à 010 pour un 0 reçu
 		for(int i=0 ; i<informationRecue.nbElements() ; i++) {
-			if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("1")) {
-				emission[j]=(float)1;
+			if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("true")) {
+				emission[j]=true;
 				j++;
-				emission[j]=(float)0;
+				emission[j]=false;
 				j++;
-				emission[j]=(float)1;
+				emission[j]=true;
+				j++;
+				
 			}
-			if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("0")) {
-				emission[j]=(float)0;
+			if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("false")) {
+				emission[j]=false;
 				j++;
-				emission[j]=(float)1;
+				emission[j]=true;
 				j++;
-				emission[j]=(float)0;
+				emission[j]=false;
+				j++;
 			}
 		}
 		//Création de l'information à émettre
 		this.informationEmise = new Information(emission);
 		System.out.println(informationEmise);
 		//Envoie l'information aux différentes destinations connectées présente dans la variable destinationsConnectees
-		for(int i=0;j<destinationsConnectees.size();i++){
+		for(int i=0;i<destinationsConnectees.size();i++){
 			destinationsConnectees.get(i).recevoir(this.informationEmise);
 		}	
 	}
