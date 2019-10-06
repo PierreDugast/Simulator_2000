@@ -44,9 +44,9 @@ public class Simulateur {
     private Float SNR;
     /**indique l'utilisation d'un transmetteur multi trajet*/
     private Boolean isTi = false;
-    /** liste contenant les décalages (en nombre d'échantillons) dans le cas d'une transmission multi-trajets. **/
+    /** liste contenant les dï¿½calages (en nombre d'ï¿½chantillons) dans le cas d'une transmission multi-trajets. **/
     private Integer [] dtList = new Integer[5];
-    /** liste contenant les (en nombre d'échantillons) dans le cas d'une transmission multi-trajets. **/
+    /** liste contenant les (en nombre d'ï¿½chantillons) dans le cas d'une transmission multi-trajets. **/
     private Float [] arList = new Float[5];
     /** indique l'utilisation d'un codeur*/
     private boolean unCodeur = false; 
@@ -59,11 +59,11 @@ public class Simulateur {
     public Transmetteur <Boolean,Float> emetteurAnalogique = null;
     /** le  composant Transmetteur analogique parfait logique de la chaine de transmission */
     public Transmetteur <Float, Float>  transmetteurAnalogique1 = new TransmetteurParfait();
-    /** un deuxième transmetteur analogique pour les multiples trajets (par défaut parfait)*/
+    /** un deuxiï¿½me transmetteur analogique pour les multiples trajets (par dï¿½faut parfait)*/
     public Transmetteur <Float,Float> transmetteurAnalogique2 = new TransmetteurParfait();
-    /** un transmetteur pour le codeur(par défaut parfait)*/
+    /** un transmetteur pour le codeur(par dï¿½faut parfait)*/
     public Transmetteur <Boolean,Boolean> emetteurCodeur = new TransmetteurParfait();
-    /** un transmetteur pour le codeur(par défaut parfait)*/
+    /** un transmetteur pour le codeur(par dï¿½faut parfait)*/
     public Transmetteur <Boolean,Boolean> recepteurCodeur = new TransmetteurParfait();
     /** le composant recepteur analogique de la chaine de transmission */
     public Transmetteur <Float, Boolean> recepteurAnalogique = null;
@@ -204,11 +204,17 @@ public class Simulateur {
 		        else if (args[i].matches("-form"))
 		        {
 		        	i++;
-		        	if (args[i].matches("NRZ")||args[i].matches("NRZT")||args[i].matches("RZ")) 
+		        	if (args[i].matches("NRZ"))
 		        	{
-		        		if(args != null && args[i] != null) {
-		        			this.messageAnalogicEncoding = args[i];
-		        		}
+		        		this.messageAnalogicEncoding ="NRZ";
+		        	}
+		        	else if (args[i].matches("NRZT"))
+		        	{
+		        		this.messageAnalogicEncoding ="NRZT";
+		        	}
+		        	else if (args[i].matches("RZ"))
+		        	{
+		        		this.messageAnalogicEncoding ="RZ";
 		        	}
 		        	else
 		        		throw new ArgumentsException ("Valeur du parametre -form invalide : " + args[i]);
@@ -261,8 +267,8 @@ public class Simulateur {
 					}
 					else
 		        		throw new ArgumentsException ("Valeur du parametre -ti dt invalide : " + args[i]);
-					i++;
-					if (args[i].matches("[0-9]*.[0-9]")) {
+					i++;  
+					if (args[i].matches("^[+]?[0-9]*\\.?[0-9]+")) {
 						this.arList[j] = new Float(args[i]);
 						j++;
 					}
