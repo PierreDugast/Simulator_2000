@@ -215,16 +215,20 @@ public class Simulateur {
 		        }
 				else if (args[i].matches("-nbEch"))
 				{
-				i++;
-				if (args[i].matches("[0-9]{1,10}"))
-					this.nbEchantillon = new Integer(args[i]);
-				else
-	        		throw new ArgumentsException ("Valeur du parametre -nbEch invalide : " + args[i]);
-			}
+					i++;
+					if (args[i].matches("[0-2]?")) {
+						this.nbEchantillon = 3;
+					} else if (args[i].matches("[0-9]{1,10}")) {
+						this.nbEchantillon = new Integer(args[i]);
+					}
+					else {
+						throw new ArgumentsException ("Valeur du parametre -nbEch invalide : " + args[i]);
+					}
+				}
 			else if (args[i].matches("-ampl"))
 			{
 				i++;
-				if (args[i].matches("[-]?[0-9]{1,10}"))
+				if (args[i].matches("[-]?[0-9]{1,10}[.]?[0-9]{1,10}"))
 					this.amplitudeMin = Float.parseFloat(args[i]);
 				else
 	        		throw new ArgumentsException ("Valeur du parametre -ampl invalide : " + args[i]);
@@ -356,7 +360,7 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-mess","0101010101","-s","-form","NRZT","-ampl","-2","2","-snr","10"};
+    	String[] argsBis = {"-mess","0101010101","-s","-form","NRZT","-ampl","-3.0","2","-snr","5","-nbEch","26","-cod"};
     	
 		try 
 		{
