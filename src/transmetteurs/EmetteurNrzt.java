@@ -44,7 +44,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		nbEchantillon=tier*3;
 		// Déclaration et initialisation du tableau qui va contenir les symboles échantillonés.
 		Float [] emission = new Float[this.informationRecue.nbElements()*this.nbEchantillon];
-		System.out.println(informationRecue);
+		//System.out.println(informationRecue);
 		int compteurEchantillon=0;		
 		//Boucle de mise en forme de l'information
 		for(int i=0 ; i<informationRecue.nbElements() ; i++) {
@@ -291,7 +291,7 @@ public class EmetteurNrzt <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		}
 		//Création de l'information à émettre
 		this.informationEmise = new Information(emission);
-		System.out.println(informationEmise);
+		//System.out.println(informationEmise);
 		//Envoie l'information aux différentes destinations connectées présente dans la variable destinationsConnectees
 		for(int j=0;j<destinationsConnectees.size();j++){
 			destinationsConnectees.get(j).recevoir(this.informationEmise);

@@ -71,7 +71,7 @@ public class RecepteurNrzt<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		
 		// Crï¿½ation de l'information contenant les valeur du tableau de boolean créé dans la boucle précèdente
 		this.informationEmise = new Information(emission);
-		System.out.println(informationEmise);
+		//System.out.println(informationEmise);
 		// Envoie de l'information mise en forme vers les destinations connectées
 		for(int j=0;j<destinationsConnectees.size();j++){
 			destinationsConnectees.get(j).recevoir(this.informationEmise);
