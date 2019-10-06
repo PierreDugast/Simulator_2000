@@ -204,11 +204,17 @@ public class Simulateur {
 		        else if (args[i].matches("-form"))
 		        {
 		        	i++;
-		        	if (args[i].matches("NRZ")||args[i].matches("NRZT")||args[i].matches("RZ")) 
+		        	if (args[i].matches("NRZ"))
 		        	{
-		        		if(args != null && args[i] != null) {
-		        			this.messageAnalogicEncoding = args[i];
-		        		}
+		        		this.messageAnalogicEncoding ="NRZ";
+		        	}
+		        	else if (args[i].matches("NRZT"))
+		        	{
+		        		this.messageAnalogicEncoding ="NRZT";
+		        	}
+		        	else if (args[i].matches("RZ"))
+		        	{
+		        		this.messageAnalogicEncoding ="RZ";
 		        	}
 		        	else
 		        		throw new ArgumentsException ("Valeur du parametre -form invalide : " + args[i]);
@@ -261,8 +267,8 @@ public class Simulateur {
 					}
 					else
 		        		throw new ArgumentsException ("Valeur du parametre -ti dt invalide : " + args[i]);
-					i++;
-					if (args[i].matches("[0-9]*.[0-9]")) {
+					i++;  
+					if (args[i].matches("^[+]?[0-9]*\\.?[0-9]+")) {
 						this.arList[j] = new Float(args[i]);
 						j++;
 					}
@@ -313,7 +319,7 @@ public class Simulateur {
           		sonde6.recevoir(this.recepteurCodeur.getInformationEmise());
       		}
       		
-      		System.out.println(""+this.amplitudeMax+" "+this.amplitudeMin+" "+this.SNR+" "+this.messageAnalogicEncoding);
+      		System.out.println(" AmplitudeMax : "+this.amplitudeMax+" AmplitudeMin : "+this.amplitudeMin+" SNR : "+this.SNR+" Encodage : "+this.messageAnalogicEncoding);
       		
       	}
     }
@@ -360,7 +366,7 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-mess","0101010101","-s","-form","NRZT","-ampl","-2","2","-snr","5","-nbEch","26","-cod"};
+    	String[] argsBis = {"-s","-form","NRZT","-ampl","-2","2","-snr","10","-ti","2","0.01"};
     	
 		try 
 		{
