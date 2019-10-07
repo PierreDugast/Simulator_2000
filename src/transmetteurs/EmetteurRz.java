@@ -23,14 +23,14 @@ public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 	}
 	
 	public void emettre() throws InformationNonConforme {
-		
+		int tier = (int) Math.floor(nbEchantillon/3);
+		nbEchantillon=tier*3;
 		Float [] emission = new Float[this.informationRecue.nbElements()*this.nbEchantillon];
 		
-		int tier = (nbEchantillon / 3); 
 		
 		for (int i=0; i < informationRecue.nbElements(); i++) {
 			for (int j=0; j < tier; j++) {
-				emission[i*nbEchantillon+j] =amplitudeMin; 
+				emission[i*nbEchantillon+j] =(float) 0;
 				}
 			if((Boolean) informationRecue.iemeElement(i)) {
 				for(int j=tier; j<2*tier; j++) {
@@ -43,7 +43,7 @@ public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 				}
 			}
 			for (int j=2*tier; j<nbEchantillon; j++) {
-				emission[i*nbEchantillon+j]=amplitudeMin; 
+				emission[i*nbEchantillon+j]=(float) 0; 
 			}
 			
 		}
