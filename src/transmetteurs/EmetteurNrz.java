@@ -20,7 +20,7 @@ public class EmetteurNrz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		int c=0;
 		for(int i=0 ; i<informationRecue.nbElements() ; i++) {
 			int j = c;
-			if(informationRecue.iemeElement(i).equals(true)) {
+			if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("true")) {
 				//for(c; c<this.nbEchantillon; c++)
 				
 				while(c<(j+nbEchantillon)) {
