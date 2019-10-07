@@ -59,8 +59,6 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 			}
 			tierCourant++;
 		}	
-		// Crï¿½ation de l'information contenant les valeur du tableau de boolean créé dans la boucle précèdente
-		this.informationEmise = new Information(emission);
 		
 		//Dï¿½clanchement de la methode recevoir des destinations connectes
 		this.informationEmise = new Information(emission);
