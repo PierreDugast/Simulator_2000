@@ -260,7 +260,7 @@ public class Simulateur {
 			{
 					int j=0; //compteur pour remplir dtList et ArList
 					this.isTi = true;
-					while (i<args.length-1) {
+					while (i<args.length-1 && (args[i+1].matches("[0-9]{1,10}") || args[i+1].matches("^[+]?[0-9]*\\.?[0-9]+")) ) {
 					i++;
 					if (args[i].matches("[0-9]{1,10}")) {
 						this.dtList[j] = new Integer(args[i]);
@@ -283,7 +283,8 @@ public class Simulateur {
 	        else 
 	        	throw new ArgumentsException("Option invalide :"+ args[i]);
 			
-		}		
+		}	
+		
 	}
      
     
@@ -366,7 +367,7 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-s","-form","NRZT","-ampl","-2","2","-snr","10","-ti","2","0.01"};
+    	String[] argsBis = {"-s","-mess","1000","-form","NRZT","-ampl","-2","2","-snr","10","-ti","2","0.01","-cod"};
     	
 		try 
 		{
