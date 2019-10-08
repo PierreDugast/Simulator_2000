@@ -367,7 +367,7 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-s","-mess","1000","-form","NRZT","-ampl","-2","2","-snr","10"};
+    	String[] argsBis = {"-s","-mess","101010101010","-form","NRZT","-snr","10","-cod"};
     	
 		try 
 		{
