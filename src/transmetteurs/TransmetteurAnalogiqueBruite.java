@@ -36,8 +36,8 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 	
 	public void emettre() throws InformationNonConforme 
 	{
-		float puissanceSignal = this.calculPuissance(this.nbEchantillon, this.informationRecue);
-		float sigma = this.calculSigma(puissanceSignal, this.SNR);
+		float puissanceSignal = this.calculPuissance(this.nbEchantillon, this.informationRecue);	
+		float sigma = this.calculSigma(puissanceSignal, this.SNR);	
 		Information<Float> bruitBlanc = this.generationBruitBlanc(sigma);
 		this.ajoutSignalBruite(bruitBlanc);
 		for(int j=0;j<destinationsConnectees.size();j++){
@@ -66,8 +66,9 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 			//somme des carres des valeurs
 			sum += carreValeurs; 
 		}
+
 		//calcul de la puissance 
-		calculPuissance = sum / informationRecue.nbElements();
+		calculPuissance = (float) sum / informationRecue.nbElements();
 		return calculPuissance; 
 
 	}
@@ -91,6 +92,8 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 			Float a2 = r.nextFloat();
 			valueI = sigma*Math.sqrt(-2*Math.log(1-a1))*Math.cos(2*Math.PI*a2);
 			bruitBlanc[i] = valueI.floatValue();
+			
+			
 			i++;
 		}
 		Information<Float> generationBruitBlanc = new Information<Float>(bruitBlanc);

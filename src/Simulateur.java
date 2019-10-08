@@ -344,10 +344,12 @@ public class Simulateur {
       		if (itInit.next()!=itFinal.next())
       		{
       			nbErreur++;
-      		}
       			
-      	}
+      		}
+      		
+      	}	
     	return  (((float)nbErreur)/((float)this.source.getInformationEmise().nbElements()));
+    	
     }
    
    
@@ -363,7 +365,7 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-s","-mess","1111111111","-form","NRZT","-snr","-5","-codeur"};
+    	String[] argsBis = {"-s","-mess","111111111111","-form","NRZT","-snr","-6","-ampl","0","1","-ti","17","0.1","-codeur"};
     	
 		try 
 		{

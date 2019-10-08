@@ -14,7 +14,7 @@ public class TransmetteurAnalogiqueMultitrajet<R,T> extends Transmetteur<R,T> {
 		this.dtList=dtList;
 		this.arList=arList;
 		
-		System.out.println(""+this.dtList.toString());
+		//System.out.println(""+this.dtList.toString());
 	}
 	
 	@Override
@@ -87,8 +87,8 @@ public class TransmetteurAnalogiqueMultitrajet<R,T> extends Transmetteur<R,T> {
 		
 		
 		
-		System.out.println("\nsignal refléchi : "+informationMultitrajetList.get(0).toString());
-		System.out.println("\nsignal : "+informationMultitrajetList.get(1).toString());
+		//System.out.println("\nsignal refléchi : "+informationMultitrajetList.get(0).toString());
+		//System.out.println("\nsignal : "+informationMultitrajetList.get(1).toString());
 		
 		
 		
@@ -113,7 +113,7 @@ public class TransmetteurAnalogiqueMultitrajet<R,T> extends Transmetteur<R,T> {
 		//On crée l'information à envoyer :
 		informationMultitrajet = new Information<Float>(info);
 		
-		System.out.println("\nsortie: "+informationMultitrajet.toString());
+		//System.out.println("\nsortie: "+informationMultitrajet.toString());
 		
 		return informationMultitrajet;
 	}
