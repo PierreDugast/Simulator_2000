@@ -33,7 +33,7 @@ public class RecepteurCodeur <R,T> extends Transmetteur<R,T>{
 			oneBitList[0] = (Boolean) this.informationRecue.iemeElement(i);
 			oneBitList[1] = (Boolean) this.informationRecue.iemeElement(i+1);
 			oneBitList[2] = (Boolean) this.informationRecue.iemeElement(i+2);
-			System.out.println(""+oneBitList[0]+" "+oneBitList[1]+" "+oneBitList[2]+" | ");
+			//System.out.println(""+oneBitList[0]+" "+oneBitList[1]+" "+oneBitList[2]+" | ");
 			j = 0;
 			while(j<trueList.length)
 			{
@@ -43,7 +43,6 @@ public class RecepteurCodeur <R,T> extends Transmetteur<R,T>{
 					elem = false;
 				j++;
 			}
-			System.out.println(elem.toString());
 			emission[i/3] = elem;
 			i=i+3;
 		}
