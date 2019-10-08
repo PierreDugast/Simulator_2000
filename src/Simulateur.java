@@ -316,7 +316,7 @@ public class Simulateur {
           		sonde6.recevoir(this.recepteurCodeur.getInformationEmise());
       		}
       		
-      		System.out.println(" AmplitudeMax : "+this.amplitudeMax+" AmplitudeMin : "+this.amplitudeMin+" SNR : "+this.SNR+" Encodage : "+this.messageAnalogicEncoding);
+      		System.out.println(" AmplitudeMax : "+this.amplitudeMax+" | AmplitudeMin : "+this.amplitudeMin+" | SNR : "+this.SNR+" | Encodage : "+this.messageAnalogicEncoding);
       		
       	}
     }
@@ -363,7 +363,7 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-s","-mess","500","-form","NRZT","-snr","-5"};
+    	String[] argsBis = {"-s","-mess","500","-form","NRZT","-snr","5"};
     	
 		try 
 		{
