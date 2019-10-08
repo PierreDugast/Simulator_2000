@@ -130,12 +130,8 @@ public class Simulateur {
       	this.emetteurAnalogique.connecter(this.transmetteurAnalogique1);
       	this.transmetteurAnalogique1.connecter(this.transmetteurAnalogique2);
       	this.transmetteurAnalogique2.connecter(this.recepteurAnalogique);
-      	if(this.unCodeur) {
-      		this.recepteurAnalogique.connecter(this.recepteurCodeur);
-          	this.recepteurCodeur.connecter(this.destination);
-      	} else {
-      		this.recepteurAnalogique.connecter(this.destination);
-      	}
+  		this.recepteurAnalogique.connecter(this.recepteurCodeur);
+      	this.recepteurCodeur.connecter(this.destination);
       	
     }
    
@@ -248,7 +244,7 @@ public class Simulateur {
 			else if (args[i].matches("-snr"))
 			{
 				i++;
-				if (args[i].matches("[-]?[0-9]{1,10}"))
+				if (args[i].matches("^[-]?[0-9]*\\.?[0-9]+"))
 				{
 					this.SNR = new Float(args[i]);
 					this.isSNR = true;
@@ -276,7 +272,7 @@ public class Simulateur {
 		        		throw new ArgumentsException ("Valeur du parametre -ti ar invalide : " + args[i]);
 				}
 			}
-			else if (args[i].matches("-cod"))
+			else if (args[i].matches("-codeur"))
 			{
 				this.unCodeur = true;
 			}
@@ -367,7 +363,7 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-s","-mess","101010101010","-form","NRZT","-snr","10","-cod"};
+    	String[] argsBis = {"-s","-mess","500","-form","NRZT","-snr","-5"};
     	
 		try 
 		{
