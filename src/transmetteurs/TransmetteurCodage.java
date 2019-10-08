@@ -42,16 +42,15 @@ public class TransmetteurCodage <R,T> extends Transmetteur<R,T>{
 		int j=0;
 		//Boucle permettant de créer pour chaque bits reçu trois bits à 101 pour un 1 reçu et trois bits à 010 pour un 0 reçu
 		for(int i=0 ; i<informationRecue.nbElements() ; i++) {
-			if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("true")) {
+			if((Boolean) informationRecue.iemeElement(i)) {  //.toString().equalsIgnoreCase("true")) Inutile ici
 				emission[j]=true;
 				j++;
 				emission[j]=false;
 				j++;
 				emission[j]=true;
-				j++;
-				
+				j++;	
 			}
-			if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("false")) {
+		else{
 				emission[j]=false;
 				j++;
 				emission[j]=true;
