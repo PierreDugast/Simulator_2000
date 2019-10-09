@@ -1,11 +1,30 @@
 #!/bin/bash
-i=-10
+i=$1
+j=$2
+if [ -z "$1" ]
+  then
+    echo "Pas de snr min specifié"
+    exit 0
+fi
+
+if [ -z "$2" ]
+  then
+    echo "Pas de snr max specifié"
+    exit 0
+fi
+if [ -z "$3" ]
+  then
+    echo "Pas de form specifié"
+    exit 0
+fi
+rm $3.txt
 cd bin
-while ((i<11))
+while ((i<j+1))
 do
-	echo "Snr : $i"
+	echo "Snr : $i"	
 	
-	java  Simulateur  -mess  100  -form  RZ  -ampl  -2  2  -snr  $i -codeur
+	
+	java  Simulateur  -mess  1000  -form  $3  -ampl  -2  2  -snr  $i -codeur | grep TEB >> ../$3.txt
 	((i+=1))
 	echo " "
 done
