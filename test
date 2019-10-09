@@ -1,0 +1,12 @@
+#!/bin/bash
+i=-10
+cd bin
+while ((i<11))
+do
+	echo "Snr : $i"
+	
+	java  Simulateur  -mess  100  -form  RZ  -ampl  -2  2  -snr  $i -codeur
+	((i+=1))
+	echo " "
+done
+exit 0
