@@ -12,34 +12,25 @@ public class EmetteurNrz extends ConvertisseurAnalogiqueNumerique<Boolean,Float>
 		informationEmise = new Information<Float>();
 	}
 
-	@Override
 	public void emettre() throws InformationNonConforme 
 	{
-		//Float [] emission = new Float[this.informationRecue.nbElements()*this.nbEchantillon];
-		
-		
 		int c=0;
+		
 		for(boolean bool : informationRecue) {
 			int j = c;
-			if(bool) {
-				//for(c; c<this.nbEchantillon; c++)
-				
+			if(bool) {				
 				while(c<(j+nbEchantillon)) {
 					informationEmise.add(amplitudeMax);
-					//emission[c] = amplitudeMax;
 					c++;
 				}
 			} else {
 				while(c<(j+this.nbEchantillon)) {
 					informationEmise.add(amplitudeMin);
-					//emission[c] = amplitudeMin;
 					c++;
 				}
 			}
 	  
 		}
-		//this.informationEmise = new Information(emission);
-		System.out.println(informationEmise);
 		
 		for(int j=0;j<destinationsConnectees.size();j++)
 		{
