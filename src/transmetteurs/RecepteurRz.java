@@ -13,13 +13,14 @@ import java.util.List;
  * @param <R>
  * @param <T>
  */
-public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
+public class RecepteurRz extends ConvertisseurAnalogiqueNumerique<Float,Boolean>
 {
 	
 	public RecepteurRz(int nbEchantillon, Float amplitudeMax, Float amplitudeMin) throws AnalogicArgumentException 
 	{
 		super(nbEchantillon, amplitudeMax, amplitudeMin);	
 		//le seuil est egal a la difference des deux amplitudes divisees par 2 
+		informationEmise = new Information<Boolean>();
 		
 	}
 	
@@ -27,9 +28,7 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 	{
 		//Récupère la partie entière de la division par 3 du nombre d'échantillon
 		int tier = (int) Math.floor(nbEchantillon/3);
-		nbEchantillon= tier*3;
-		// Déclaration et initialisation du tableau qui va contenir les booleans.
-		Boolean [] emission = new Boolean[this.informationRecue.nbElements()/nbEchantillon];		
+		nbEchantillon= tier*3;	
 				
 		// Compteur permettant de savoir quel élément du tableau doit être modifié
 		int symboleCourant=0;
@@ -50,10 +49,10 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 			if (tierCourant==tier*2){
 				moyenneSignal=moyenneSignal/(tier+1);
 				if(moyenneSignal>(amplitudeMax+amplitudeMin)/2) {
-					emission[symboleCourant] = true;
+					informationEmise.add(true);
 				}
 				if(moyenneSignal<(amplitudeMax+amplitudeMin)/2) {
-					emission[symboleCourant] = false;
+					informationEmise.add(false);
 				}
 				symboleCourant++;
 			}
@@ -61,7 +60,6 @@ public class RecepteurRz<R,T> extends ConvertisseurAnalogiqueNumerique<R,T>
 		}	
 		
 		//Dï¿½clanchement de la methode recevoir des destinations connectes
-		this.informationEmise = new Information(emission);
 		for(int j=0;j<destinationsConnectees.size();j++)
 		{
 			destinationsConnectees.get(j).recevoir(this.informationEmise);

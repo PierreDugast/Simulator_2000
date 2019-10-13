@@ -15,44 +15,49 @@ import information.InformationNonConforme;
  * @param <T>
  */
 
-public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
+public class EmetteurRz extends ConvertisseurAnalogiqueNumerique<Boolean, Float> {
 
 	public EmetteurRz(int nbEchantillon, Float amplitudeMax, Float amplitudeMin) throws AnalogicArgumentException 
 	{
 		super(nbEchantillon, amplitudeMax, amplitudeMin);
+		informationEmise = new Information<Float>();
 	}
 	
 	public void emettre() throws InformationNonConforme {
 		int tier = (int) Math.floor(nbEchantillon/3);
 		nbEchantillon=tier*3;
-		Float [] emission = new Float[this.informationRecue.nbElements()*this.nbEchantillon];
+		//Float [] emission = new Float[this.informationRecue.nbElements()*this.nbEchantillon];
 		
 		
 		for (int i=0; i < informationRecue.nbElements(); i++) {
 			for (int j=0; j < tier; j++) {
-				emission[i*nbEchantillon+j] =(float) 0;
+				//emission[i*nbEchantillon+j] =(float) 0;
+				informationEmise.add(0.0f);
 				}
 			if((Boolean) informationRecue.iemeElement(i)) {
 				for(int j=tier; j<2*tier; j++) {
-					emission[i*nbEchantillon+j]=amplitudeMax; 
+					informationEmise.add(amplitudeMax);
+					//emission[i*nbEchantillon+j]=amplitudeMax; 
 				}
 			}
 			else {
 				for (int j=tier; j<2*tier; j++) {
-					emission[i*nbEchantillon+j]=amplitudeMin; 
+					informationEmise.add(amplitudeMin);
+					//emission[i*nbEchantillon+j]=amplitudeMin; 
 				}
 			}
 			for (int j=2*tier; j<nbEchantillon; j++) {
-				emission[i*nbEchantillon+j]=(float) 0; 
+				informationEmise.add((float) 0);
+				//emission[i*nbEchantillon+j]=(float) 0; 
 			}
 			
 		}
-		this.informationEmise = new Information(emission);
+		//this.informationEmise = new Information(emission);
 		for(int j=0;j<destinationsConnectees.size();j++){
 			destinationsConnectees.get(j).recevoir(this.informationEmise);
 		}
 	}
-	
+	/*
 	public boolean equals(Object o)
 	{
 		Boolean rep = false;
@@ -65,4 +70,5 @@ public class EmetteurRz <R,T> extends ConvertisseurAnalogiqueNumerique<R,T> {
 		}
 		return rep;
 	}
+	*/
 }
