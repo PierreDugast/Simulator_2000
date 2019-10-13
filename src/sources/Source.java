@@ -14,7 +14,7 @@ public  abstract class Source <T> implements  SourceInterface <T> {
     /** 
      * la liste des composants destination connectés
      */
-    protected LinkedList <DestinationInterface <T>> destinationsConnectees;
+    protected ArrayList <DestinationInterface <T>> destinationsConnectees;
    
     /** 
      * l'information générée par la source
@@ -31,7 +31,7 @@ public  abstract class Source <T> implements  SourceInterface <T> {
      * réalisations de la classe abstraite Source
      */
     public Source () {
-    	destinationsConnectees = new LinkedList <DestinationInterface <T>> ();
+    	destinationsConnectees = new ArrayList <DestinationInterface <T>> ();
     	informationGeneree = null;
     	informationEmise = null;
     }

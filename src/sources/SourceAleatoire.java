@@ -7,11 +7,11 @@ public class SourceAleatoire extends Source <Boolean>
 	public SourceAleatoire(int nbBits)
 	{
 		super();
-		Boolean [] boolTab = new Boolean[nbBits];
+		informationGeneree= new Information<Boolean>();
 		Random bool = new Random();
-		for(int i = 0; i<nbBits; i++)
-			boolTab[i] = bool.nextBoolean();
-		
-		this.informationGeneree = new Information(boolTab);
+		for(int i = 0; i<nbBits; i++) {
+			informationGeneree.add(bool.nextBoolean());
+		}
+		informationEmise = informationGeneree;
 	}	  
 }
