@@ -19,7 +19,7 @@ public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, 
     /** 
      * la liste des composants destination connectés en sortie du transmetteur 
      */
-    protected LinkedList <DestinationInterface <E>> destinationsConnectees;
+    protected ArrayList <DestinationInterface <E>> destinationsConnectees;
    
     /** 
      * l'information reçue en entrée du transmetteur 
@@ -36,7 +36,7 @@ public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, 
      * réalisations de la classe abstraite Transmetteur
      */
     public Transmetteur() {
-    	destinationsConnectees = new LinkedList <DestinationInterface <E>> ();
+    	destinationsConnectees = new ArrayList <DestinationInterface <E>> ();
     	informationRecue = null;
     	informationEmise = null;
     }
