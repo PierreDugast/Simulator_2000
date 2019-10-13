@@ -17,7 +17,7 @@ import java.io.*;
  * @param <T>
  */
 
-public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
+public class TransmetteurAnalogiqueBruite extends Transmetteur<Float,Float> {
 	
 	public int nbEchantillon; 
 	public float SNR; 
@@ -25,11 +25,11 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 	public TransmetteurAnalogiqueBruite(int nbEchantillon, float SNR) {
 		super (); 
 		this.nbEchantillon = nbEchantillon; 
-		this.SNR = SNR; 
-		
+		this.SNR = SNR;
+		informationEmise=new Information<Float>();
 	}
 	
-	public void recevoir (Information <R> information) throws InformationNonConforme {
+	public void recevoir (Information <Float> information) throws InformationNonConforme {
 		informationRecue=information; 
 		emettre(); 
 	}
@@ -38,8 +38,7 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 	{
 		float puissanceSignal = this.calculPuissance(this.nbEchantillon, this.informationRecue);	
 		float sigma = this.calculSigma(puissanceSignal, this.SNR);	
-		Information<Float> bruitBlanc = this.generationBruitBlanc(sigma);
-		this.ajoutSignalBruite(bruitBlanc);
+		generationSignalEtBruitBlanc(sigma);
 		for(int j=0;j<destinationsConnectees.size();j++){
 			destinationsConnectees.get(j).recevoir(this.informationEmise);
 		}
@@ -81,40 +80,20 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 		return sigma;
 	}
 	
-	private Information<Float> generationBruitBlanc (Float sigma)
+	private void generationSignalEtBruitBlanc (Float sigma)
 	{
-		Float [] bruitBlanc = new Float[this.informationRecue.nbElements()];
 		Random r = new Random();
-		int i = 0;
-		while(i<this.informationRecue.nbElements())
+		for(Float elementInformationRecue : informationRecue) 
 		{
 			Double valueI;
 			Float a1 = r.nextFloat();
 			Float a2 = r.nextFloat();
 			valueI = sigma*Math.sqrt(-2*Math.log(1-a1))*Math.cos(2*Math.PI*a2);
-			bruitBlanc[i] = valueI.floatValue();
-			
-			
-			i++;
+			informationEmise.add(valueI.floatValue() + elementInformationRecue);
 		}
-		Information<Float> generationBruitBlanc = new Information<Float>(bruitBlanc);
-		
-		this.exportInformation(generationBruitBlanc); //permet d'exporter le bruit blanc créé vers un fichier txt
-		return generationBruitBlanc;
 	}
-	
-	private void ajoutSignalBruite (Information<Float> bruitBlanc) 
-	{
-		Float [] infoEmiseList = new Float[this.informationRecue.nbElements()];
-		int i = 0;
-		while(i<this.informationRecue.nbElements())
-		{
-			infoEmiseList[i] = (Float) this.informationRecue.iemeElement(i) + (Float) bruitBlanc.iemeElement(i);
-			i++;
-		}
-		this.informationEmise = new Information(infoEmiseList);
-	}
-	
+
+	/*
 	private void exportInformation(Information<Float> information)
 	{
 		File f = new File("export_BB_Simulation.txt");
@@ -127,7 +106,7 @@ public class TransmetteurAnalogiqueBruite <R,T> extends Transmetteur<R,T> {
 	}
 	public boolean equals (Object obj) {
 		return (obj instanceof TransmetteurAnalogiqueBruite); 
-		//TODO : finir l'implémentation de la méthode
 	}
+	*/
 	  
 }
