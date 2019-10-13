@@ -74,9 +74,9 @@ public class SimulateurTestTp2 {
 			//Test de la source par defaut
 			collector.checkThat("Test source par defaut",simulateur.source, equalTo(new SourceAleatoire(100)));
 			//Test de l'emetteur analogique par defaut
-			collector.checkThat("Test emetteurAnalogique NRZT", simulateur.emetteurAnalogique,equalTo(new EmetteurNrzt<Boolean,Float>(30,1.0f,0.0f)));
+			collector.checkThat("Test emetteurAnalogique NRZT", simulateur.emetteurAnalogique,equalTo(new EmetteurNrzt(30,1.0f,0.0f)));
 			//Test du recepteur analogique par defaut
-			collector.checkThat("Test recepteurAnalogique NRZT",simulateur.recepteurAnalogique,is(new RecepteurNrzt<Float,Boolean>(30,1.0f,0.0f)));
+			collector.checkThat("Test recepteurAnalogique NRZT",simulateur.recepteurAnalogique,is(new RecepteurNrzt(30,1.0f,0.0f)));
 			
 		}
 		catch (Exception e) {collector.addError(new Throwable("Erreur constructeur avec args : "+args.toString()));} 		
