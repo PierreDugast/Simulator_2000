@@ -14,7 +14,7 @@ import information.InformationNonConforme;
  * @param <R>
  * @param <T>
  */
-public class TransmetteurCodage <R,T> extends Transmetteur<R,T>{
+public class TransmetteurCodage extends Transmetteur<Boolean,Boolean>{
 	
 	public int nbEchantillon;
 	
@@ -22,12 +22,13 @@ public class TransmetteurCodage <R,T> extends Transmetteur<R,T>{
 	public TransmetteurCodage(int nbEchantillon) {
 		super();
 		this.nbEchantillon=nbEchantillon;
+		informationEmise = new Information<Boolean>();
 	}
 
 	/**
 	 * Méthode qui récupère l'information envoyé.
 	 */
-	public void recevoir(Information<R> information) throws InformationNonConforme {
+	public void recevoir(Information<Boolean> information) throws InformationNonConforme {
 		informationRecue=information;
 		emettre();
 	}
@@ -37,30 +38,23 @@ public class TransmetteurCodage <R,T> extends Transmetteur<R,T>{
 	 * remplacer les 1 par trois bits à 101 et à remplacer les 0 par trois bits à 010.
 	 */
 	public void emettre() throws InformationNonConforme {
-		//Tableau qui va contenir la nouvelle suite de bits
-		Boolean [] emission = new Boolean[this.informationRecue.nbElements()*3];
+		
 		int j=0;
 		//Boucle permettant de créer pour chaque bits reçu trois bits à 101 pour un 1 reçu et trois bits à 010 pour un 0 reçu
-		for(int i=0 ; i<informationRecue.nbElements() ; i++) {
-			if((Boolean) informationRecue.iemeElement(i)) {  //.toString().equalsIgnoreCase("true")) Inutile ici
-				emission[j]=true;
-				j++;
-				emission[j]=false;
-				j++;
-				emission[j]=true;
-				j++;	
+		for(boolean bool : informationRecue) {
+			if(bool) {  
+				informationEmise.add(true);
+				informationEmise.add(false);
+				informationEmise.add(true);
+				j=j+3;	
 			}
-		else{
-				emission[j]=false;
-				j++;
-				emission[j]=true;
-				j++;
-				emission[j]=false;
-				j++;
+			else{
+				informationEmise.add(false);
+				informationEmise.add(true);
+				informationEmise.add(false);
+				j=j+3;
 			}
 		}
-		//Création de l'information à émettre
-		this.informationEmise = new Information(emission);
 
 		//Envoie l'information aux différentes destinations connectées présente dans la variable destinationsConnectees
 		for(int i=0;i<destinationsConnectees.size();i++){
