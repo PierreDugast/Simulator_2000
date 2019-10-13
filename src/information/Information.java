@@ -8,13 +8,13 @@ import java.util.*;
  */	
 public  class Information <T>  implements Iterable <T> {
    
-    private LinkedList <T> content;
+    private ArrayList <T> content;
    
     /**
      * pour construire une information vide
      */
     public Information() {
-    	this.content = new LinkedList <T> (); 
+    	this.content = new ArrayList <T> (); 
     }
    
     /**
@@ -23,10 +23,10 @@ public  class Information <T>  implements Iterable <T> {
      */
     public Information(T [] content) 
     {
-    	this.content = new LinkedList <T> (); 
+    	this.content = new ArrayList <T> (); 
     	for (int i = 0; i < content.length; i++) 
 			{
-            	this.content.addLast(content[i]);
+            	this.content.add(content[i]);
 			}
     }
    
