@@ -3,24 +3,23 @@ package transmetteurs;
 import information.Information;
 import information.InformationNonConforme;
 
-public class RecepteurCodeur <R,T> extends Transmetteur<R,T>{
+public class RecepteurCodeur extends Transmetteur<Boolean,Boolean>{
 	
 	public int nbEchantillon;
 	
 	public RecepteurCodeur(int nbEchantillon) {
 		super();
 		this.nbEchantillon=nbEchantillon;
+		informationEmise = new Information<Boolean>();
 	}
 
-	public void recevoir(Information<R> information) throws InformationNonConforme {
+	public void recevoir(Information<Boolean> information) throws InformationNonConforme {
 		informationRecue=information;
 		emettre();
-		
 	}
 
 	public void emettre() throws InformationNonConforme {
-		//Tableau qui va contenir la nouvelle suite de bits
-		Boolean [] emission = new Boolean[this.informationRecue.nbElements()/3];
+		
 		Boolean [][] trueList = {{false,false,true},{true,false,false},{true,false,true},{true,true,true}};
 		Boolean [][] falseList = {{false,false,false},{false,true,false},{false,true,true},{true,true,false}};
 		Boolean [] oneBitList = new Boolean[3];
@@ -43,14 +42,9 @@ public class RecepteurCodeur <R,T> extends Transmetteur<R,T>{
 					elem = false;
 				j++;
 			}
-			emission[i/3] = elem;
+			informationEmise.add(elem);
 			i=i+3;
 		}
-		
-		//Création de l'information à émettre
-		this.informationEmise = new Information(emission);
-		
-		//System.out.println(informationEmise);
 		
 		//Envoie l'information aux différentes destinations connectées présente dans la variable destinationsConnectees
 		for(i=0;i<destinationsConnectees.size();i++){
