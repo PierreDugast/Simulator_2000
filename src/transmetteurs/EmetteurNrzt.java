@@ -9,7 +9,7 @@ import information.InformationNonConforme;
  * @author Jérémie
  *
  * Classe permettant d'emettre des message de type NRZT. C'est ï¿½ dire des messages qui ont leur premier tier 
- * des échantillons pour 1 symbole qui augmente jusqu'à la valeur max linï¿½airement puis le deuxième tier des
+ * des échantillons pour 1 symbole qui augmente jusqu'à la valeur max linéairement puis le deuxième tier des
  * échantillons reste à cette valeur puis le dernier tier diminue linéairement jusqu'à 0 si le symbol suivant
  * est négatif. Pour un symbole négatif le premier tier diminue jusqu'à la valeur min et le dernier tier augmente
  * jusqu'à 0 si le symbol qui suit est positif. Si des symboles consécutif sont identique la valeur entre le 
@@ -262,7 +262,6 @@ public class EmetteurNrzt extends ConvertisseurAnalogiqueNumerique<Boolean,Float
 				//Cas ou le symbole est false et le précèdent est true
 				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("false") && informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("true") ) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
-						//informationEmise.add(amplitudeMin);
 						if (compteurEchantillon<symbolCourant+tier) {
 							informationEmise.add((compteurEchantillon-symbolCourant)*amplitudeMin/tier);
 						} else if (compteurEchantillon<symbolCourant+2*tier){
@@ -276,7 +275,6 @@ public class EmetteurNrzt extends ConvertisseurAnalogiqueNumerique<Boolean,Float
 				//Cas ou le symbole est false et le précèdent est false
 				if(informationRecue.iemeElement(i).toString().equalsIgnoreCase("false") && informationRecue.iemeElement(i-1).toString().equalsIgnoreCase("false")) {
 					while(compteurEchantillon<(symbolCourant+this.nbEchantillon)) {
-						//informationEmise.add(amplitudeMin);
 						if (compteurEchantillon<symbolCourant+2*tier){
 							informationEmise.add(amplitudeMin);
 						} else if (compteurEchantillon<symbolCourant+3*tier) {
@@ -292,20 +290,4 @@ public class EmetteurNrzt extends ConvertisseurAnalogiqueNumerique<Boolean,Float
 			destinationsConnectees.get(j).recevoir(this.informationEmise);
 		}		
 	}	
-	/*
-	//Equals de Guigui
-	public boolean equals(Object o)
-	{
-		Boolean rep = false;
-		EmetteurNrzt<R,T> e;
-		if(o instanceof EmetteurNrzt)
-		{
-			e = (EmetteurNrzt<R,T>) o;
-			if ((e.amplitudeMax==this.amplitudeMax)&&(e.amplitudeMin==this.amplitudeMin)&&(e.nbEchantillon==this.nbEchantillon))
-				rep = true;
-		}
-		return rep;
-	}
-	*/
-
 }

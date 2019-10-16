@@ -32,13 +32,14 @@ public class RecepteurNrz extends ConvertisseurAnalogiqueNumerique<Float,Boolean
 		for(int i=0 ; i<informationRecue.nbElements() ; i++) {
 			if(i%nbEchantillon==0) {
 				tierCourant=0;
+				moyenneSignal=0;
 			}
 			String elementI = informationRecue.iemeElement(i).toString();
 			valeurElementI = Float.parseFloat(elementI);
 			moyenneSignal=moyenneSignal+valeurElementI;
 			if (tierCourant==(nbEchantillon-1)){
 				moyenneSignal=moyenneSignal/(nbEchantillon-1);
-				if(moyenneSignal>(amplitudeMax+amplitudeMin)/2) {
+				if(moyenneSignal>=(amplitudeMax+amplitudeMin)/2) {
 					informationEmise.add(true);
 				}
 				if(moyenneSignal<(amplitudeMax+amplitudeMin)/2) {
@@ -52,14 +53,5 @@ public class RecepteurNrz extends ConvertisseurAnalogiqueNumerique<Float,Boolean
 		{
 			destinationsConnectees.get(j).recevoir(this.informationEmise);
 		}
-	}
-	/*
-	public boolean equals (Object obj) {
-		return (obj instanceof RecepteurNrz)&& 
-				(((RecepteurNrz)obj).nbEchantillon== this.nbEchantillon) &&
-				(((RecepteurNrz)obj).amplitudeMax== this.amplitudeMax) &&
-				(((RecepteurNrz)obj).amplitudeMin== this.amplitudeMin); 
-	}
-	*/
-	
+	}	
 }

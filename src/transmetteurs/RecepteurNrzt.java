@@ -37,10 +37,9 @@ public class RecepteurNrzt extends ConvertisseurAnalogiqueNumerique<Float,Boolea
 	public void emettre() throws InformationNonConforme {
 		//Récupère la partie entière de la division par 3 du nombre d'échantillon
 		int tier = (int) Math.floor(nbEchantillon/3);
-		nbEchantillon= tier*3;		
+		nbEchantillon = tier*3;		
 		
 		// Compteur permettant de savoir quel élément du tableau doit être modifié
-		int symboleCourant=0;
 		int tierCourant=0;
 		float moyenneSignal=0;
 		float valeurElementI=0;
@@ -49,6 +48,7 @@ public class RecepteurNrzt extends ConvertisseurAnalogiqueNumerique<Float,Boolea
 		for(int i=0 ; i<informationRecue.nbElements() ; i++) {
 			if(i%nbEchantillon==0) {
 				tierCourant=0;
+				moyenneSignal=0;
 			}
 			if(tierCourant>=tier && tierCourant<=tier*2) {
 				String elementI = informationRecue.iemeElement(i).toString();
@@ -57,13 +57,12 @@ public class RecepteurNrzt extends ConvertisseurAnalogiqueNumerique<Float,Boolea
 			}
 			if (tierCourant==tier*2){
 				moyenneSignal=moyenneSignal/(tier+1);
-				if(moyenneSignal>(amplitudeMax+amplitudeMin)/2) {
+				if(moyenneSignal>=(amplitudeMax+amplitudeMin)/2) {
 					informationEmise.add(true);
 				}
 				if(moyenneSignal<(amplitudeMax+amplitudeMin)/2) {
 					informationEmise.add(false);
 				}
-				symboleCourant++;
 			}
 			tierCourant++;
 		}
@@ -72,14 +71,4 @@ public class RecepteurNrzt extends ConvertisseurAnalogiqueNumerique<Float,Boolea
 			destinationsConnectees.get(j).recevoir(this.informationEmise);
 		}		
 	}
-	
-	/*
-	public boolean equals (Object obj) {
-		return (obj instanceof RecepteurNrzt)&& 
-				(((RecepteurNrzt)obj).nbEchantillon== this.nbEchantillon) &&
-				(((RecepteurNrzt)obj).amplitudeMax== this.amplitudeMax) &&
-				(((RecepteurNrz)obj).amplitudeMin== this.amplitudeMin); 
-	}
-	*/
-	
 }
