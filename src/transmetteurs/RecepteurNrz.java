@@ -24,7 +24,6 @@ public class RecepteurNrz extends ConvertisseurAnalogiqueNumerique<Float,Boolean
 		nbEchantillon= tier*3;	
 				
 		// Compteur permettant de savoir quel élément du tableau doit être modifié
-		int symboleCourant=0;
 		int tierCourant=0;
 		float moyenneSignal=0;
 		float valeurElementI=0;
@@ -37,15 +36,14 @@ public class RecepteurNrz extends ConvertisseurAnalogiqueNumerique<Float,Boolean
 			String elementI = informationRecue.iemeElement(i).toString();
 			valeurElementI = Float.parseFloat(elementI);
 			moyenneSignal=moyenneSignal+valeurElementI;
-			if (tierCourant==tier*3-1){
-				moyenneSignal=moyenneSignal/(tier+1);
+			if (tierCourant==(nbEchantillon-1)){
+				moyenneSignal=moyenneSignal/(nbEchantillon-1);
 				if(moyenneSignal>(amplitudeMax+amplitudeMin)/2) {
 					informationEmise.add(true);
 				}
 				if(moyenneSignal<(amplitudeMax+amplitudeMin)/2) {
 					informationEmise.add(false);
 				}
-				symboleCourant++;
 			}
 			tierCourant++;
 		}
