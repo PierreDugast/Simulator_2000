@@ -36,6 +36,8 @@ public class Simulateur {
     private Float amplitudeMin = 0.0f;
     /** la cha√Æne de caract√®res correspondant √† m dans l'argument -mess m */
     private String messageString = "100";
+    /** indique si il s'agit d'une transmission analogique*/
+    private Boolean isAnalogic = false;
     /** indique la forme de l'onde choisie*/
     private String messageAnalogicEncoding = "RZ";
     /** indique l'utilisation d'un SNR*/
@@ -95,20 +97,23 @@ public class Simulateur {
       	if (!(messageAleatoire)) {
       		this.source = new SourceFixe(this.messageString,this.nbBitsMess);
       	}	
-      	if (this.messageAnalogicEncoding == "RZ") 
+      	if (this.isAnalogic)
       	{
-      		this.emetteurAnalogique = new EmetteurRz(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
-      		this.recepteurAnalogique = new RecepteurRz(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
-      	}
-      	if (this.messageAnalogicEncoding == "NRZ") 
-      	{
-      		this.emetteurAnalogique = new EmetteurNrz(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
-      		this.recepteurAnalogique = new RecepteurNrz(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
-      	}
-      	if (this.messageAnalogicEncoding == "NRZT") 
-      	{
-      		this.emetteurAnalogique = new EmetteurNrzt(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
-      		this.recepteurAnalogique = new RecepteurNrzt(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
+	      	if (this.messageAnalogicEncoding == "RZ") 
+	      	{
+	      		this.emetteurAnalogique = new EmetteurRz(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
+	      		this.recepteurAnalogique = new RecepteurRz(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
+	      	}
+	      	if (this.messageAnalogicEncoding == "NRZ") 
+	      	{
+	      		this.emetteurAnalogique = new EmetteurNrz(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
+	      		this.recepteurAnalogique = new RecepteurNrz(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
+	      	}
+	      	if (this.messageAnalogicEncoding == "NRZT") 
+	      	{
+	      		this.emetteurAnalogique = new EmetteurNrzt(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
+	      		this.recepteurAnalogique = new RecepteurNrzt(this.nbEchantillon, this.amplitudeMax, this.amplitudeMin);
+	      	}
       	}
       	if (this.isTi) {
       		this.transmetteurAnalogique1 = new TransmetteurAnalogiqueMultitrajet(this.dtList,this.arList);
@@ -199,6 +204,7 @@ public class Simulateur {
 		        }
 		        else if (args[i].matches("-form"))
 		        {
+		        	this.isAnalogic = true;
 		        	i++;
 		        	if (args[i].matches("NRZ"))
 		        	{
@@ -217,8 +223,10 @@ public class Simulateur {
 		        }
 				else if (args[i].matches("-nbEch"))
 				{
+					this.isAnalogic = true;
 					i++;
 					if (args[i].matches("[0-2]?")) {
+						System.out.println("NnEch trop faible pour generer un signal. NbEch = 3 minimum.");
 						this.nbEchantillon = 3;
 					} else if (args[i].matches("[0-9]{1,10}")) {
 						this.nbEchantillon = new Integer(args[i]);
@@ -229,6 +237,7 @@ public class Simulateur {
 				}
 			else if (args[i].matches("-ampl"))
 			{
+				this.isAnalogic = true;
 				i++;
 				if (args[i].matches("[-]?([0-9]{1,10}[.])?[0-9]{1,10}"))
 					this.amplitudeMin = Float.parseFloat(args[i]);
@@ -243,6 +252,7 @@ public class Simulateur {
 			}
 			else if (args[i].matches("-snr"))
 			{
+				this.isAnalogic = true;
 				i++;
 				if (args[i].matches("^[-]?[0-9]*\\.?[0-9]+"))
 				{
@@ -254,6 +264,7 @@ public class Simulateur {
 			}
 			else if (args[i].matches("-ti"))
 			{
+					this.isAnalogic = true;
 					int j=0; //compteur pour remplir dtList et ArList
 					this.isTi = true;
 					while (i<args.length-1 && (args[i+1].matches("[0-9]{1,10}") || args[i+1].matches("^[+]?[0-9]*\\.?[0-9]+")) ) {
@@ -303,8 +314,11 @@ public class Simulateur {
       			SondeLogique sonde5 = new SondeLogique("Sonde sortie  Codage", 720);
           		sonde5.recevoir(this.emetteurCodeur.getInformationEmise());
       		}
-      		SondeAnalogique sonde2 = new SondeAnalogique("Sonde sortie emetteur analogique");
-      		sonde2.recevoir(this.emetteurAnalogique.getInformationEmise());
+      		if (this.isAnalogic)
+      		{
+	      		SondeAnalogique sonde2 = new SondeAnalogique("Sonde sortie emetteur analogique");
+	      		sonde2.recevoir(this.emetteurAnalogique.getInformationEmise());
+      		}
       		if(this.isSNR) {
       			SondeAnalogique sonde3 = new SondeAnalogique("Sonde sortie transmetteur analogique");
           		sonde3.recevoir(this.transmetteurAnalogique2.getInformationEmise());
@@ -316,7 +330,18 @@ public class Simulateur {
           		sonde6.recevoir(this.recepteurCodeur.getInformationEmise());
       		}
       		
-      		System.out.println(" AmplitudeMax : "+this.amplitudeMax+" | AmplitudeMin : "+this.amplitudeMin+" | SNR : "+this.SNR+" | Encodage : "+this.messageAnalogicEncoding);
+          	System.out.println("ParamËtres utilises : ");
+          	
+      		System.out.println(
+      				" - Bruit blanc gaussien avec SNR : "+this.SNR+"\n"
+      				+" - Transmission analogique : "+this.isAnalogic+"\n"
+      				+" - Encodage analogique : "+this.messageAnalogicEncoding+"\n"
+      				+" - Nombre d'Èchantillon par symbole : "+this.nbEchantillon+"\n"
+      				+" - Amplitude max : "+this.amplitudeMax+"\n"
+      				+" - Amplitude min : "+this.amplitudeMin+"\n"
+      				+" - Trajets multiples : "+"\n"
+      				+" - prÈsence d'un codeur : "+this.unCodeur
+      				);
       		
       	}
     }
@@ -365,7 +390,7 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-mess","00001111","-s","-ampl","0.1","1.4"};
+    	String[] argsBis = {"-mess","00001111","-s"};
     	
 		try 
 		{
