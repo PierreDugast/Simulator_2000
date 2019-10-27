@@ -19,7 +19,9 @@ public class EmetteurNrzt extends ConvertisseurAnalogiqueNumerique<Boolean,Float
 {
 	
 	/**
-	 * Constructeur permettant de créer un émetteur NRZT à partir du constructeur de transmetteur avec trois parammètres
+	 * Constructeur permettant de créer un émetteur NRZT à partir du constructeur de transmetteur avec trois parammètres.
+	 * Il initialise nbEchantillon, amplitudeMax et amplitudeMin avec les paramètres renseignés dans le constructeur et 
+	 * initialise informationEmise avec le constructeur d'Information de type float.
 	 * @param nbEchantillon
 	 * @param amplitudeMax
 	 * @param amplitudeMin
@@ -34,13 +36,15 @@ public class EmetteurNrzt extends ConvertisseurAnalogiqueNumerique<Boolean,Float
 	/**
 	 * Méthode permettant de mettre en forme l'information reçu pour ensuite la rémettre. La mise en forme consiste à 
 	 * créer une information qui pour chaque symbole crée nbEchantillon. Le premier tier des échantillons tend linéairement
-	 * vers la valeur amplitudeMax si le symbole est true et amplitudeMin si le symbole est false. Le deuxième tier est constant
-	 * à la valeur amplitudeMax si le symbole est true et amplitudeMin si le symbole est false. Si le symbole suivant est différent 
-	 * du symbole courant le dernier tier tend vers 0 linéairement. Si le symbole précèdent est identique au courant la valeur reste 
-	 * constante sur le premier tier du suivant et sur le dernier tier du symbole courant. 
+	 * vers la valeur amplitudeMax si le symbole est true et amplitudeMin si le symbole est false. Le deuxième tier est 
+	 * constant à la valeur amplitudeMax si le symbole est true et amplitudeMin si le symbole est false. Si le symbole
+	 * suivant est différent du symbole courant le dernier tier tend vers 0 linéairement. Si le symbole précèdent est
+	 * identique au courant la valeur reste constante sur le premier tier du suivant et sur le dernier tier du symbole 
+	 * courant.
+	 *  
 	 */
 	public void emettre() throws InformationNonConforme {
-		//Récupère la partie entière de la division par 3 du nombre d'échantillon
+		// Récupère la partie entière de la division par 3 du nombre d'échantillon
 		int tier = (int) Math.floor(nbEchantillon/3);
 		nbEchantillon=tier*3;
 		int compteurEchantillon=0;		
@@ -285,7 +289,7 @@ public class EmetteurNrzt extends ConvertisseurAnalogiqueNumerique<Boolean,Float
 				}
 			}
 		}
-		//Envoie l'information aux différentes destinations connectées présente dans la variable destinationsConnectees
+		// Envoie l'information aux différentes destinations connectées présente dans la variable destinationsConnectees
 		for(int j=0;j<destinationsConnectees.size();j++){
 			destinationsConnectees.get(j).recevoir(this.informationEmise);
 		}		

@@ -13,7 +13,10 @@ public class RecepteurNrzt extends ConvertisseurAnalogiqueNumerique<Float,Boolea
 {
 	
 	/**
-	 * Constructeur du recepteur NRZT utilisant le constructeur des transmetteurs avec 3 paramètres
+	 * Constructeur permettant de créer un émetteur NRZT à partir du constructeur de transmetteur avec trois parammètres.
+	 * Il initialise nbEchantillon, amplitudeMax et amplitudeMin avec les paramètres renseignés dans le constructeur et 
+	 * initialise informationEmise avec le constructeur d'Information de type Boolean.
+	 * 
 	 * @param nbEchantillon
 	 * @param amplitudeMax
 	 * @param amplitudeMin
@@ -28,19 +31,19 @@ public class RecepteurNrzt extends ConvertisseurAnalogiqueNumerique<Float,Boolea
 	/**
 	 * Méthode permettant de mettre en forme le message reçu puis de l'envoyer. La mise en forme du message consiste 
 	 * à récupérer l'information reçu. Mettre dans le tableau soit true soit false en comparant la valeur de 
-	 * l'échantillon pris en compte avec amplitudeMax et amplitudeMin. Si l'échantillon est 
-	 * supérieur à amplitudeMax+amplitudeMin/2 (c'est à dire la moyenne entre les deux amplitudes) on met true dans le 
-	 * tableau et si l'échantillon est inférieur à amplitudeMax+amplitudeMin/2 on met false dans le tableau. 
-	 * On crée ensuite une information avec en paramètre du constructeur le tableau de 
-	 * boolean créé que l'on met dans information Emise.
+	 * la moyenne du deuxième tier des échantillons pris en compte avec amplitudeMax+amplitudeMin/2. Si l'échantillon est 
+	 * supérieur à amplitudeMax+amplitudeMin/2 on met true dans le tableau et si l'échantillon est inférieur
+	 * à amplitudeMax+amplitudeMin/2 on met false dans le tableau. On utilise ensuite la méthode recevoir des différentes
+	 * destinationsConnectees.
 	 */
 	public void emettre() throws InformationNonConforme {
 		//Récupère la partie entière de la division par 3 du nombre d'échantillon
 		int tier = (int) Math.floor(nbEchantillon/3);
 		nbEchantillon = tier*3;		
 		
-		// Compteur permettant de savoir quel élément du tableau doit être modifié
+		// Compteur permettant de savoir quel échantillon est utilisé
 		int tierCourant=0;
+		
 		float moyenneSignal=0;
 		float valeurElementI=0;
 		

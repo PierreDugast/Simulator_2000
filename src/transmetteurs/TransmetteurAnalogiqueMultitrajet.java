@@ -85,14 +85,6 @@ public class TransmetteurAnalogiqueMultitrajet<R,T> extends Transmetteur<R,T> {
 		//On ajoute également le trajet direct (informationRecue) à la LinkedList :
 		informationMultitrajetList.add(informationRecue);
 		
-		
-		
-		//System.out.println("\nsignal refléchi : "+informationMultitrajetList.get(0).toString());
-		//System.out.println("\nsignal : "+informationMultitrajetList.get(1).toString());
-		
-		
-		
-		
 		//une fois tous les trajets stockés dans la likedList d'Informations informationMultitrajetsList
 		//on additionne chaque élément à son emplacement dans l'Information retounee informationMutlitrajet :
 		i = 0;
@@ -112,8 +104,6 @@ public class TransmetteurAnalogiqueMultitrajet<R,T> extends Transmetteur<R,T> {
 		
 		//On crée l'information à envoyer :
 		informationMultitrajet = new Information<Float>(info);
-		
-		//System.out.println("\nsortie: "+informationMultitrajet.toString());
 		
 		return informationMultitrajet;
 	}
