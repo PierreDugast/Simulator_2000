@@ -329,21 +329,18 @@ public class Simulateur {
           		SondeLogique sonde6 = new SondeLogique("Sonde sortie recepteur codeur",720);
           		sonde6.recevoir(this.recepteurCodeur.getInformationEmise());
       		}
-      		
-          	System.out.println("Paramètres utilises : ");
-          	
-      		System.out.println(
-      				" - Bruit blanc gaussien avec SNR : "+this.SNR+"\n"
-      				+" - Transmission analogique : "+this.isAnalogic+"\n"
-      				+" - Encodage analogique : "+this.messageAnalogicEncoding+"\n"
-      				+" - Nombre d'échantillon par symbole : "+this.nbEchantillon+"\n"
-      				+" - Amplitude max : "+this.amplitudeMax+"\n"
-      				+" - Amplitude min : "+this.amplitudeMin+"\n"
-      				+" - Trajets multiples : "+"\n"
-      				+" - présence d'un codeur : "+this.unCodeur
-      				);
-      		
       	}
+      	System.out.println("Paramètres utilises : ");
+  		System.out.println(
+  				" - Bruit blanc gaussien avec SNR : "+this.SNR+"\n"
+  				+" - Transmission analogique : "+this.isAnalogic+"\n"
+  				+" - Encodage analogique : "+this.messageAnalogicEncoding+"\n"
+  				+" - Nombre d'échantillon par symbole : "+this.nbEchantillon+"\n"
+  				+" - Amplitude max : "+this.amplitudeMax+"\n"
+  				+" - Amplitude min : "+this.amplitudeMin+"\n"
+  				+" - Trajets multiples : "+this.isTi+"\n"
+  				+" - présence d'un codeur : "+this.unCodeur+"\n"
+  				);
     }
    
    	   	
@@ -390,7 +387,7 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-mess","00001111","-s"};
+    	String[] argsBis = {"-s","-mess","1010111001","-form","RZ","-nbEch","99","-ti","50","0.5"};
     	
 		try 
 		{

@@ -101,7 +101,6 @@ public class TransmetteurAnalogiqueBruite extends Transmetteur<Float,Float> {
 		float sigma = 0;
 		//calcul la valeur de sigma en fonction de la puissance du signal et du SNR
 		sigma = (float) Math.sqrt(nbEchantillon*1/2*puissanceSignal/Math.pow(10, (SNR/10)));
-		System.out.println("Sigma_BBG : "+sigma);
 		return sigma;
 	}
 	
