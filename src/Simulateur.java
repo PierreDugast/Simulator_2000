@@ -56,7 +56,7 @@ public class Simulateur {
     /** le  composant Source de la chaine de transmission */
     public Source <Boolean>  source = null;
     /** le composant emetteur analogique de la chaine de transmission */
-    public Transmetteur <Boolean,Float> emetteurAnalogique = null;
+    public Transmetteur <Boolean,Float> emetteurAnalogique = new TransmetteurParfait();
     /** le  composant Transmetteur analogique parfait logique de la chaine de transmission */
     public Transmetteur <Float, Float>  transmetteurAnalogique1 = new TransmetteurParfait();
     /** un deuxi�me transmetteur analogique pour les multiples trajets (par d�faut parfait)*/
@@ -66,7 +66,7 @@ public class Simulateur {
     /** un transmetteur pour le codeur(par d�faut parfait)*/
     public Transmetteur <Boolean,Boolean> recepteurCodeur = new TransmetteurParfait();
     /** le composant recepteur analogique de la chaine de transmission */
-    public Transmetteur <Float, Boolean> recepteurAnalogique = null;
+    public Transmetteur <Float, Boolean> recepteurAnalogique = new TransmetteurParfait();
     /** le  composant Destination de la chaine de transmission */
     public Destination <Boolean>  destination = null;
    	
@@ -230,12 +230,12 @@ public class Simulateur {
 			else if (args[i].matches("-ampl"))
 			{
 				i++;
-				if (args[i].matches("[-]?[0-9]{1,10}"))
+				if (args[i].matches("[-]?([0-9]{1,10}[.])?[0-9]{1,10}"))
 					this.amplitudeMin = Float.parseFloat(args[i]);
 				else
 	        		throw new ArgumentsException ("Valeur du parametre -ampl invalide : " + args[i]);
 				i++;
-				if (args[i].matches("[-]?[0-9]{1,10}"))
+				if (args[i].matches("[-]?([0-9]{1,10}[.])?[0-9]{1,10}"))
 					this.amplitudeMax = Float.parseFloat(args[i]);
 				else
 	        		throw new ArgumentsException ("Valeur du parametre -ampl invalide : " + args[i]);
@@ -365,7 +365,7 @@ public class Simulateur {
     	Simulateur simulateur = null;
     	//Test des arguments avec le String[] argBis :
 
-    	String[] argsBis = {"-s","-mess","11001010","-form","RZ"};
+    	String[] argsBis = {"-mess","00001111","-s","-ampl","0.1","1.4"};
     	
 		try 
 		{
